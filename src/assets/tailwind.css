@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;900&display=swap');
 
 @layer base {
   :root {
@@ -13,8 +14,9 @@
   }
 
   body {
-    @apply antialiased bg-white;
-    color: #0f172a;
+    @apply antialiased font-sans;
+    background: linear-gradient(180deg, #e8f0fa 0%, #f5f6f7 100%);
+    color: theme('colors.neutral.900');
   }
 
   * {
@@ -33,3 +35,19 @@
     touch-action: manipulation;
   }
 }
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(224, 227, 231, 0.3);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgb(195, 201, 208);
+    transition: all 0.3s;
+  }
+}
+

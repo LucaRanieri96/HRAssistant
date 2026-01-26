@@ -1,77 +1,165 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import Button from 'primevue/button'
+import { FileText } from 'lucide-vue-next'
+import GeometricBackground from '@/components/GeometricBackground.vue'
+import Logo from '@/components/Logo.vue'
+import BottomNav from '@/components/BottomNav.vue'
+import type { Screen } from '@/components/BottomNav.vue'
 
 const router = useRouter()
 
-const jobs = [
-  { id: 'frontend', title: 'Sviluppatore Frontend', icon: 'pi-code', color: '#3b82f6' },
-  { id: 'backend', title: 'Sviluppatore Backend', icon: 'pi-database', color: '#6366f1' },
-  { id: 'fullstack', title: 'Sviluppatore Full Stack', icon: 'pi-server', color: '#8b5cf6' },
-  { id: 'uxui', title: 'Designer UX/UI', icon: 'pi-palette', color: '#a855f7' },
-  { id: 'hr', title: 'Specialista HR', icon: 'pi-users', color: '#ec4899' },
-]
-
-const selectedJob = ref<string | null>(null)
-
-const handleJobSelect = (jobId: string) => {
-  selectedJob.value = jobId
+export interface JobOffer {
+  id: string
+  title: string
+  department: string
+  description: string
 }
 
-const handleBack = () => {
+const jobOffers: JobOffer[] = [
+  {
+    id: '1',
+    title: 'Senior AI Engineer',
+    department: 'Engineering & Ricerca',
+    description: 'Guida lo sviluppo AI e i progetti di ricerca'
+  },
+  {
+    id: '2',
+    title: 'Product Manager - Soluzioni AI',
+    department: 'Prodotto & Strategia',
+    description: 'Definisci la visione del prodotto per soluzioni AI'
+  },
+  {
+    id: '3',
+    title: 'Data Scientist',
+    department: 'Analytics & Data',
+    description: 'Estrai insights e costruisci modelli predittivi'
+  },
+  {
+    id: '4',
+    title: 'UX/UI Designer',
+    department: 'Design & Experience',
+    description: 'Crea interfacce intuitive per applicazioni AI'
+  },
+  {
+    id: '5',
+    title: 'Machine Learning Researcher',
+    department: 'Engineering & Ricerca',
+    description: 'Avanza le capacità e metodologie ML'
+  }
+]
+
+const currentScreen = ref<Screen>('jobs')
+
+const handleJobSelect = (job: JobOffer) => {
+  router.push({ name: 'cv-selection', params: { job: job.id } })
+}
+
+const handleNavigate = (screen: Screen) => {
+  currentScreen.value = screen
+  if (screen === 'history') {
+    // Navigate to history
+  } else if (screen === 'settings') {
+    // Navigate to settings
+  }
+}
+
+const handleHome = () => {
   router.push('/')
 }
 
-const handleContinue = () => {
-  if (selectedJob.value) {
-    router.push({ name: 'cv-selection', params: { job: selectedJob.value } })
-  }
+function onEnterCard(el: Element, done: () => void) {
+  const htmlEl = el as HTMLElement
+  const index = parseInt(htmlEl.dataset.index || '0')
+  htmlEl.style.opacity = '0'
+  htmlEl.offsetHeight
+  htmlEl.style.transition = `opacity 0.4s ease ${index * 0.08}s`
+  htmlEl.style.opacity = '1'
+  done()
 }
 </script>
 
 <template>
-  <div class="flex h-screen flex-col bg-white overflow-hidden">
-    <div class="flex-shrink-0 bg-gradient-to-r from-brandBlue to-brandBlueDark px-16 py-6 text-white">
-      <Button label="Indietro" icon="pi pi-arrow-left" severity="secondary" text class="!mb-4 !text-2xl !py-3 !px-6"
-        @click="handleBack" />
-      <h1 class="text-6xl font-bold md:text-7xl mb-2">Seleziona la posizione</h1>
-      <p class="text-3xl text-white/90">Scegli il ruolo da valutare</p>
+  <div class="relative w-full h-full overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0">
+      <GeometricBackground />
     </div>
 
-    <div class="flex-1 overflow-y-auto px-16 py-4">
-      <div class="mx-auto grid max-w-6xl gap-6">
-        <button v-for="job in jobs" :key="job.id" @click="handleJobSelect(job.id)" :class="[
-          'group relative rounded-3xl border-4 p-10 text-left transition-all duration-300 min-h-[10rem]',
-          selectedJob === job.id
-            ? 'scale-[1.02] border-blue-600 bg-blue-50 shadow-xl'
-            : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-lg'
-        ]">
-          <div class="flex items-center gap-12">
-            <div :class="[
-              'flex h-32 w-32 flex-shrink-0 items-center justify-center rounded-2xl transition-all',
-              selectedJob === job.id ? 'shadow-lg' : 'bg-gray-100 group-hover:bg-blue-100'
-            ]" :style="{ backgroundColor: selectedJob === job.id ? job.color : undefined }">
-              <i :class="`pi ${job.icon}`" class="text-6xl"
-                :style="{ color: selectedJob === job.id ? 'white' : '#4b5563' }"></i>
-            </div>
+    <!-- Logo in top right -->
+    <div class="absolute top-8 right-16 z-10">
+      <Logo size="medium" />
+    </div>
 
-            <div class="flex-1 text-left">
-              <h3 class="text-5xl font-semibold text-gray-900 md:text-6xl">{{ job.title }}</h3>
-            </div>
+    <!-- Content -->
+    <div class="relative h-full flex flex-col px-16 pt-20 pb-48">
+      <!-- Header -->
+      <div class="mb-16">
+        <h1 class="text-display-1 font-bold text-neutral-900 tracking-tight mb-4">
+          SELEZIONA POSIZIONE
+        </h1>
+        <div class="w-32 h-2 bg-secondary-500 rounded-full" />
+      </div>
 
-            <div v-if="selectedJob === job.id"
-              class="flex h-16 w-16 items-center justify-center rounded-full bg-brandYellow">
-              <i class="pi pi-check text-4xl text-brandGray"></i>
+      <!-- Job Cards -->
+      <div class="flex-1 overflow-y-auto space-y-6 pb-8 pr-6 custom-scrollbar">
+        <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard">
+          <div :data-index="index" @click="handleJobSelect(job)" class="relative group cursor-pointer select-none">
+            <!-- Card -->
+            <div
+              class="relative glass-card glass-card-hover rounded-3xl p-10 transition-all duration-300 ease-out active:scale-[0.98] hover:border-secondary-500">
+              <!-- Job Info -->
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <h2 class="text-[52px] font-bold text-neutral-900 mb-3 leading-tight">
+                    {{ job.title }}
+                  </h2>
+                  <p class="text-h5 text-neutral-500">
+                    {{ job.department }}
+                  </p>
+                </div>
+
+                <!-- Document Icon -->
+                <div class="ml-6 flex-shrink-0">
+                  <div
+                    class="w-24 h-24 rounded-2xl bg-secondary-100 border-2 border-secondary-500 flex items-center justify-center group-hover:bg-secondary-200 transition-all duration-300">
+                    <FileText class="w-12 h-12 text-secondary-700" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hover indicator -->
+              <div
+                class="absolute bottom-6 right-10 text-body-m text-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Tocca per selezionare →
+              </div>
             </div>
           </div>
-        </button>
+        </Transition>
       </div>
     </div>
 
-    <div class="flex-shrink-0 border-t border-gray-200 bg-gray-50 px-16 py-6">
-      <Button @click="handleContinue" :disabled="!selectedJob" label="Continua alla selezione CV" size="large"
-        class="w-full !py-10 !text-4xl !font-semibold !min-h-[7rem]" />
-    </div>
+    <!-- Bottom Navigation -->
+    <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />
   </div>
 </template>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(195, 201, 208, 0.1);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(248, 203, 70, 0.5);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(248, 203, 70, 0.7);
+}
+</style>

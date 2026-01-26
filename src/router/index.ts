@@ -3,6 +3,7 @@ import SplashView from '../views/SplashView.vue'
 import JobSelectionView from '../views/JobSelectionView.vue'
 import CVSelectionView from '../views/CVSelectionView.vue'
 import ResultsView from '../views/ResultsView.vue'
+import ProcessingScreen from '../components/ProcessingScreen.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,12 @@ const router = createRouter({
       name: 'cv-selection',
       component: CVSelectionView,
       meta: { transition: 'slide-left' },
+    },
+    {
+      path: '/processing',
+      name: 'processing',
+      component: ProcessingScreen,
+      meta: { transition: 'fade' },
     },
     {
       path: '/results/:job',
