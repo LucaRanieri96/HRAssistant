@@ -40,8 +40,9 @@
               'w-20 h-20 rounded-full flex items-center justify-center',
               currentStep >= index ? 'bg-secondary-500' : 'bg-neutral-200'
             ]">
-              <component :is="step.icon" :class="[
-                'w-10 h-10',
+              <i :class="[
+                step.icon,
+                'pi text-[40px]',
                 currentStep >= index ? 'text-neutral-900' : 'text-neutral-300'
               ]" />
             </div>
@@ -81,7 +82,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Brain, Zap, TrendingUp } from 'lucide-vue-next'
 import GeometricBackground from '@/components/GeometricBackground.vue'
 import Logo from '@/components/Logo.vue'
 
@@ -90,18 +90,16 @@ const progress = ref(0)
 const currentStep = ref(0)
 
 const steps = [
-  { icon: Brain, label: 'Analisi competenze in corso', delay: 0 },
-  { icon: Zap, label: 'Calcolo affinità candidati', delay: 1000 },
-  { icon: TrendingUp, label: 'Generazione ranking finale', delay: 2000 }
+  { icon: 'pi-file-edit', label: 'Analisi competenze in corso', delay: 0 },
+  { icon: 'pi-bolt', label: 'Calcolo affinità candidati', delay: 1000 },
+  { icon: 'pi-chart-line', label: 'Generazione ranking finale', delay: 2000 }
 ]
 
 onMounted(() => {
-  // Animate progress bar
   const progressInterval = setInterval(() => {
     progress.value += 2
     if (progress.value >= 100) {
       clearInterval(progressInterval)
-      // Navigate to results after completion
       setTimeout(() => {
         router.push({ name: 'results', params: { job: 'ai-engineer' } })
       }, 500)

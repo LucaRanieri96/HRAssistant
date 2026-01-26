@@ -1,9 +1,5 @@
 <template>
   <div class="relative w-full h-screen overflow-hidden">
-    <!-- Background -->
-    <div class="absolute inset-0 bg-[#0a1628]">
-      <GeometricBackground />
-    </div>
 
     <!-- Logo in top right -->
     <div class="absolute top-8 right-16 z-10">
@@ -41,7 +37,6 @@
             <div v-if="first" class="mb-6">
               <div class="relative bg-white/5 backdrop-blur-sm border-2 border-secondary-400 bg-white/10 rounded-3xl overflow-visible
                          shadow-[0_0_60px_rgba(255,210,77,0.4),0_0_100px_rgba(255,210,77,0.2)]
-                         hover:shadow-[0_0_80px_rgba(255,210,77,0.5),0_0_120px_rgba(255,210,77,0.3)]
                          transition-all duration-500">
                 <!-- Animated border glow -->
                 <div class="absolute inset-0 rounded-3xl pointer-events-none">
@@ -52,7 +47,7 @@
                   <!-- Trophy Badge with Position -->
                   <div class="flex-shrink-0 relative">
                     <div class="w-32 h-32 rounded-2xl bg-secondary-400 flex items-center justify-center">
-                      <Trophy :size="64" class="text-[#0a1628]" />
+                      <i class="pi pi-trophy text-[#0a1628] text-[64px]" />
                     </div>
                     <div
                       class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-secondary-400 border-4 border-[#0a1628] flex items-center justify-center z-10 shadow-lg">
@@ -72,7 +67,7 @@
 
                     <div class="flex items-center gap-4 mb-6 flex-wrap">
                       <div class="flex items-center gap-2">
-                        <Briefcase :size="24" class="text-white/40" />
+                        <i class="pi pi-briefcase text-white/40 text-[24px]" />
                         <span class="text-[24px] text-white/70">{{ first.experience }} · {{ first.skills[0] }}</span>
                       </div>
                     </div>
@@ -104,7 +99,7 @@
                   <div class="flex-shrink-0 relative">
                     <div
                       class="w-24 h-24 rounded-2xl bg-white/10 border-2 border-white/30 flex items-center justify-center">
-                      <Award :size="48" class="text-white/80" />
+                      <i class="pi pi-star-fill text-white/80 text-[48px]" />
                     </div>
                     <div
                       class="absolute -top-3 -right-3 w-14 h-14 rounded-full bg-white border-4 border-[#0a1628] flex items-center justify-center z-10 shadow-lg">
@@ -128,7 +123,7 @@
                 <!-- Details -->
                 <div class="flex flex-col gap-3 mb-4">
                   <div class="flex items-center gap-2">
-                    <Briefcase :size="20" class="text-white/40" />
+                    <i class="pi pi-briefcase text-white/40 text-[20px]" />
                     <span class="text-[20px] text-white/70">{{ second.experience }} · {{ second.skills[0] }}</span>
                   </div>
                 </div>
@@ -152,7 +147,7 @@
                   <div class="flex-shrink-0 relative">
                     <div
                       class="w-24 h-24 rounded-2xl bg-white/10 border-2 border-white/30 flex items-center justify-center">
-                      <Medal :size="48" class="text-white/80" />
+                      <i class="pi pi-star text-white/80 text-[48px]" />
                     </div>
                     <div
                       class="absolute -top-3 -right-3 w-14 h-14 rounded-full bg-white border-4 border-[#0a1628] flex items-center justify-center z-10 shadow-lg">
@@ -176,7 +171,7 @@
                 <!-- Details -->
                 <div class="flex flex-col gap-3 mb-4">
                   <div class="flex items-center gap-2">
-                    <Briefcase :size="20" class="text-white/40" />
+                    <i class="pi pi-briefcase text-white/40 text-[20px]" />
                     <span class="text-[20px] text-white/70">{{ third.experience }} · {{ third.skills[0] }}</span>
                   </div>
                 </div>
@@ -199,7 +194,8 @@
         <div class="mb-8">
           <h2 class="text-[40px] font-bold text-white mb-6 ml-2">Altri Candidati</h2>
           <div class="space-y-6">
-            <div v-for="(candidate, index) in rest" :key="candidate.id" class="relative bg-white/5 backdrop-blur-sm
+            <div v-for="(candidate, index) in rest" :key="candidate.id" v-memo="[candidate.id, candidate.matchScore]"
+              class="relative bg-white/5 backdrop-blur-sm
                      border border-white/10 rounded-3xl p-8
                      transition-all duration-300 select-none
                      hover:border-white/20 hover:bg-white/10">
@@ -232,12 +228,12 @@
                   <!-- Details -->
                   <div class="flex items-center gap-6 mb-4">
                     <div class="flex items-center gap-2">
-                      <Briefcase :size="20" class="text-white/30" />
+                      <i class="pi pi-briefcase text-white/30 text-[20px]" />
                       <span class="text-[22px] text-white/60">{{ candidate.skills[0] }}</span>
                     </div>
                     <div class="h-5 w-px bg-white/20" />
                     <div class="flex items-center gap-2">
-                      <Clock :size="20" class="text-white/30" />
+                      <i class="pi pi-clock text-white/30 text-[20px]" />
                       <span class="text-[22px] text-white/60">{{ candidate.experience }}</span>
                     </div>
                   </div>
@@ -257,26 +253,20 @@
       </Transition>
 
       <!-- Export Button -->
-      <button class="w-full h-[110px] mt-8
-               bg-transparent border-2 border-secondary-400 rounded-xl
-               text-white text-[38px] font-medium tracking-wide
-               transition-all duration-300
-               hover:bg-secondary-400 hover:text-[#0a1628]
-               active:scale-[0.98]
-               flex items-center justify-center gap-6">
-        <QrCode :size="48" />
-        <span>ESPORTA RISULTATI</span>
-      </button>
+      <Button @click="handleBack" severity="warn" class="!w-full !h-[110px] !mt-8 !text-[42px] !font-bold !rounded-xl">
+        <template #icon>
+          <i class="pi pi-qrcode text-[48px] mr-4" />
+        </template>
+        ESPORTA RISULTATI
+      </Button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Trophy, Award, Medal, QrCode, Briefcase, Clock } from 'lucide-vue-next';
-import type { Candidate } from '../types';
-import GeometricBackground from '../components/GeometricBackground.vue';
-import Logo from '../components/Logo.vue';
+import { computed } from 'vue'
+import type { Candidate } from '../types'
+import Logo from '../components/Logo.vue'
 
 // Mock data - ordinati per matchScore
 const candidates = computed<Candidate[]>(() => [

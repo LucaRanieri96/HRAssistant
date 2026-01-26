@@ -1,180 +1,168 @@
+<script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+import { Application, Graphics } from 'pixi.js'
+
+const canvasContainer = ref<HTMLDivElement | null>(null)
+let app: Application | null = null
+let nodes: Node[] = []
+let linesGraphics: Graphics | null = null
+
+interface Node {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  size: number
+  graphics: Graphics
+}
+
+const nodeCount = 150
+const connectionDistance = 100
+const targetFPS = 60
+
+const worldMultiplier = 1.8
+
+const handleResize = () => {
+  if (!app || !canvasContainer.value) return
+
+  const width = canvasContainer.value.offsetWidth
+  const height = canvasContainer.value.offsetHeight
+
+  app.renderer.resize(width, height)
+  // I nodi continuano a muoversi liberamente, non vengono riposizionati
+}
+
+onMounted(async () => {
+  if (!canvasContainer.value) return
+
+  const width = canvasContainer.value.offsetWidth
+  const height = canvasContainer.value.offsetHeight
+
+  app = new Application()
+  await app.init({
+    width,
+    height,
+    backgroundColor: 0x0a1628,
+    backgroundAlpha: 0,
+    antialias: true,
+    resolution: Math.min(window.devicePixelRatio || 1, 2),
+    autoDensity: true,
+    powerPreference: 'high-performance',
+    eventMode: 'passive',
+  })
+
+  canvasContainer.value.appendChild(app.canvas as HTMLCanvasElement)
+
+  const worldWidth = width * worldMultiplier
+  const worldHeight = height * worldMultiplier
+
+  for (let i = 0; i < nodeCount; i++) {
+    const graphics = new Graphics()
+    const node: Node = {
+      x: Math.random() * worldWidth - (worldWidth - width) / 2,
+      y: Math.random() * worldHeight - (worldHeight - height) / 2,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      size: Math.random() * 2 + 1.5,
+      graphics,
+    }
+
+    graphics.circle(0, 0, node.size)
+    graphics.fill({ color: 0xd4d4d4, alpha: 0.8 })
+
+    graphics.x = node.x
+    graphics.y = node.y
+
+    app.stage.addChild(graphics)
+    nodes.push(node)
+  }
+
+  linesGraphics = new Graphics()
+  app.stage.addChildAt(linesGraphics, 0)
+
+  app.ticker.maxFPS = targetFPS
+
+  app.ticker.add((ticker) => {
+    if (!app || !linesGraphics) return
+
+    const delta = ticker.deltaTime
+
+    const screenWidth = app.screen.width
+    const screenHeight = app.screen.height
+
+    const worldWidth = screenWidth * worldMultiplier
+    const worldHeight = screenHeight * worldMultiplier
+    const offsetX = (worldWidth - screenWidth) / 2
+    const offsetY = (worldHeight - screenHeight) / 2
+
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i]
+      if (!node) continue
+
+      node.x += node.vx * delta
+      node.y += node.vy * delta
+
+
+      if (node.x < -offsetX) node.x = screenWidth + offsetX
+      if (node.x > screenWidth + offsetX) node.x = -offsetX
+      if (node.y < -offsetY) node.y = screenHeight + offsetY
+      if (node.y > screenHeight + offsetY) node.y = -offsetY
+
+      node.graphics.x = node.x
+      node.graphics.y = node.y
+    }
+
+    linesGraphics.clear()
+    const maxDistSq = connectionDistance * connectionDistance
+
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i]
+      if (!node) continue
+      for (let j = i + 1; j < nodes.length; j++) {
+        const otherNode = nodes[j]
+        if (!otherNode) continue
+        const dx = node.x - otherNode.x
+        const dy = node.y - otherNode.y
+        const distSq = dx * dx + dy * dy
+
+        if (distSq < maxDistSq) {
+          const dist = Math.sqrt(distSq)
+          const alpha = (1 - dist / connectionDistance) * 0.2
+          linesGraphics.moveTo(node.x, node.y)
+          linesGraphics.lineTo(otherNode.x, otherNode.y)
+          linesGraphics.stroke({ width: 1, color: 0x737373, alpha })
+        }
+      }
+    }
+  })
+
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  if (app) {
+    app.destroy(true, { children: true, texture: true })
+  }
+  nodes = []
+  linesGraphics = null
+})
+</script>
+
 <template>
   <div class="absolute inset-0 overflow-hidden">
-    <!-- Grid Pattern -->
-    <svg class="absolute inset-0 w-full h-full opacity-5">
-      <defs>
-        <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-          <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" stroke-width="0.5" class="text-primary-300" />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#grid)" />
-    </svg>
-
-    <!-- Animated Neural Network Nodes -->
-    <svg class="absolute inset-0 w-full h-full">
-      <defs>
-        <radialGradient id="nodeGlow">
-          <stop offset="0%" stop-color="#f8cb46" stop-opacity="0.8" />
-          <stop offset="100%" stop-color="#f8cb46" stop-opacity="0" />
-        </radialGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-          <feMerge>
-            <feMergeNode in="coloredBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      <!-- Connection Lines -->
-      <line v-for="(line, index) in connectionLines" :key="`line-${index}`" :x1="`${line.x1}%`" :y1="`${line.y1}%`"
-        :x2="`${line.x2}%`" :y2="`${line.y2}%`" stroke="rgba(248, 203, 70, 0.15)" stroke-width="1"
-        class="animate-draw-line" :style="{ animationDelay: `${line.delay}s` }" />
-
-      <!-- Nodes -->
-      <g v-for="node in nodes" :key="node.id">
-        <circle :cx="`${node.x}%`" :cy="`${node.y}%`" :r="node.size * 2" fill="url(#nodeGlow)"
-          class="animate-pulse-node" :style="{ animationDelay: `${node.delay}s` }" />
-        <circle :cx="`${node.x}%`" :cy="`${node.y}%`" :r="node.size" fill="#f8cb46" filter="url(#glow)"
-          class="animate-fade-in" :style="{ animationDelay: `${node.delay}s` }" />
-      </g>
-    </svg>
-
-    <!-- Floating Geometric Shapes -->
-    <div class="absolute inset-0">
-      <div v-for="(shape, i) in shapes" :key="`shape-${i}`" class="absolute animate-float" :style="{
-        left: `${10 + (i % 4) * 25}%`,
-        top: `${15 + Math.floor(i / 4) * 40}%`,
-        animationDelay: `${i * 0.5}s`,
-        animationDuration: `${8 + i * 2}s`
-      }">
-        <div v-if="i % 3 === 0" class="w-24 h-24 border-2 border-secondary-300/20 rotate-45" />
-        <svg v-else-if="i % 3 === 1" width="96" height="96" viewBox="0 0 96 96">
-          <polygon points="48,8 88,88 8,88" fill="none" stroke="rgba(248, 203, 70, 0.2)" stroke-width="2" />
-        </svg>
-        <div v-else class="w-20 h-20 rounded-full border-2 border-neutral-200/20" />
-      </div>
-    </div>
+    <!-- Background image -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+      style="background-image: url('/bg_ava.png')" />
+    <!-- Canvas overlay -->
+    <div ref="canvasContainer" class="absolute inset-0"></div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-
-interface Node {
-  id: number
-  x: number
-  y: number
-  size: number
-  delay: number
-}
-
-// Generate neural network nodes
-const nodes = computed<Node[]>(() =>
-  Array.from({ length: 40 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    delay: Math.random() * 3
-  }))
-)
-
-const connectionLines = computed(() => {
-  const lines: Array<{ x1: number; y1: number; x2: number; y2: number; delay: number }> = []
-  const nodeArray = nodes.value
-
-  nodeArray.forEach((node, i) => {
-    nodeArray.slice(i + 1).forEach((otherNode) => {
-      const distance = Math.sqrt(
-        Math.pow(node.x - otherNode.x, 2) + Math.pow(node.y - otherNode.y, 2)
-      )
-      if (distance < 20) {
-        lines.push({
-          x1: node.x,
-          y1: node.y,
-          x2: otherNode.x,
-          y2: otherNode.y,
-          delay: node.delay + 0.5
-        })
-      }
-    })
-  })
-
-  return lines
-})
-
-const shapes = Array.from({ length: 8 })
-</script>
-
 <style scoped>
-@keyframes draw-line {
-  from {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    opacity: 0;
-  }
-
-  to {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 0;
-    opacity: 0.3;
-  }
-}
-
-@keyframes pulse-node {
-
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.3;
-    transform: scale(1.2);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.1;
-  }
-
-  50% {
-    transform: translateY(-30px) rotate(180deg);
-    opacity: 0.3;
-  }
-}
-
-.animate-draw-line {
-  animation: draw-line 2s ease-in-out forwards;
-}
-
-.animate-pulse-node {
-  animation: pulse-node 1.5s ease-in-out infinite;
-}
-
-.animate-fade-in {
-  animation: fade-in 1s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 8s ease-in-out infinite;
+:deep(canvas) {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 </style>

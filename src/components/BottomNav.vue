@@ -8,7 +8,7 @@
             ? 'bg-secondary-500 text-neutral-900 shadow-glow-yellow'
             : 'text-neutral-400 hover:text-neutral-900 hover:bg-white/60'
         ]">
-          <component :is="item.icon" class="w-10 h-10" />
+          <i :class="['pi', item.icon, 'text-[40px]']" />
           <span class="text-[28px] font-medium">{{ item.label }}</span>
         </button>
       </div>
@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { Home, History, Settings } from 'lucide-vue-next'
 
 export type Screen = 'splash' | 'jobs' | 'candidates' | 'processing' | 'podium' | 'history' | 'settings'
 
@@ -25,7 +24,7 @@ interface Props {
   currentScreen: Screen
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits<{
   navigate: [screen: Screen]
@@ -33,15 +32,14 @@ const emit = defineEmits<{
 }>()
 
 const navItems = [
-  { id: 'home', icon: Home, label: 'Home', action: () => emit('home') },
-  { id: 'history', icon: History, label: 'Storico', action: () => emit('navigate', 'history') },
-  { id: 'settings', icon: Settings, label: 'Impostazioni', action: () => emit('navigate', 'settings') }
+  { id: 'home', icon: 'pi-home', label: 'Home', action: () => emit('home') },
+  { id: 'history', icon: 'pi-history', label: 'Storico', action: () => emit('navigate', 'history') },
+  { id: 'settings', icon: 'pi-cog', label: 'Impostazioni', action: () => emit('navigate', 'settings') }
 ]
 
 function onEnter(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   htmlEl.style.opacity = '0'
-  htmlEl.offsetHeight // trigger reflow
   htmlEl.style.transition = 'opacity 0.5s ease'
   htmlEl.style.opacity = '1'
   done()
