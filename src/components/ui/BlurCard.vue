@@ -28,7 +28,6 @@ const classes = computed(() => {
     baseClasses.push('border border-neutral-200/30')
   }
 
-  // Shadow classes
   if (props.shadow === 'sm') {
     baseClasses.push('shadow-sm')
   } else if (props.shadow === 'md') {
@@ -39,7 +38,6 @@ const classes = computed(() => {
     baseClasses.push('shadow-glow-yellow')
   }
 
-  // Hover effect
   if (props.hover) {
     baseClasses.push('transition-all duration-300 hover:bg-white/80 hover:border-neutral-300')
   }

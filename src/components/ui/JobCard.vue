@@ -23,7 +23,6 @@ const emit = defineEmits<{
 <template>
   <div class="relative group cursor-pointer select-none" @click="emit('click', job)">
     <BlurCard padding="p-10" rounded="3xl" class="transition-all duration-300 ease-out active:scale-[0.98]">
-      <!-- Job Info -->
       <div class="flex items-start justify-between">
         <div class="flex-1">
           <h2 class="text-[52px] font-bold text-neutral-900 mb-3 leading-tight">
@@ -34,7 +33,6 @@ const emit = defineEmits<{
           </p>
         </div>
 
-        <!-- Document Icon -->
         <div class="ml-6 flex-shrink-0">
           <div
             class="w-24 h-24 rounded-2xl bg-secondary-100 border-2 border-secondary-500 flex items-center justify-center transition-all duration-300">
@@ -43,7 +41,6 @@ const emit = defineEmits<{
         </div>
       </div>
 
-      <!-- Hover indicator -->
       <div class="absolute bottom-6 right-10 text-body-m text-secondary-600 opacity-60 transition-opacity duration-300">
         Tocca per selezionare →
       </div>
