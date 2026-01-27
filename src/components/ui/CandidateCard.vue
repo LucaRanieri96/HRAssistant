@@ -25,11 +25,9 @@ const emit = defineEmits<{
 
 <template>
   <div class="relative cursor-pointer group select-none" @click="emit('click', candidate)">
-    <BlurCard :padding="'p-10'" :rounded="'3xl'" :shadow="selected ? 'glow' : 'sm'" :class="[
+    <BlurCard :padding="'p-10'" :rounded="'3xl'" :class="[
       'transition-all duration-300 ease-out active:scale-[0.98]',
-      selected
-        ? '!border-secondary-500 !bg-white/90 dark:!bg-neutral-800/90'
-        : 'border-neutral-200 dark:border-neutral-700'
+      selected ? '!bg-white/90 dark:!bg-neutral-800/90' : ''
     ]">
       <div v-if="selected" class="absolute top-8 left-8">
         <i class="pi pi-check-circle text-secondary-600 text-icon-l" />
@@ -54,7 +52,7 @@ const emit = defineEmits<{
 
           <div class="flex flex-wrap gap-3 mb-4">
             <div v-for="skill in candidate.skills.slice(0, 4)" :key="skill"
-              class="px-5 py-2 rounded-xl bg-secondary-50 dark:bg-secondary-950 border border-secondary-200 dark:border-secondary-800">
+              class="px-5 py-2 rounded-xl bg-secondary-50 dark:bg-secondary-950">
               <span class="text-body-m text-secondary-700 dark:text-secondary-300 font-medium">{{ skill }}</span>
             </div>
           </div>

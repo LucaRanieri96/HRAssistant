@@ -43,12 +43,12 @@ const toggleCandidate = (candidate: Candidate) => {
 
 const handleRank = () => {
   if (selectedIds.value.size > 0) {
-    // Passa gli ID selezionati e l'ID del job alla schermata di processing
+    // Passa i dati tramite router state (nascosto nell'URL)
     router.push({
       path: '/processing',
-      query: {
+      state: {
         jobId: '1', // TODO: prendere l'ID del job dalla route precedente
-        candidateIds: Array.from(selectedIds.value).join(',')
+        candidateIds: Array.from(selectedIds.value)
       }
     })
   }
@@ -89,7 +89,7 @@ function onEnterCard(el: Element, done: () => void) {
     </div>
 
     <ScrollArea class="flex-1 pb-8 pr-6">
-      <div class="grid grid-cols-1 gap-6">
+      <div class="grid grid-cols-1 gap-6 p-2">
         <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
           v-memo="[selectedIds.has(candidate.id), candidate.id, candidate.name]">
           <CandidateCard :candidate="candidate" :selected="selectedIds.has(candidate.id)" :index="index"

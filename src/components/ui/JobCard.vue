@@ -22,8 +22,7 @@ const emit = defineEmits<{
 
 <template>
   <div class="relative group cursor-pointer select-none" @click="emit('click', job)">
-    <BlurCard padding="p-10" rounded="3xl"
-      class="transition-all duration-300 ease-out active:scale-[0.98] border-neutral-200 dark:border-neutral-700">
+    <BlurCard padding="p-10" rounded="3xl" class="transition-all duration-300 ease-out active:scale-[0.98]">
       <div class="flex items-start justify-between">
         <div class="flex-1">
           <h2 class="text-display-3 font-bold mb-3 leading-tight">
@@ -36,7 +35,7 @@ const emit = defineEmits<{
 
         <div class="ml-6 flex-shrink-0">
           <div
-            class="w-24 h-24 rounded-2xl bg-secondary-100 dark:bg-secondary-950 border-2 border-secondary-500 flex items-center justify-center transition-all duration-300">
+            class="w-24 h-24 rounded-2xl bg-secondary-100 dark:bg-secondary-950 flex items-center justify-center transition-all duration-300">
             <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-l" />
           </div>
         </div>

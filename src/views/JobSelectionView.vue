@@ -67,10 +67,12 @@ function onEnterCard(el: Element, done: () => void) {
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">
-      <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard"
-        v-memo="[job.id, job.title]">
-        <JobCard :job="job" :index="index" :data-index="index" @click="handleJobSelect" />
-      </Transition>
+      <div class="space-y-6 p-2">
+        <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard"
+          v-memo="[job.id, job.title]">
+          <JobCard :job="job" :index="index" :data-index="index" @click="handleJobSelect" />
+        </Transition>
+      </div>
     </ScrollArea>
 
     <template #bottom-nav>

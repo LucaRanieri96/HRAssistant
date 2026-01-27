@@ -30,25 +30,27 @@ function onEnterBottom(el: Element, done: () => void) {
 </script>
 
 <template>
-  <ScreenLayout container-class="flex justify-center items-center h-full px-16 py-12"
-    content-class="flex-1 flex flex-col items-center justify-center gap-16">
-    <Transition appear @enter="onEnterContent">
-      <div class="flex flex-col items-center justify-center space-y-12 max-w-225">
+  <ScreenLayout container-class="flex h-full px-16 py-12" content-class="h-full flex flex-col justify-between">
 
-        <!-- HR Assistant Tagline -->
-        <div class="text-center space-y-6">
-          <h2 class="text-display-3 font-semibold tracking-tight leading-tight">
-            {{ $t('splash.title') }}
-          </h2>
-          <p class="text-h5 opacity-70 max-w-[850px] leading-relaxed">
-            {{ $t('splash.subtitle') }}
-          </p>
+    <!-- Contenuto centrale centrato -->
+    <div class="flex-1 flex items-center justify-center">
+      <Transition appear @enter="onEnterContent">
+        <div class="flex flex-col items-center justify-center space-y-12 max-w-225">
+          <!-- HR Assistant Tagline -->
+          <div class="text-center space-y-6">
+            <h2 class="text-display-3 font-semibold tracking-tight leading-tight">
+              {{ $t('splash.title') }}
+            </h2>
+            <p class="text-h5 opacity-70 max-w-[850px] leading-relaxed">
+              {{ $t('splash.subtitle') }}
+            </p>
+          </div>
+
+          <!-- CTA Button -->
+          <PrimaryButton :label="$t('splash.cta')" @click="handleStart" />
         </div>
-
-        <!-- CTA Button -->
-        <PrimaryButton :label="$t('splash.cta')" @click="handleStart" />
-      </div>
-    </Transition>
+      </Transition>
+    </div>
 
     <!-- Bottom Section - QR Code -->
     <Transition appear @enter="onEnterBottom">

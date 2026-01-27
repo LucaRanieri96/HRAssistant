@@ -17,28 +17,32 @@ export interface ScreenLayoutProps {
 const props = withDefaults(defineProps<ScreenLayoutProps>(), {
   showLogo: true,
   logoSize: 'medium',
-  rootClass: 'relative w-full h-full overflow-hidden',
-  containerClass: 'relative h-full min-h-0 flex flex-col px-16 pt-20 pb-48',
+  rootClass: 'w-full h-full',
+  containerClass: 'h-full flex flex-col px-16 py-12',
   headerClass: '',
-  contentClass: 'flex-1',
+  contentClass: '',
   footerClass: '',
   scroll: false,
   scrollClass: 'overflow-y-auto pr-6 pb-8 kiosk-scrollbar',
 })
 
-const contentClasses = computed(() => [
-  'min-h-0',
-  props.contentClass,
-  props.scroll ? props.scrollClass : '',
-])
+const contentClasses = computed(() => {
+  const classes = ['min-h-0', props.contentClass]
+  if (props.scroll) {
+    classes.push(props.scrollClass)
+  }
+  return classes.join(' ')
+})
 </script>
 
 <template>
   <div :class="rootClass">
+    <!-- Logo in alto a destra (absolute solo per lui) -->
     <div v-if="showLogo" class="absolute top-8 right-16 z-10">
       <Logo :size="logoSize" />
     </div>
 
+    <!-- Container principale con flex -->
     <div :class="containerClass">
       <header v-if="$slots.header" :class="headerClass">
         <slot name="header" />
@@ -47,12 +51,9 @@ const contentClasses = computed(() => [
       <div :class="contentClasses">
         <slot />
       </div>
-
-      <footer v-if="$slots.footer" :class="footerClass">
-        <slot name="footer" />
-      </footer>
     </div>
 
+    <!-- Bottom nav fuori dal container -->
     <slot name="bottom-nav" />
   </div>
 </template>

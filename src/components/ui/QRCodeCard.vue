@@ -1,37 +1,60 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import QRCode from 'qrcode'
 import BlurCard from './BlurCard.vue'
 
 export interface QRCodeCardProps {
   title: string
   description: string
   qrLabel?: string
+  url?: string
 }
 
-const props = defineProps<QRCodeCardProps>()
+const props = withDefaults(defineProps<QRCodeCardProps>(), {
+  url: 'https://aidia.it/'
+})
+
 const { t } = useI18n()
+const qrCodeDataUrl = ref('')
 
 const displayQrLabel = computed(() => props.qrLabel ?? t('components.qrCodeCard.defaultLabel'))
+
+onMounted(async () => {
+  try {
+    qrCodeDataUrl.value = await QRCode.toDataURL(props.url, {
+      width: 240,
+      margin: 2,
+      color: {
+        dark: '#1f2937',
+        light: '#ffffff'
+      },
+      errorCorrectionLevel: 'H'
+    })
+  } catch (error) {
+    console.error('Error generating QR code:', error)
+  }
+})
 </script>
 
 <template>
-  <BlurCard padding="p-8" rounded="2xl" hover>
-    <div class="flex items-center gap-16">
+  <BlurCard padding="p-10" rounded="3xl">
+    <div class="flex items-center gap-12">
       <!-- QR Code -->
-      <div class="flex flex-col items-center gap-4">
-        <div class="w-40 h-40 bg-white rounded-xl p-3 flex items-center justify-center shadow-lg">
-          <div class="w-full h-full bg-neutral-900 rounded-lg flex items-center justify-center">
-            <i class="pi pi-qrcode text-white text-icon-xxl" />
+      <div class="flex flex-col items-center gap-4 flex-shrink-0">
+        <div
+          class="w-52 h-52 bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 rounded-3xl p-5 flex items-center justify-center">
+          <img v-if="qrCodeDataUrl" :src="qrCodeDataUrl" alt="QR Code" class="w-full h-full rounded-2xl" />
+          <div v-else class="w-full h-full bg-neutral-100 rounded-2xl flex items-center justify-center">
+            <i class="pi pi-spinner text-neutral-400 text-icon-xl animate-spin" />
           </div>
         </div>
-        <p class="text-body-l text-neutral-500 text-center">{{ displayQrLabel }}</p>
       </div>
 
       <!-- Info Text -->
-      <div class="flex-1 space-y-3">
-        <h3 class="text-h5 font-semibold text-neutral-900">{{ title }}</h3>
-        <p class="text-body-m text-neutral-500 leading-relaxed">
+      <div class="flex-1 space-y-4">
+        <h3 class="text-h4 font-bold leading-tight">{{ title }}</h3>
+        <p class="text-body-xl opacity-70 leading-relaxed">
           {{ description }}
         </p>
       </div>

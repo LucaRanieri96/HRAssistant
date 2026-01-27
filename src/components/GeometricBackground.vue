@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { Application, Graphics } from 'pixi.js'
+import { useSettingsStore } from '@/stores/settings'
 
+const settingsStore = useSettingsStore()
 const canvasContainer = ref<HTMLDivElement | null>(null)
 let app: Application | null = null
 let nodes: Node[] = []
 let linesGraphics: Graphics | null = null
+
+const isDark = computed(() => settingsStore.theme === 'dark')
 
 interface Node {
   x: number
@@ -42,7 +46,6 @@ onMounted(async () => {
   await app.init({
     width,
     height,
-    backgroundColor: 0x0a1628,
     backgroundAlpha: 0,
     antialias: true,
     resolution: Math.min(window.devicePixelRatio || 1, 2),
@@ -56,6 +59,21 @@ onMounted(async () => {
   const worldWidth = width * worldMultiplier
   const worldHeight = height * worldMultiplier
 
+  const updateNodeColors = () => {
+    const nodeColor = isDark.value ? 0xb9cfef : 0x1c65cc
+    const nodeStrokeColor = isDark.value ? 0xe8f0fa : 0x4984d6
+    const nodeAlpha = isDark.value ? 0.4 : 0.35
+    const strokeAlpha = isDark.value ? 0.6 : 0.5
+
+    nodes.forEach((node) => {
+      node.graphics.clear()
+      node.graphics.circle(0, 0, node.size)
+      node.graphics.fill({ color: nodeColor, alpha: nodeAlpha })
+      node.graphics.circle(0, 0, node.size)
+      node.graphics.stroke({ width: 0.5, color: nodeStrokeColor, alpha: strokeAlpha })
+    })
+  }
+
   for (let i = 0; i < nodeCount; i++) {
     const graphics = new Graphics()
     const node: Node = {
@@ -67,10 +85,15 @@ onMounted(async () => {
       graphics,
     }
 
+    const nodeColor = isDark.value ? 0xb9cfef : 0x1c65cc
+    const nodeStrokeColor = isDark.value ? 0xe8f0fa : 0x4984d6
+    const nodeAlpha = isDark.value ? 0.4 : 0.35
+    const strokeAlpha = isDark.value ? 0.6 : 0.5
+
     graphics.circle(0, 0, node.size)
-    graphics.fill({ color: 0x1c65cc, alpha: 0.35 })
+    graphics.fill({ color: nodeColor, alpha: nodeAlpha })
     graphics.circle(0, 0, node.size)
-    graphics.stroke({ width: 0.5, color: 0x4984d6, alpha: 0.5 })
+    graphics.stroke({ width: 0.5, color: nodeStrokeColor, alpha: strokeAlpha })
 
     graphics.x = node.x
     graphics.y = node.y
@@ -83,6 +106,11 @@ onMounted(async () => {
   app.stage.addChildAt(linesGraphics, 0)
 
   app.ticker.maxFPS = targetFPS
+
+  // Watch per aggiornare i colori quando cambia il tema
+  const unwatchTheme = settingsStore.$subscribe(() => {
+    updateNodeColors()
+  })
 
   app.ticker.add((ticker) => {
     if (!app || !linesGraphics) return
@@ -129,10 +157,12 @@ onMounted(async () => {
 
         if (distSq < maxDistSq) {
           const dist = Math.sqrt(distSq)
-          const alpha = (1 - dist / connectionDistance) * 0.18
+          const baseAlpha = isDark.value ? 0.22 : 0.18
+          const alpha = (1 - dist / connectionDistance) * baseAlpha
+          const lineColor = isDark.value ? 0xb9cfef : 0x4984d6
           linesGraphics.moveTo(node.x, node.y)
           linesGraphics.lineTo(otherNode.x, otherNode.y)
-          linesGraphics.stroke({ width: 1, color: 0x4984d6, alpha })
+          linesGraphics.stroke({ width: 1, color: lineColor, alpha })
         }
       }
     }
@@ -148,15 +178,14 @@ onUnmounted(() => {
   }
   nodes = []
   linesGraphics = null
+  if (typeof unwatchTheme === 'function') {
+    unwatchTheme()
+  }
 })
 </script>
 
 <template>
   <div class="absolute inset-0 overflow-hidden">
-    <!-- Background image -->
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-      style="background-image: url('/bg_ava.png')" />
-    <!-- Canvas overlay -->
     <div ref="canvasContainer" class="absolute inset-0"></div>
   </div>
 </template>

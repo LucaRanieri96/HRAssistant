@@ -36,7 +36,7 @@ const router = createRouter({
       meta: { transition: 'fade' },
     },
     {
-      path: '/results/:job',
+      path: '/results',
       name: 'results',
       component: ResultsView,
       meta: { transition: 'fade' },

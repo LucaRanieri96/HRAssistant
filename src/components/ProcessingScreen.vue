@@ -94,9 +94,9 @@ onMounted(async () => {
   }, 30)
 
   try {
-    // Recupera i parametri dalla query
-    const jobId = route.query.jobId as string || '1'
-    const candidateIds = (route.query.candidateIds as string)?.split(',') || []
+    // Recupera i parametri dal router state
+    const jobId = (history.state.jobId as string) || '1'
+    const candidateIds = (history.state.candidateIds as string[]) || []
 
     // Chiamata API al backend (per ora mockata)
     const response = await rankCandidates({
@@ -110,7 +110,7 @@ onMounted(async () => {
 
     setTimeout(() => {
       router.push({
-        name: 'results',
+        path: '/results',
         state: { rankedCandidates: response.candidates }
       })
     }, 500)

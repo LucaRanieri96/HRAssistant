@@ -27,5 +27,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     ScreenLayout: typeof import('./src/components/layout/ScreenLayout.vue')['default']
     ScrollArea: typeof import('./src/components/ui/ScrollArea.vue')['default']
+    SettingCard: typeof import('./src/components/ui/SettingCard.vue')['default']
   }
 }
