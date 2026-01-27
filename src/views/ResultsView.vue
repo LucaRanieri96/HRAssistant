@@ -1,7 +1,7 @@
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <PageTitle title="CLASSIFICA AI" />
+      <PageTitle :title="$t('results.title')" />
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">
@@ -30,7 +30,7 @@
                     <h3 class="text-h3 font-bold mb-4 leading-tight">{{ first.name }}</h3>
 
                     <div class="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-secondary-400 mb-6">
-                      <span class="text-label-xl font-bold text-neutral-950">SCORE</span>
+                      <span class="text-label-xl font-bold text-neutral-950">{{ $t('results.score') }}</span>
                       <div class="w-1 h-10 bg-neutral-950/30 rounded-full"></div>
                       <span class="text-score-huge font-black text-neutral-950 leading-none">{{ first.matchScore
                       }}</span>
@@ -86,7 +86,7 @@
 
                 <!-- Score Badge - Full Width -->
                 <div class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6">
-                  <span class="text-label-m font-bold text-neutral-950">SCORE</span>
+                  <span class="text-label-m font-bold text-neutral-950">{{ $t('results.score') }}</span>
                   <div class="w-1 h-8 bg-neutral-950/30 rounded-full"></div>
                   <span class="text-score-large font-black text-neutral-950 leading-none">{{
                     second.matchScore }}</span>
@@ -135,7 +135,7 @@
 
                 <!-- Score Badge - Full Width -->
                 <div class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6">
-                  <span class="text-label-m font-bold text-neutral-950">SCORE</span>
+                  <span class="text-label-m font-bold text-neutral-950">{{ $t('results.score') }}</span>
                   <div class="w-1 h-8 bg-neutral-950/30 rounded-full"></div>
                   <span class="text-score-large font-black text-neutral-950 leading-none">{{
                     third.matchScore }}</span>
@@ -166,7 +166,7 @@
       <!-- Other Candidates -->
       <Transition v-if="rest.length > 0" appear @before-enter="onBeforeEnter" @enter="(el) => onEnter(el, 0.4)">
         <div>
-          <h2 class="text-title-xl font-bold mb-6 ml-2">Altri Candidati</h2>
+          <h2 class="text-title-xl font-bold mb-6 ml-2">{{ $t('results.otherCandidates') }}</h2>
           <div class="space-y-6">
             <div v-for="(candidate, index) in rest" :key="candidate.id" v-memo="[candidate.id, candidate.matchScore]"
               class="relative bg-surface-0
@@ -189,7 +189,7 @@
                       {{ candidate.name }}
                     </h4>
                     <div class="flex items-center gap-3">
-                      <span class="text-label-l opacity-50">Score:</span>
+                      <span class="text-label-l opacity-50">{{ $t('results.score') }}:</span>
                       <div class="px-5 py-2 rounded-xl bg-surface-100 border border-surface-200">
                         <span class="text-label-xl font-bold opacity-80">
                           {{ candidate.matchScore }}
@@ -235,6 +235,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import type { Candidate } from '../types'
 import type { Screen } from '@/components/BottomNav.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
@@ -243,6 +244,7 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 
 const handleBack = () => {
   router.push('/')
@@ -260,51 +262,51 @@ const handleNavigate = (screen: Screen) => {
 const candidates = computed<Candidate[]>(() => [
   {
     id: '1',
-    name: 'Marco Bianchi',
+    name: t('results.mockData.marcoBianchi.name'),
     matchScore: 95,
-    experience: '8 anni di esperienza',
+    experience: t('results.mockData.marcoBianchi.experience'),
     skills: ['React', 'TypeScript', 'Node.js', 'AWS'],
-    education: 'Laurea Magistrale in Informatica'
+    education: t('results.mockData.marcoBianchi.education')
   },
   {
     id: '2',
-    name: 'Sara Rossi',
+    name: t('results.mockData.saraRossi.name'),
     matchScore: 92,
-    experience: '6 anni di esperienza',
+    experience: t('results.mockData.saraRossi.experience'),
     skills: ['Vue.js', 'Python', 'Docker', 'PostgreSQL'],
-    education: 'Laurea in Ingegneria Informatica'
+    education: t('results.mockData.saraRossi.education')
   },
   {
     id: '3',
-    name: 'Luca Verdi',
+    name: t('results.mockData.lucaVerdi.name'),
     matchScore: 88,
-    experience: '5 anni di esperienza',
+    experience: t('results.mockData.lucaVerdi.experience'),
     skills: ['Angular', 'Java', 'Spring Boot', 'MongoDB'],
-    education: 'Laurea in Computer Science'
+    education: t('results.mockData.lucaVerdi.education')
   },
   {
     id: '4',
-    name: 'Giulia Neri',
+    name: t('results.mockData.giuliaNeri.name'),
     matchScore: 85,
-    experience: '7 anni di esperienza',
+    experience: t('results.mockData.giuliaNeri.experience'),
     skills: ['React Native', 'Flutter', 'Firebase', 'GraphQL'],
-    education: 'Laurea in Informatica'
+    education: t('results.mockData.giuliaNeri.education')
   },
   {
     id: '5',
-    name: 'Andrea Ferrari',
+    name: t('results.mockData.andreaFerrari.name'),
     matchScore: 82,
-    experience: '4 anni di esperienza',
+    experience: t('results.mockData.andreaFerrari.experience'),
     skills: ['Next.js', 'Tailwind CSS', 'Prisma', 'Vercel'],
-    education: 'Laurea Triennale in Informatica'
+    education: t('results.mockData.andreaFerrari.education')
   },
   {
     id: '6',
-    name: 'Chiara Russo',
+    name: t('results.mockData.chiaraRusso.name'),
     matchScore: 78,
-    experience: '3 anni di esperienza',
+    experience: t('results.mockData.chiaraRusso.experience'),
     skills: ['Svelte', 'Go', 'Kubernetes', 'Redis'],
-    education: 'Laurea in Ingegneria del Software'
+    education: t('results.mockData.chiaraRusso.education')
   }
 ]);
 

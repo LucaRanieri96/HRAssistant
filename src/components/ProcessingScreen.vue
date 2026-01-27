@@ -59,19 +59,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const progress = ref(0)
 const currentStep = ref(0)
 
-const steps = [
-  { icon: 'pi-file-edit', label: 'Analisi competenze in corso', delay: 0 },
-  { icon: 'pi-bolt', label: 'Calcolo affinità candidati', delay: 1000 },
-  { icon: 'pi-chart-line', label: 'Generazione ranking finale', delay: 2000 }
-]
+const steps = computed(() => [
+  { icon: 'pi-file-edit', label: t('processing.steps.analyzeSkills'), delay: 0 },
+  { icon: 'pi-bolt', label: t('processing.steps.calculateAffinity'), delay: 1000 },
+  { icon: 'pi-chart-line', label: t('processing.steps.generateRanking'), delay: 2000 }
+])
 
 onMounted(() => {
   const progressInterval = setInterval(() => {
@@ -84,7 +86,7 @@ onMounted(() => {
     }
   }, 30)
 
-  steps.forEach((step, index) => {
+  steps.value.forEach((step, index) => {
     setTimeout(() => {
       currentStep.value = index
     }, step.delay)

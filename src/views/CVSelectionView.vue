@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import FilterButton from '@/components/ui/FilterButton.vue'
@@ -10,57 +11,58 @@ import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen, Candidate } from '@/types'
 
 const router = useRouter()
+const { t } = useI18n()
 
-const mockCandidates: Candidate[] = [
+const mockCandidates = computed<Candidate[]>(() => [
   {
     id: '1',
-    name: 'Alessandro Rossi',
+    name: t('candidates.mockData.alessandroRossi.name'),
     matchScore: 97,
-    experience: '8 anni in AI/ML',
+    experience: t('candidates.mockData.alessandroRossi.experience'),
     skills: ['Python', 'TensorFlow', 'Deep Learning', 'NLP'],
-    education: 'PhD Informatica - MIT'
+    education: t('candidates.mockData.alessandroRossi.education')
   },
   {
     id: '2',
-    name: 'Maria Ferrari',
+    name: t('candidates.mockData.mariaFerrari.name'),
     matchScore: 94,
-    experience: '6 anni in Data Science',
+    experience: t('candidates.mockData.mariaFerrari.experience'),
     skills: ['Python', 'PyTorch', 'Computer Vision', 'MLOps'],
-    education: 'MSc AI - Stanford University'
+    education: t('candidates.mockData.mariaFerrari.education')
   },
   {
     id: '3',
-    name: 'Giuseppe Bianchi',
+    name: t('candidates.mockData.giuseppeBianchi.name'),
     matchScore: 91,
-    experience: '7 anni in ML Engineering',
+    experience: t('candidates.mockData.giuseppeBianchi.experience'),
     skills: ['Scala', 'Spark', 'Kubernetes', 'AWS'],
-    education: 'MSc Data Engineering - ETH Zurich'
+    education: t('candidates.mockData.giuseppeBianchi.education')
   },
   {
     id: '4',
-    name: 'Sofia Romano',
+    name: t('candidates.mockData.sofiaRomano.name'),
     matchScore: 89,
-    experience: '5 anni in Ricerca AI',
+    experience: t('candidates.mockData.sofiaRomano.experience'),
     skills: ['Python', 'Ricerca', 'Pubblicazioni', 'Transformers'],
-    education: 'PhD Machine Learning - Oxford'
+    education: t('candidates.mockData.sofiaRomano.education')
   },
   {
     id: '5',
-    name: 'Marco Colombo',
+    name: t('candidates.mockData.marcoColombo.name'),
     matchScore: 86,
-    experience: '9 anni in Software Engineering',
+    experience: t('candidates.mockData.marcoColombo.experience'),
     skills: ['Java', 'Python', 'System Design', 'Leadership'],
-    education: 'MSc Informatica - Politecnico Milano'
+    education: t('candidates.mockData.marcoColombo.education')
   },
   {
     id: '6',
-    name: 'Francesca Ricci',
+    name: t('candidates.mockData.francescaRicci.name'),
     matchScore: 84,
-    experience: '4 anni in ML Development',
+    experience: t('candidates.mockData.francescaRicci.experience'),
     skills: ['Python', 'FastAPI', 'Docker', 'CI/CD'],
-    education: 'BSc Ingegneria Informatica - Politecnico Torino'
+    education: t('candidates.mockData.francescaRicci.education')
   }
-]
+])
 
 const selectedIds = ref<Set<string>>(new Set())
 const currentScreen = ref<Screen>('candidates')
@@ -121,7 +123,7 @@ function onEnterCard(el: Element, done: () => void) {
     <ScrollArea class="flex-1 pb-8 pr-6">
       <div class="grid grid-cols-1 gap-6">
         <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
-          v-memo="[selectedIds.has(candidate.id), candidate.id]">
+          v-memo="[selectedIds.has(candidate.id), candidate.id, candidate.name]">
           <CandidateCard :candidate="candidate" :selected="selectedIds.has(candidate.id)" :index="index"
             :data-index="index" @click="toggleCandidate" />
         </Transition>

@@ -2,7 +2,11 @@
   "splash": {
     "title": "HR ASSISTANT",
     "subtitle": "Intelligent candidate analysis and matching system",
-    "cta": "START HR ANALYSIS"
+    "cta": "START HR ANALYSIS",
+    "qrCard": {
+      "title": "Discover more about Aidia",
+      "description": "Visit our website to learn about all AI solutions for recruiting and HR management"
+    }
   },
   "jobs": {
     "title": "SELECT POSITION",
@@ -12,6 +16,33 @@
       "developer": "Senior Developer",
       "designer": "UI/UX Designer",
       "hr": "HR Specialist"
+    },
+    "offers": {
+      "seniorAiEngineer": {
+        "title": "Senior AI Engineer",
+        "department": "Engineering & Research",
+        "description": "Lead AI development and research projects"
+      },
+      "productManager": {
+        "title": "Product Manager - AI Solutions",
+        "department": "Product & Strategy",
+        "description": "Define product vision for AI solutions"
+      },
+      "dataScientist": {
+        "title": "Data Scientist",
+        "department": "Analytics & Data",
+        "description": "Extract insights and build predictive models"
+      },
+      "uxUiDesigner": {
+        "title": "UX/UI Designer",
+        "department": "Design & Experience",
+        "description": "Create intuitive interfaces for AI applications"
+      },
+      "mlResearcher": {
+        "title": "Machine Learning Researcher",
+        "department": "Engineering & Research",
+        "description": "Advance ML capabilities and methodologies"
+      }
     }
   },
   "candidates": {
@@ -28,16 +59,82 @@
     "immediate": "Immediate",
     "twoWeeks": "2 weeks",
     "oneMonth": "1 month",
-    "ctaRank": "RANK CANDIDATES"
+    "ctaRank": "RANK CANDIDATES",
+    "mockData": {
+      "alessandroRossi": {
+        "name": "Alessandro Rossi",
+        "experience": "8 years in AI/ML",
+        "education": "PhD Computer Science - MIT"
+      },
+      "mariaFerrari": {
+        "name": "Maria Ferrari",
+        "experience": "6 years in Data Science",
+        "education": "MSc AI - Stanford University"
+      },
+      "giuseppeBianchi": {
+        "name": "Giuseppe Bianchi",
+        "experience": "7 years in ML Engineering",
+        "education": "MSc Data Engineering - ETH Zurich"
+      },
+      "sofiaRomano": {
+        "name": "Sofia Romano",
+        "experience": "5 years in AI Research",
+        "education": "PhD Machine Learning - Oxford"
+      },
+      "marcoColombo": {
+        "name": "Marco Colombo",
+        "experience": "9 years in Software Engineering",
+        "education": "MSc Computer Science - Politecnico Milano"
+      },
+      "francescaRicci": {
+        "name": "Francesca Ricci",
+        "experience": "4 years in ML Development",
+        "education": "BSc Computer Engineering - Politecnico Torino"
+      }
+    }
   },
   "results": {
-    "title": "ANALYSIS RESULTS",
+    "title": "AI RANKING",
     "subtitle": "Top 3 candidates for",
     "match": "Match",
     "viewProfile": "VIEW PROFILE",
     "newSearch": "NEW SEARCH",
     "qrTitle": "DOWNLOAD FULL REPORT",
-    "qrSubtitle": "Scan the QR code with your smartphone to receive the detailed report via email"
+    "qrSubtitle": "Scan the QR code with your smartphone to receive the detailed report via email",
+    "score": "SCORE",
+    "otherCandidates": "Other Candidates",
+    "mockData": {
+      "marcoBianchi": {
+        "name": "Marco Bianchi",
+        "experience": "8 years of experience",
+        "education": "Master's Degree in Computer Science"
+      },
+      "saraRossi": {
+        "name": "Sara Rossi",
+        "experience": "6 years of experience",
+        "education": "Degree in Computer Engineering"
+      },
+      "lucaVerdi": {
+        "name": "Luca Verdi",
+        "experience": "5 years of experience",
+        "education": "Degree in Computer Science"
+      },
+      "giuliaNeri": {
+        "name": "Giulia Neri",
+        "experience": "7 years of experience",
+        "education": "Degree in Computer Science"
+      },
+      "andreaFerrari": {
+        "name": "Andrea Ferrari",
+        "experience": "4 years of experience",
+        "education": "Bachelor's Degree in Computer Science"
+      },
+      "chiaraRusso": {
+        "name": "Chiara Russo",
+        "experience": "3 years of experience",
+        "education": "Degree in Software Engineering"
+      }
+    }
   },
   "bottomNav": {
     "home": "Home",
@@ -55,6 +152,16 @@
   },
   "processing": {
     "analyzing": "Analyzing...",
-    "wait": "Please wait"
+    "wait": "Please wait",
+    "steps": {
+      "analyzeSkills": "Analyzing skills",
+      "calculateAffinity": "Calculating candidate affinity",
+      "generateRanking": "Generating final ranking"
+    }
+  },
+  "components": {
+    "qrCodeCard": {
+      "defaultLabel": "Scan for info"
+    }
   }
 }

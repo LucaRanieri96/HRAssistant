@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
@@ -10,6 +11,7 @@ import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen } from '@/components/BottomNav.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 
 export interface JobOffer {
   id: string
@@ -18,38 +20,38 @@ export interface JobOffer {
   description: string
 }
 
-const jobOffers: JobOffer[] = [
+const jobOffers = computed<JobOffer[]>(() => [
   {
     id: '1',
-    title: 'Senior AI Engineer',
-    department: 'Engineering & Ricerca',
-    description: 'Guida lo sviluppo AI e i progetti di ricerca'
+    title: t('jobs.offers.seniorAiEngineer.title'),
+    department: t('jobs.offers.seniorAiEngineer.department'),
+    description: t('jobs.offers.seniorAiEngineer.description')
   },
   {
     id: '2',
-    title: 'Product Manager - Soluzioni AI',
-    department: 'Prodotto & Strategia',
-    description: 'Definisci la visione del prodotto per soluzioni AI'
+    title: t('jobs.offers.productManager.title'),
+    department: t('jobs.offers.productManager.department'),
+    description: t('jobs.offers.productManager.description')
   },
   {
     id: '3',
-    title: 'Data Scientist',
-    department: 'Analytics & Data',
-    description: 'Estrai insights e costruisci modelli predittivi'
+    title: t('jobs.offers.dataScientist.title'),
+    department: t('jobs.offers.dataScientist.department'),
+    description: t('jobs.offers.dataScientist.description')
   },
   {
     id: '4',
-    title: 'UX/UI Designer',
-    department: 'Design & Experience',
-    description: 'Crea interfacce intuitive per applicazioni AI'
+    title: t('jobs.offers.uxUiDesigner.title'),
+    department: t('jobs.offers.uxUiDesigner.department'),
+    description: t('jobs.offers.uxUiDesigner.description')
   },
   {
     id: '5',
-    title: 'Machine Learning Researcher',
-    department: 'Engineering & Ricerca',
-    description: 'Avanza le capacità e metodologie ML'
+    title: t('jobs.offers.mlResearcher.title'),
+    department: t('jobs.offers.mlResearcher.department'),
+    description: t('jobs.offers.mlResearcher.description')
   }
-]
+])
 
 const currentScreen = ref<Screen>('jobs')
 
@@ -88,7 +90,8 @@ function onEnterCard(el: Element, done: () => void) {
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">
-      <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard" v-memo="[job.id]">
+      <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard"
+        v-memo="[job.id, job.title]">
         <JobCard :job="job" :index="index" :data-index="index" @click="handleJobSelect" />
       </Transition>
     </ScrollArea>

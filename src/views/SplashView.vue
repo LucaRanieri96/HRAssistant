@@ -52,8 +52,7 @@ function onEnterBottom(el: Element, done: () => void) {
 
     <!-- Bottom Section - QR Code -->
     <Transition appear @enter="onEnterBottom">
-      <QRCodeCard title="Scopri di più su Aidia"
-        description="Visita il nostro sito per conoscere tutte le soluzioni AI per il recruiting e la gestione HR" />
+      <QRCodeCard :title="$t('splash.qrCard.title')" :description="$t('splash.qrCard.description')" />
     </Transition>
   </ScreenLayout>
 </template>

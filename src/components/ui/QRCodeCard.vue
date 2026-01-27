@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BlurCard from './BlurCard.vue'
 
 export interface QRCodeCardProps {
@@ -7,9 +9,10 @@ export interface QRCodeCardProps {
   qrLabel?: string
 }
 
-withDefaults(defineProps<QRCodeCardProps>(), {
-  qrLabel: 'Scansiona per info',
-})
+const props = defineProps<QRCodeCardProps>()
+const { t } = useI18n()
+
+const displayQrLabel = computed(() => props.qrLabel ?? t('components.qrCodeCard.defaultLabel'))
 </script>
 
 <template>
@@ -22,7 +25,7 @@ withDefaults(defineProps<QRCodeCardProps>(), {
             <i class="pi pi-qrcode text-white text-icon-xxl" />
           </div>
         </div>
-        <p class="text-body-l text-neutral-500 text-center">{{ qrLabel }}</p>
+        <p class="text-body-l text-neutral-500 text-center">{{ displayQrLabel }}</p>
       </div>
 
       <!-- Info Text -->
