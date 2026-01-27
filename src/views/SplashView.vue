@@ -30,16 +30,10 @@ function onEnterBottom(el: Element, done: () => void) {
 </script>
 
 <template>
-  <ScreenLayout container-class="relative h-full px-16 py-12"
+  <ScreenLayout container-class="flex justify-center items-center h-full px-16 py-12"
     content-class="flex-1 flex flex-col items-center justify-center gap-16">
     <Transition appear @enter="onEnterContent">
-      <div class="flex flex-col items-center justify-center space-y-12 max-w-[900px]">
-        <!-- Main Logo -->
-        <div class="flex flex-col items-center">
-          <div class="text-display-1 font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text mb-4">
-            Aidia</div>
-          <div class="text-h5 text-secondary-600 font-medium">Problem Solving with AI</div>
-        </div>
+      <div class="flex flex-col items-center justify-center space-y-12 max-w-225">
 
         <!-- HR Assistant Tagline -->
         <div class="text-center space-y-6">
