@@ -18,9 +18,22 @@ const props = withDefaults(defineProps<BlurCardProps>(), {
 })
 
 const classes = computed(() => {
+  const roundedClassMap: Record<NonNullable<BlurCardProps['rounded']>, string> = {
+    xl: 'rounded-xl',
+    '2xl': 'rounded-2xl',
+    '3xl': 'rounded-3xl',
+  }
+
+  const shadowClassMap: Record<NonNullable<BlurCardProps['shadow']>, string> = {
+    sm: 'shadow-sm',
+    md: 'shadow-md',
+    lg: 'shadow-lg',
+    glow: 'shadow-glow-yellow',
+  }
+
   const baseClasses = [
     'relative bg-white/60 backdrop-blur-[12px]',
-    `rounded-${props.rounded}`,
+    roundedClassMap[props.rounded],
     props.padding,
   ]
 
@@ -28,15 +41,7 @@ const classes = computed(() => {
     baseClasses.push('border border-neutral-200/30')
   }
 
-  if (props.shadow === 'sm') {
-    baseClasses.push('shadow-sm')
-  } else if (props.shadow === 'md') {
-    baseClasses.push('shadow-md')
-  } else if (props.shadow === 'lg') {
-    baseClasses.push('shadow-lg')
-  } else if (props.shadow === 'glow') {
-    baseClasses.push('shadow-glow-yellow')
-  }
+  baseClasses.push(shadowClassMap[props.shadow])
 
   if (props.hover) {
     baseClasses.push('transition-all duration-300 hover:bg-white/80 hover:border-neutral-300')

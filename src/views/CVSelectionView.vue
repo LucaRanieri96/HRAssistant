@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import Logo from '@/components/Logo.vue'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import FilterButton from '@/components/ui/FilterButton.vue'
 import CandidateCard from '@/components/ui/CandidateCard.vue'
+import ScreenLayout from '@/components/layout/ScreenLayout.vue'
+import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen, Candidate } from '@/types'
 
 const router = useRouter()
@@ -103,55 +104,31 @@ function onEnterCard(el: Element, done: () => void) {
 </script>
 
 <template>
-  <div class="relative w-full h-full overflow-hidden">
-
-    <div class="absolute top-8 right-16 z-10">
-      <Logo size="medium" />
-    </div>
-
-    <div class="relative h-full flex flex-col px-16 pt-20 pb-48">
+  <ScreenLayout content-class="flex-1 flex flex-col">
+    <template #header>
       <PageTitle title="POOL CANDIDATI" :subtitle="jobTitle" />
+    </template>
 
-      <div class="flex gap-4 mb-8">
-        <FilterButton v-for="(filter, idx) in ['Tutti', 'Alta affinità', 'Media affinità']" :key="idx" :label="filter"
-          :active="activeFilter === idx" @click="activeFilter = idx" />
-      </div>
-
-      <div class="flex-1 overflow-y-auto pb-8 pr-6 custom-scrollbar">
-        <div class="grid grid-cols-1 gap-6">
-          <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
-            v-memo="[selectedIds.has(candidate.id), candidate.id]">
-            <CandidateCard :candidate="candidate" :selected="selectedIds.has(candidate.id)" :index="index"
-              :data-index="index" @click="toggleCandidate" />
-          </Transition>
-        </div>
-      </div>
-
-      <Button @click="handleRank" :disabled="selectedIds.size === 0"
-        :label="`CLASSIFICA CANDIDATI (${selectedIds.size})`" severity="warn"
-        class="!w-full !h-[110px] !text-[42px] !font-bold !rounded-xl !mt-8" />
+    <div class="flex gap-4 mb-8">
+      <FilterButton v-for="(filter, idx) in ['Tutti', 'Alta affinità', 'Media affinità']" :key="idx" :label="filter"
+        :active="activeFilter === idx" @click="activeFilter = idx" />
     </div>
 
-    <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />
-  </div>
+    <ScrollArea class="flex-1 pb-8 pr-6">
+      <div class="grid grid-cols-1 gap-6">
+        <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
+          v-memo="[selectedIds.has(candidate.id), candidate.id]">
+          <CandidateCard :candidate="candidate" :selected="selectedIds.has(candidate.id)" :index="index"
+            :data-index="index" @click="toggleCandidate" />
+        </Transition>
+      </div>
+    </ScrollArea>
+
+    <Button @click="handleRank" :disabled="selectedIds.size === 0" :label="`CLASSIFICA CANDIDATI (${selectedIds.size})`"
+      severity="warn" class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl !mt-8" />
+
+    <template #bottom-nav>
+      <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />
+    </template>
+  </ScreenLayout>
 </template>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(195, 201, 208, 0.1);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(248, 203, 70, 0.5);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(248, 203, 70, 0.7);
-}
-</style>

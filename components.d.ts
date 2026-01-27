@@ -25,5 +25,7 @@ declare module 'vue' {
     QRCodeCard: typeof import('./src/components/ui/QRCodeCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScreenLayout: typeof import('./src/components/layout/ScreenLayout.vue')['default']
+    ScrollArea: typeof import('./src/components/ui/ScrollArea.vue')['default']
   }
 }

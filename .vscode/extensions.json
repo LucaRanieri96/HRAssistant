@@ -1,8 +1,12 @@
 {
   "recommendations": [
     "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
-    "prettier.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "usernamehw.errorlens",
+    "GitHub.copilot"
   ]
 }

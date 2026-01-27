@@ -14,6 +14,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Button :label="label" :severity="active ? 'warn' : 'secondary'" :outlined="!active"
-    class="!px-8 !py-4 !text-[26px] !rounded-2xl" @click="emit('click', $event)" />
+  <Button type="button" :label="label" :severity="active ? 'warn' : 'secondary'"
+    :variant="active ? undefined : 'outlined'" class="!px-8 !py-4 !text-label-l !rounded-2xl"
+    @click="emit('click', $event)" />
 </template>

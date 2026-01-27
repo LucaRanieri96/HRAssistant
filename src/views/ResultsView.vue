@@ -1,11 +1,5 @@
 <template>
   <div class="relative w-full h-screen overflow-hidden">
-
-    <!-- Logo in top right -->
-    <div class="absolute top-8 right-16 z-10">
-      <Logo size="medium" />
-    </div>
-
     <!-- Particle celebration effect -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div v-for="i in 20" :key="i" class="particle absolute w-2 h-2 bg-secondary-400 rounded-full" :style="{
@@ -16,13 +10,12 @@
       }" />
     </div>
 
-    <!-- Content -->
-    <div class="relative h-full flex flex-col px-16 pt-20 pb-48 overflow-y-auto pr-6
-                scrollbar-thin scrollbar-thumb-secondary-400/50 scrollbar-track-white/5">
+    <ScreenLayout root-class="relative w-full h-full"
+      content-class="relative h-full flex flex-col overflow-y-auto pr-6 scrollbar-thin scrollbar-thumb-secondary-400/50 scrollbar-track-white/5">
       <!-- Header -->
       <Transition appear @before-enter="onBeforeEnter" @enter="onEnter">
         <div class="mb-12">
-          <h1 class="text-[72px] font-bold text-white tracking-tight mb-4">
+          <h1 class="text-display-1 font-bold text-white tracking-tight mb-4">
             CLASSIFICA AI
           </h1>
           <div class="w-32 h-2 bg-secondary-400 rounded-full" />
@@ -47,28 +40,28 @@
                   <!-- Trophy Badge with Position -->
                   <div class="flex-shrink-0 relative">
                     <div class="w-32 h-32 rounded-2xl bg-secondary-400 flex items-center justify-center">
-                      <i class="pi pi-trophy text-[#0a1628] text-[64px]" />
+                      <i class="pi pi-trophy text-[#0a1628] text-icon-xl" />
                     </div>
                     <div
                       class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-secondary-400 border-4 border-[#0a1628] flex items-center justify-center z-10 shadow-lg">
-                      <span class="text-[28px] font-black text-[#0a1628]">1</span>
+                      <span class="text-label-xl font-black text-[#0a1628]">1</span>
                     </div>
                   </div>
 
                   <!-- Info -->
                   <div class="flex-1">
-                    <h3 class="text-[44px] font-bold text-white mb-4 leading-tight">{{ first.name }}</h3>
+                    <h3 class="text-h3 font-bold text-white mb-4 leading-tight">{{ first.name }}</h3>
 
                     <div class="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-secondary-400 mb-6 shadow-lg">
-                      <span class="text-[28px] font-bold text-[#0a1628]">SCORE</span>
+                      <span class="text-label-xl font-bold text-[#0a1628]">SCORE</span>
                       <div class="w-1 h-10 bg-[#0a1628]/30 rounded-full"></div>
-                      <span class="text-[52px] font-black text-[#0a1628] leading-none">{{ first.matchScore }}</span>
+                      <span class="text-score-huge font-black text-[#0a1628] leading-none">{{ first.matchScore }}</span>
                     </div>
 
                     <div class="flex items-center gap-4 mb-6 flex-wrap">
                       <div class="flex items-center gap-2">
-                        <i class="pi pi-briefcase text-white/40 text-[24px]" />
-                        <span class="text-[24px] text-white/70">{{ first.experience }} · {{ first.skills[0] }}</span>
+                        <i class="pi pi-briefcase text-white/40 text-icon-s" />
+                        <span class="text-body-xl text-white/70">{{ first.experience }} · {{ first.skills[0] }}</span>
                       </div>
                     </div>
 
@@ -79,7 +72,7 @@
                           ? 'bg-secondary-400/10 border-secondary-400/40 text-secondary-400'
                           : 'bg-white/5 border-white/10 text-white/70'
                       ]">
-                        <span class="text-[20px] font-medium">{{ skill }}</span>
+                        <span class="text-body-m font-medium">{{ skill }}</span>
                       </div>
                     </div>
                   </div>
@@ -99,32 +92,32 @@
                   <div class="flex-shrink-0 relative">
                     <div
                       class="w-24 h-24 rounded-2xl bg-white/10 border-2 border-white/30 flex items-center justify-center">
-                      <i class="pi pi-star-fill text-white/80 text-[48px]" />
+                      <i class="pi pi-star-fill text-white/80 text-icon-l" />
                     </div>
                     <div
                       class="absolute -top-3 -right-3 w-14 h-14 rounded-full bg-white border-4 border-[#0a1628] flex items-center justify-center z-10 shadow-lg">
-                      <span class="text-[24px] font-black text-[#0a1628]">2</span>
+                      <span class="text-label-m font-black text-[#0a1628]">2</span>
                     </div>
                   </div>
 
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-[32px] font-bold text-white leading-tight truncate">{{ second.name }}</h3>
+                    <h3 class="text-h5 font-bold text-white leading-tight truncate">{{ second.name }}</h3>
                   </div>
                 </div>
 
                 <!-- Score Badge - Full Width -->
                 <div
                   class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6 shadow-lg">
-                  <span class="text-[24px] font-bold text-[#0a1628]">SCORE</span>
+                  <span class="text-label-m font-bold text-[#0a1628]">SCORE</span>
                   <div class="w-1 h-8 bg-[#0a1628]/30 rounded-full"></div>
-                  <span class="text-[48px] font-black text-[#0a1628] leading-none">{{ second.matchScore }}</span>
+                  <span class="text-score-large font-black text-[#0a1628] leading-none">{{ second.matchScore }}</span>
                 </div>
 
                 <!-- Details -->
                 <div class="flex flex-col gap-3 mb-4">
                   <div class="flex items-center gap-2">
-                    <i class="pi pi-briefcase text-white/40 text-[20px]" />
-                    <span class="text-[20px] text-white/70">{{ second.experience }} · {{ second.skills[0] }}</span>
+                    <i class="pi pi-briefcase text-white/40 text-icon-xs" />
+                    <span class="text-body-m text-white/70">{{ second.experience }} · {{ second.skills[0] }}</span>
                   </div>
                 </div>
 
@@ -132,7 +125,7 @@
                 <div class="flex flex-wrap gap-2 mt-auto">
                   <div v-for="(skill, idx) in second.skills.slice(0, 3)" :key="idx"
                     class="px-4 py-1.5 rounded-xl border bg-white/5 border-white/10">
-                    <span class="text-[18px] text-white/70">{{ skill }}</span>
+                    <span class="text-body-s text-white/70">{{ skill }}</span>
                   </div>
                 </div>
               </div>
@@ -147,32 +140,32 @@
                   <div class="flex-shrink-0 relative">
                     <div
                       class="w-24 h-24 rounded-2xl bg-white/10 border-2 border-white/30 flex items-center justify-center">
-                      <i class="pi pi-star text-white/80 text-[48px]" />
+                      <i class="pi pi-star text-white/80 text-icon-l" />
                     </div>
                     <div
                       class="absolute -top-3 -right-3 w-14 h-14 rounded-full bg-white border-4 border-[#0a1628] flex items-center justify-center z-10 shadow-lg">
-                      <span class="text-[24px] font-black text-[#0a1628]">3</span>
+                      <span class="text-label-m font-black text-[#0a1628]">3</span>
                     </div>
                   </div>
 
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-[32px] font-bold text-white leading-tight truncate">{{ third.name }}</h3>
+                    <h3 class="text-h5 font-bold text-white leading-tight truncate">{{ third.name }}</h3>
                   </div>
                 </div>
 
                 <!-- Score Badge - Full Width -->
                 <div
                   class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6 shadow-lg">
-                  <span class="text-[24px] font-bold text-[#0a1628]">SCORE</span>
+                  <span class="text-label-m font-bold text-[#0a1628]">SCORE</span>
                   <div class="w-1 h-8 bg-[#0a1628]/30 rounded-full"></div>
-                  <span class="text-[48px] font-black text-[#0a1628] leading-none">{{ third.matchScore }}</span>
+                  <span class="text-score-large font-black text-[#0a1628] leading-none">{{ third.matchScore }}</span>
                 </div>
 
                 <!-- Details -->
                 <div class="flex flex-col gap-3 mb-4">
                   <div class="flex items-center gap-2">
-                    <i class="pi pi-briefcase text-white/40 text-[20px]" />
-                    <span class="text-[20px] text-white/70">{{ third.experience }} · {{ third.skills[0] }}</span>
+                    <i class="pi pi-briefcase text-white/40 text-icon-xs" />
+                    <span class="text-body-m text-white/70">{{ third.experience }} · {{ third.skills[0] }}</span>
                   </div>
                 </div>
 
@@ -180,7 +173,7 @@
                 <div class="flex flex-wrap gap-2 mt-auto">
                   <div v-for="(skill, idx) in third.skills.slice(0, 3)" :key="idx"
                     class="px-4 py-1.5 rounded-xl border bg-white/5 border-white/10">
-                    <span class="text-[18px] text-white/70">{{ skill }}</span>
+                    <span class="text-body-s text-white/70">{{ skill }}</span>
                   </div>
                 </div>
               </div>
@@ -192,7 +185,7 @@
       <!-- Other Candidates -->
       <Transition v-if="rest.length > 0" appear @before-enter="onBeforeEnter" @enter="(el) => onEnter(el, 0.4)">
         <div class="mb-8">
-          <h2 class="text-[40px] font-bold text-white mb-6 ml-2">Altri Candidati</h2>
+          <h2 class="text-title-xl font-bold text-white mb-6 ml-2">Altri Candidati</h2>
           <div class="space-y-6">
             <div v-for="(candidate, index) in rest" :key="candidate.id" v-memo="[candidate.id, candidate.matchScore]"
               class="relative bg-white/5 backdrop-blur-sm
@@ -203,7 +196,7 @@
                 <!-- Position Number -->
                 <div class="flex-shrink-0 w-20 h-20 rounded-xl bg-white/5 border-2 border-white/20
                           flex items-center justify-center">
-                  <span class="text-[32px] font-bold text-white/60">
+                  <span class="text-h5 font-bold text-white/60">
                     {{ index + 4 }}
                   </span>
                 </div>
@@ -212,13 +205,13 @@
                 <div class="flex-1">
                   <!-- Name and Score -->
                   <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-[36px] font-bold text-white">
+                    <h4 class="text-h4 font-bold text-white">
                       {{ candidate.name }}
                     </h4>
                     <div class="flex items-center gap-3">
-                      <span class="text-[26px] text-white/50">Score:</span>
+                      <span class="text-label-l text-white/50">Score:</span>
                       <div class="px-5 py-2 rounded-xl bg-white/5 border border-white/20">
-                        <span class="text-[28px] font-bold text-white/80">
+                        <span class="text-label-xl font-bold text-white/80">
                           {{ candidate.matchScore }}
                         </span>
                       </div>
@@ -228,13 +221,13 @@
                   <!-- Details -->
                   <div class="flex items-center gap-6 mb-4">
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase text-white/30 text-[20px]" />
-                      <span class="text-[22px] text-white/60">{{ candidate.skills[0] }}</span>
+                      <i class="pi pi-briefcase text-white/30 text-icon-xs" />
+                      <span class="text-body-l text-white/60">{{ candidate.skills[0] }}</span>
                     </div>
                     <div class="h-5 w-px bg-white/20" />
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-clock text-white/30 text-[20px]" />
-                      <span class="text-[22px] text-white/60">{{ candidate.experience }}</span>
+                      <i class="pi pi-clock text-white/30 text-icon-xs" />
+                      <span class="text-body-l text-white/60">{{ candidate.experience }}</span>
                     </div>
                   </div>
 
@@ -242,7 +235,7 @@
                   <div class="flex flex-wrap gap-2">
                     <div v-for="(skill, idx) in candidate.skills.slice(0, 4)" :key="idx"
                       class="px-4 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                      <span class="text-[20px] text-white/60">{{ skill }}</span>
+                      <span class="text-body-m text-white/60">{{ skill }}</span>
                     </div>
                   </div>
                 </div>
@@ -253,20 +246,21 @@
       </Transition>
 
       <!-- Export Button -->
-      <Button @click="handleBack" severity="warn" class="!w-full !h-[110px] !mt-8 !text-[42px] !font-bold !rounded-xl">
+      <Button @click="handleBack" severity="warn"
+        class="!w-full !h-[110px] !mt-8 !text-button-xxl !font-bold !rounded-xl">
         <template #icon>
-          <i class="pi pi-qrcode text-[48px] mr-4" />
+          <i class="pi pi-qrcode text-icon-l mr-4" />
         </template>
         ESPORTA RISULTATI
       </Button>
-    </div>
+    </ScreenLayout>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Candidate } from '../types'
-import Logo from '../components/Logo.vue'
+import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 
 // Mock data - ordinati per matchScore
 const candidates = computed<Candidate[]>(() => [

@@ -1,15 +1,24 @@
 <template>
   <Transition appear @enter="onEnter">
-    <div class="fixed bottom-0 left-0 right-0 h-32 glass-card border-t border-neutral-200/30 z-50">
-      <div class="relative h-full flex items-center justify-around px-20">
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-neutral-200 z-50">
+      <div class="relative h-full flex items-stretch justify-stretch">
         <button v-for="item in navItems" :key="item.id" @click="item.action" :class="[
-          'relative flex items-center gap-4 px-8 py-4 rounded-2xl transition-all duration-300',
+          'flex-1 flex flex-col items-center justify-center gap-2 py-6 border-r-2 border-neutral-200 last:border-r-0',
+          'transition-colors duration-200 active:bg-neutral-100',
           currentScreen === item.id
-            ? 'bg-secondary-500 text-neutral-900 shadow-glow-yellow'
-            : 'text-neutral-400 hover:text-neutral-900 hover:bg-white/60'
+            ? 'bg-secondary-500 border-secondary-600'
+            : 'bg-white'
         ]">
-          <i :class="['pi', item.icon, 'text-[40px]']" />
-          <span class="text-[28px] font-medium">{{ item.label }}</span>
+          <i :class="[
+            'pi',
+            item.icon,
+            'text-icon-m',
+            currentScreen === item.id ? 'text-neutral-900' : 'text-neutral-500'
+          ]" />
+          <span :class="[
+            'text-label-s font-semibold',
+            currentScreen === item.id ? 'text-neutral-900' : 'text-neutral-600'
+          ]">{{ item.label }}</span>
         </button>
       </div>
     </div>

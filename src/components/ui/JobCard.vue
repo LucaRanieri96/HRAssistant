@@ -25,7 +25,7 @@ const emit = defineEmits<{
     <BlurCard padding="p-10" rounded="3xl" class="transition-all duration-300 ease-out active:scale-[0.98]">
       <div class="flex items-start justify-between">
         <div class="flex-1">
-          <h2 class="text-[52px] font-bold text-neutral-900 mb-3 leading-tight">
+          <h2 class="text-display-3 font-bold text-neutral-900 mb-3 leading-tight">
             {{ job.title }}
           </h2>
           <p class="text-h5 text-neutral-500">
@@ -36,7 +36,7 @@ const emit = defineEmits<{
         <div class="ml-6 flex-shrink-0">
           <div
             class="w-24 h-24 rounded-2xl bg-secondary-100 border-2 border-secondary-500 flex items-center justify-center transition-all duration-300">
-            <i class="pi pi-file text-secondary-700 text-[48px]" />
+            <i class="pi pi-file text-secondary-700 text-icon-l" />
           </div>
         </div>
       </div>

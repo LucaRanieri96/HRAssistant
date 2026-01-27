@@ -14,8 +14,8 @@ const props = withDefaults(defineProps<PageTitleProps>(), {
 })
 
 const titleClasses = computed(() => {
-  if (props.size === 'sm') return 'text-[52px]'
-  if (props.size === 'md') return 'text-[64px]'
+  if (props.size === 'sm') return 'text-display-3'
+  if (props.size === 'md') return 'text-display-0'
   return 'text-display-1'
 })
 

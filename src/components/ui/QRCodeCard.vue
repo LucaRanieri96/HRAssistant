@@ -19,7 +19,7 @@ withDefaults(defineProps<QRCodeCardProps>(), {
       <div class="flex flex-col items-center gap-4">
         <div class="w-40 h-40 bg-white rounded-xl p-3 flex items-center justify-center shadow-lg">
           <div class="w-full h-full bg-neutral-900 rounded-lg flex items-center justify-center">
-            <i class="pi pi-qrcode text-white text-[96px]" />
+            <i class="pi pi-qrcode text-white text-icon-xxl" />
           </div>
         </div>
         <p class="text-body-l text-neutral-500 text-center">{{ qrLabel }}</p>

@@ -2,10 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import Logo from '@/components/Logo.vue'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import JobCard from '@/components/ui/JobCard.vue'
+import ScreenLayout from '@/components/layout/ScreenLayout.vue'
+import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen } from '@/components/BottomNav.vue'
 
 const router = useRouter()
@@ -81,47 +82,19 @@ function onEnterCard(el: Element, done: () => void) {
 </script>
 
 <template>
-  <div class="relative w-full h-full overflow-hidden">
-
-    <!-- Logo in top right -->
-    <div class="absolute top-8 right-16 z-10">
-      <Logo size="medium" />
-    </div>
-
-    <!-- Content -->
-    <div class="relative h-full flex flex-col px-16 pt-20 pb-48">
-      <!-- Header -->
+  <ScreenLayout content-class="flex-1 flex flex-col">
+    <template #header>
       <PageTitle title="SELEZIONA POSIZIONE" />
+    </template>
 
-      <!-- Job Cards -->
-      <div class="flex-1 overflow-y-auto space-y-6 pb-8 pr-6 custom-scrollbar">
-        <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard" v-memo="[job.id]">
-          <JobCard :job="job" :index="index" :data-index="index" @click="handleJobSelect" />
-        </Transition>
-      </div>
-    </div>
+    <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">
+      <Transition v-for="(job, index) in jobOffers" :key="job.id" appear @enter="onEnterCard" v-memo="[job.id]">
+        <JobCard :job="job" :index="index" :data-index="index" @click="handleJobSelect" />
+      </Transition>
+    </ScrollArea>
 
-    <!-- Bottom Navigation -->
-    <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />
-  </div>
+    <template #bottom-nav>
+      <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />
+    </template>
+  </ScreenLayout>
 </template>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(195, 201, 208, 0.1);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(248, 203, 70, 0.5);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(248, 203, 70, 0.7);
-}
-</style>
