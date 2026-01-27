@@ -60,11 +60,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
+import { rankCandidates, type RankingResponse } from '@/services/api'
 
 const router = useRouter()
+const route = useRoute()
 const { t } = useI18n()
 const progress = ref(0)
 const currentStep = ref(0)
@@ -75,21 +77,47 @@ const steps = computed(() => [
   { icon: 'pi-chart-line', label: t('processing.steps.generateRanking'), delay: 2000 }
 ])
 
-onMounted(() => {
-  const progressInterval = setInterval(() => {
-    progress.value += 2
-    if (progress.value >= 100) {
-      clearInterval(progressInterval)
-      setTimeout(() => {
-        router.push({ name: 'results', params: { job: 'ai-engineer' } })
-      }, 500)
-    }
-  }, 30)
-
+onMounted(async () => {
+  // Animazione degli step
   steps.value.forEach((step, index) => {
     setTimeout(() => {
       currentStep.value = index
     }, step.delay)
   })
+
+  // Barra di progresso
+  const progressInterval = setInterval(() => {
+    progress.value += 2
+    if (progress.value >= 100) {
+      clearInterval(progressInterval)
+    }
+  }, 30)
+
+  try {
+    // Recupera i parametri dalla query
+    const jobId = route.query.jobId as string || '1'
+    const candidateIds = (route.query.candidateIds as string)?.split(',') || []
+
+    // Chiamata API al backend (per ora mockata)
+    const response = await rankCandidates({
+      jobOfferId: jobId,
+      candidateIds: candidateIds
+    })
+
+    // Quando la chiamata è completata, naviga ai risultati passando i dati
+    clearInterval(progressInterval)
+    progress.value = 100
+
+    setTimeout(() => {
+      router.push({
+        name: 'results',
+        state: { rankedCandidates: response.candidates }
+      })
+    }, 500)
+  } catch (error) {
+    console.error('Error ranking candidates:', error)
+    // TODO: gestire l'errore mostrando un messaggio all'utente
+    clearInterval(progressInterval)
+  }
 })
 </script>

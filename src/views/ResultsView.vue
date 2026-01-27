@@ -242,6 +242,7 @@ import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
+import resultsData from '@/data/resultsData.json'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -258,57 +259,19 @@ const handleNavigate = (screen: Screen) => {
   }
 }
 
-// Mock data - ordinati per matchScore
-const candidates = computed<Candidate[]>(() => [
-  {
-    id: '1',
-    name: t('results.mockData.marcoBianchi.name'),
-    matchScore: 95,
-    experience: t('results.mockData.marcoBianchi.experience'),
-    skills: ['React', 'TypeScript', 'Node.js', 'AWS'],
-    education: t('results.mockData.marcoBianchi.education')
-  },
-  {
-    id: '2',
-    name: t('results.mockData.saraRossi.name'),
-    matchScore: 92,
-    experience: t('results.mockData.saraRossi.experience'),
-    skills: ['Vue.js', 'Python', 'Docker', 'PostgreSQL'],
-    education: t('results.mockData.saraRossi.education')
-  },
-  {
-    id: '3',
-    name: t('results.mockData.lucaVerdi.name'),
-    matchScore: 88,
-    experience: t('results.mockData.lucaVerdi.experience'),
-    skills: ['Angular', 'Java', 'Spring Boot', 'MongoDB'],
-    education: t('results.mockData.lucaVerdi.education')
-  },
-  {
-    id: '4',
-    name: t('results.mockData.giuliaNeri.name'),
-    matchScore: 85,
-    experience: t('results.mockData.giuliaNeri.experience'),
-    skills: ['React Native', 'Flutter', 'Firebase', 'GraphQL'],
-    education: t('results.mockData.giuliaNeri.education')
-  },
-  {
-    id: '5',
-    name: t('results.mockData.andreaFerrari.name'),
-    matchScore: 82,
-    experience: t('results.mockData.andreaFerrari.experience'),
-    skills: ['Next.js', 'Tailwind CSS', 'Prisma', 'Vercel'],
-    education: t('results.mockData.andreaFerrari.education')
-  },
-  {
-    id: '6',
-    name: t('results.mockData.chiaraRusso.name'),
-    matchScore: 78,
-    experience: t('results.mockData.chiaraRusso.experience'),
-    skills: ['Svelte', 'Go', 'Kubernetes', 'Redis'],
-    education: t('results.mockData.chiaraRusso.education')
-  }
-]);
+// Usa i dati dalla chiamata API se disponibili, altrimenti fallback al mock locale
+const rankedCandidatesData = (history.state?.rankedCandidates as any[]) || resultsData
+
+const candidates = computed<Candidate[]>(() =>
+  rankedCandidatesData.map(candidate => ({
+    id: candidate.id,
+    name: t(candidate.nameKey),
+    matchScore: candidate.matchScore,
+    experience: t(candidate.experienceKey),
+    skills: candidate.skills,
+    education: t(candidate.educationKey)
+  }))
+);
 
 const first = computed(() => candidates.value[0]);
 const second = computed(() => candidates.value[1]);

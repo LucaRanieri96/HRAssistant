@@ -1,0 +1,80 @@
+[
+  {
+    "id": "1",
+    "nameKey": "candidates.mockData.alessandroRossi.name",
+    "matchScore": 97,
+    "experienceKey": "candidates.mockData.alessandroRossi.experience",
+    "skills": [
+      "Python",
+      "TensorFlow",
+      "Deep Learning",
+      "NLP"
+    ],
+    "educationKey": "candidates.mockData.alessandroRossi.education"
+  },
+  {
+    "id": "2",
+    "nameKey": "candidates.mockData.mariaFerrari.name",
+    "matchScore": 94,
+    "experienceKey": "candidates.mockData.mariaFerrari.experience",
+    "skills": [
+      "Python",
+      "PyTorch",
+      "Computer Vision",
+      "MLOps"
+    ],
+    "educationKey": "candidates.mockData.mariaFerrari.education"
+  },
+  {
+    "id": "3",
+    "nameKey": "candidates.mockData.giuseppeBianchi.name",
+    "matchScore": 91,
+    "experienceKey": "candidates.mockData.giuseppeBianchi.experience",
+    "skills": [
+      "Scala",
+      "Spark",
+      "Kubernetes",
+      "AWS"
+    ],
+    "educationKey": "candidates.mockData.giuseppeBianchi.education"
+  },
+  {
+    "id": "4",
+    "nameKey": "candidates.mockData.sofiaRomano.name",
+    "matchScore": 89,
+    "experienceKey": "candidates.mockData.sofiaRomano.experience",
+    "skills": [
+      "Python",
+      "Ricerca",
+      "Pubblicazioni",
+      "Transformers"
+    ],
+    "educationKey": "candidates.mockData.sofiaRomano.education"
+  },
+  {
+    "id": "5",
+    "nameKey": "candidates.mockData.marcoColombo.name",
+    "matchScore": 86,
+    "experienceKey": "candidates.mockData.marcoColombo.experience",
+    "skills": [
+      "Java",
+      "Python",
+      "System Design",
+      "Leadership"
+    ],
+    "educationKey": "candidates.mockData.marcoColombo.education"
+  },
+  {
+    "id": "6",
+    "nameKey": "candidates.mockData.francescaRicci.name",
+    "matchScore": 84,
+    "experienceKey": "candidates.mockData.francescaRicci.experience",
+    "skills": [
+      "Python",
+      "FastAPI",
+      "Docker",
+      "CI/CD"
+    ],
+    "educationKey": "candidates.mockData.francescaRicci.education"
+  }
+]

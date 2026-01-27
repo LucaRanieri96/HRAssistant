@@ -9,60 +9,21 @@ import CandidateCard from '@/components/ui/CandidateCard.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen, Candidate } from '@/types'
+import candidatesData from '@/data/candidates.json'
 
 const router = useRouter()
 const { t } = useI18n()
 
-const mockCandidates = computed<Candidate[]>(() => [
-  {
-    id: '1',
-    name: t('candidates.mockData.alessandroRossi.name'),
-    matchScore: 97,
-    experience: t('candidates.mockData.alessandroRossi.experience'),
-    skills: ['Python', 'TensorFlow', 'Deep Learning', 'NLP'],
-    education: t('candidates.mockData.alessandroRossi.education')
-  },
-  {
-    id: '2',
-    name: t('candidates.mockData.mariaFerrari.name'),
-    matchScore: 94,
-    experience: t('candidates.mockData.mariaFerrari.experience'),
-    skills: ['Python', 'PyTorch', 'Computer Vision', 'MLOps'],
-    education: t('candidates.mockData.mariaFerrari.education')
-  },
-  {
-    id: '3',
-    name: t('candidates.mockData.giuseppeBianchi.name'),
-    matchScore: 91,
-    experience: t('candidates.mockData.giuseppeBianchi.experience'),
-    skills: ['Scala', 'Spark', 'Kubernetes', 'AWS'],
-    education: t('candidates.mockData.giuseppeBianchi.education')
-  },
-  {
-    id: '4',
-    name: t('candidates.mockData.sofiaRomano.name'),
-    matchScore: 89,
-    experience: t('candidates.mockData.sofiaRomano.experience'),
-    skills: ['Python', 'Ricerca', 'Pubblicazioni', 'Transformers'],
-    education: t('candidates.mockData.sofiaRomano.education')
-  },
-  {
-    id: '5',
-    name: t('candidates.mockData.marcoColombo.name'),
-    matchScore: 86,
-    experience: t('candidates.mockData.marcoColombo.experience'),
-    skills: ['Java', 'Python', 'System Design', 'Leadership'],
-    education: t('candidates.mockData.marcoColombo.education')
-  },
-  {
-    id: '6',
-    name: t('candidates.mockData.francescaRicci.name'),
-    matchScore: 84,
-    experience: t('candidates.mockData.francescaRicci.experience'),
-    skills: ['Python', 'FastAPI', 'Docker', 'CI/CD'],
-    education: t('candidates.mockData.francescaRicci.education')
-  }
-])
+const mockCandidates = computed<Candidate[]>(() =>
+  candidatesData.map(candidate => ({
+    id: candidate.id,
+    name: t(candidate.nameKey),
+    matchScore: candidate.matchScore,
+    experience: t(candidate.experienceKey),
+    skills: candidate.skills,
+    education: t(candidate.educationKey)
+  }))
+)
 
 const selectedIds = ref<Set<string>>(new Set())
 const currentScreen = ref<Screen>('candidates')
@@ -82,7 +43,14 @@ const toggleCandidate = (candidate: Candidate) => {
 
 const handleRank = () => {
   if (selectedIds.value.size > 0) {
-    router.push('/processing')
+    // Passa gli ID selezionati e l'ID del job alla schermata di processing
+    router.push({
+      path: '/processing',
+      query: {
+        jobId: '1', // TODO: prendere l'ID del job dalla route precedente
+        candidateIds: Array.from(selectedIds.value).join(',')
+      }
+    })
   }
 }
 

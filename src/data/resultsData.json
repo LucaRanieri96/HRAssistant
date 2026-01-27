@@ -1,0 +1,80 @@
+[
+  {
+    "id": "1",
+    "nameKey": "results.mockData.marcoBianchi.name",
+    "matchScore": 95,
+    "experienceKey": "results.mockData.marcoBianchi.experience",
+    "skills": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "AWS"
+    ],
+    "educationKey": "results.mockData.marcoBianchi.education"
+  },
+  {
+    "id": "2",
+    "nameKey": "results.mockData.saraRossi.name",
+    "matchScore": 92,
+    "experienceKey": "results.mockData.saraRossi.experience",
+    "skills": [
+      "Vue.js",
+      "Python",
+      "Docker",
+      "PostgreSQL"
+    ],
+    "educationKey": "results.mockData.saraRossi.education"
+  },
+  {
+    "id": "3",
+    "nameKey": "results.mockData.lucaVerdi.name",
+    "matchScore": 88,
+    "experienceKey": "results.mockData.lucaVerdi.experience",
+    "skills": [
+      "Angular",
+      "Java",
+      "Spring Boot",
+      "MongoDB"
+    ],
+    "educationKey": "results.mockData.lucaVerdi.education"
+  },
+  {
+    "id": "4",
+    "nameKey": "results.mockData.giuliaNeri.name",
+    "matchScore": 85,
+    "experienceKey": "results.mockData.giuliaNeri.experience",
+    "skills": [
+      "React Native",
+      "Flutter",
+      "Firebase",
+      "GraphQL"
+    ],
+    "educationKey": "results.mockData.giuliaNeri.education"
+  },
+  {
+    "id": "5",
+    "nameKey": "results.mockData.andreaFerrari.name",
+    "matchScore": 82,
+    "experienceKey": "results.mockData.andreaFerrari.experience",
+    "skills": [
+      "Next.js",
+      "Tailwind CSS",
+      "Prisma",
+      "Vercel"
+    ],
+    "educationKey": "results.mockData.andreaFerrari.education"
+  },
+  {
+    "id": "6",
+    "nameKey": "results.mockData.chiaraRusso.name",
+    "matchScore": 78,
+    "experienceKey": "results.mockData.chiaraRusso.experience",
+    "skills": [
+      "Svelte",
+      "Go",
+      "Kubernetes",
+      "Redis"
+    ],
+    "educationKey": "results.mockData.chiaraRusso.education"
+  }
+]

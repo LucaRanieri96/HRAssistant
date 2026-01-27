@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "titleKey": "jobs.offers.seniorAiEngineer.title",
+    "departmentKey": "jobs.offers.seniorAiEngineer.department",
+    "descriptionKey": "jobs.offers.seniorAiEngineer.description"
+  },
+  {
+    "id": "2",
+    "titleKey": "jobs.offers.productManager.title",
+    "departmentKey": "jobs.offers.productManager.department",
+    "descriptionKey": "jobs.offers.productManager.description"
+  },
+  {
+    "id": "3",
+    "titleKey": "jobs.offers.dataScientist.title",
+    "departmentKey": "jobs.offers.dataScientist.department",
+    "descriptionKey": "jobs.offers.dataScientist.description"
+  },
+  {
+    "id": "4",
+    "titleKey": "jobs.offers.uxUiDesigner.title",
+    "departmentKey": "jobs.offers.uxUiDesigner.department",
+    "descriptionKey": "jobs.offers.uxUiDesigner.description"
+  },
+  {
+    "id": "5",
+    "titleKey": "jobs.offers.mlResearcher.title",
+    "departmentKey": "jobs.offers.mlResearcher.department",
+    "descriptionKey": "jobs.offers.mlResearcher.description"
+  }
+]

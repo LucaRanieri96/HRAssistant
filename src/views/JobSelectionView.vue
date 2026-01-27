@@ -9,6 +9,7 @@ import JobCard from '@/components/ui/JobCard.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen } from '@/components/BottomNav.vue'
+import jobOffersData from '@/data/jobOffers.json'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -20,38 +21,14 @@ export interface JobOffer {
   description: string
 }
 
-const jobOffers = computed<JobOffer[]>(() => [
-  {
-    id: '1',
-    title: t('jobs.offers.seniorAiEngineer.title'),
-    department: t('jobs.offers.seniorAiEngineer.department'),
-    description: t('jobs.offers.seniorAiEngineer.description')
-  },
-  {
-    id: '2',
-    title: t('jobs.offers.productManager.title'),
-    department: t('jobs.offers.productManager.department'),
-    description: t('jobs.offers.productManager.description')
-  },
-  {
-    id: '3',
-    title: t('jobs.offers.dataScientist.title'),
-    department: t('jobs.offers.dataScientist.department'),
-    description: t('jobs.offers.dataScientist.description')
-  },
-  {
-    id: '4',
-    title: t('jobs.offers.uxUiDesigner.title'),
-    department: t('jobs.offers.uxUiDesigner.department'),
-    description: t('jobs.offers.uxUiDesigner.description')
-  },
-  {
-    id: '5',
-    title: t('jobs.offers.mlResearcher.title'),
-    department: t('jobs.offers.mlResearcher.department'),
-    description: t('jobs.offers.mlResearcher.description')
-  }
-])
+const jobOffers = computed<JobOffer[]>(() =>
+  jobOffersData.map(offer => ({
+    id: offer.id,
+    title: t(offer.titleKey),
+    department: t(offer.departmentKey),
+    description: t(offer.descriptionKey)
+  }))
+)
 
 const currentScreen = ref<Screen>('jobs')
 
