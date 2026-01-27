@@ -16,8 +16,8 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Button type="button" :label="label" :loading="loading" :disabled="disabled" :icon="icon" severity="warn"
-    class="!w-[750px] !h-[110px] !text-button-xxl !font-bold !rounded-xl" @click="emit('click', $event)">
+  <Button type="button" :label="label" :loading="loading" :disabled="disabled" :icon="icon"
+    class="!w-[650px] !h-[100px] !text-button-xl !font-semibold !rounded-xl" @click="emit('click', $event)">
     <template v-if="$slots.icon" #icon>
       <slot name="icon" />
     </template>

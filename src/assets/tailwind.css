@@ -1,9 +1,59 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;900&display=swap');
+@import "tailwindcss-primeui";
+
+@custom-variant dark (&:where(.app-dark, .app-dark *));
+
+@theme {
+  /* Primary (blu) */
+  --color-primary-50: #e8f0fa;
+  --color-primary-100: #b9cfef;
+  --color-primary-200: #97b8e8;
+  --color-primary-300: #6798dd;
+  --color-primary-400: #4984d6;
+  --color-primary-500: #1c65cc;
+  --color-primary-600: #195cba;
+  --color-primary-700: #144891;
+  --color-primary-800: #0f376f;
+  --color-primary-900: #0c2a56;
+  --color-primary-950: #081d3e;
+
+  /* Secondary (giallo) */
+  --color-secondary-50: #fefaed;
+  --color-secondary-100: #fdefc6;
+  --color-secondary-200: #fce7aa;
+  --color-secondary-300: #fadc83;
+  --color-secondary-400: #f9d56b;
+  --color-secondary-500: #f8cb46;
+  --color-secondary-600: #e2b940;
+  --color-secondary-700: #b09032;
+  --color-secondary-800: #887027;
+  --color-secondary-900: #68551d;
+  --color-secondary-950: #4a3b15;
+
+  /* Neutral */
+  --color-neutral-50: #fafbfb;
+  --color-neutral-100: #f5f6f7;
+  --color-neutral-200: #e0e3e7;
+  --color-neutral-300: #c3c9d0;
+  --color-neutral-400: #9ba5b0;
+  --color-neutral-500: #7e8b99;
+  --color-neutral-600: #617183;
+  --color-neutral-700: #47596e;
+  --color-neutral-800: #2a4058;
+  --color-neutral-900: #102843;
+  --color-neutral-950: #0a1829;
+
+  /* Font family */
+  --font-sans: 'Source Sans 3', sans-serif;
+}
 
 @layer base {
   :root {
     color-scheme: light;
+  }
+
+  .app-dark {
+    color-scheme: dark;
   }
 
   html,
@@ -15,9 +65,14 @@
 
   body {
     @apply antialiased font-sans;
-    background: linear-gradient(180deg, #e8f0fa 0%, #f5f6f7 100%);
-    color: theme(colors.neutral.900);
+    background: url('/bg_ava.png') center/cover no-repeat fixed;
+    color: var(--color-primary-900);
     touch-action: pan-y;
+  }
+
+  body.app-dark {
+    background: url('/bg_ava.png') center/cover no-repeat fixed;
+    color: var(--color-primary-50);
   }
 
   * {

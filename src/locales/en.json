@@ -1,0 +1,60 @@
+{
+  "splash": {
+    "title": "HR ASSISTANT",
+    "subtitle": "Intelligent candidate analysis and matching system",
+    "cta": "START HR ANALYSIS"
+  },
+  "jobs": {
+    "title": "SELECT POSITION",
+    "positions": {
+      "marketing": "Marketing Manager",
+      "sales": "Sales Director",
+      "developer": "Senior Developer",
+      "designer": "UI/UX Designer",
+      "hr": "HR Specialist"
+    }
+  },
+  "candidates": {
+    "title": "CANDIDATE POOL",
+    "filter": {
+      "all": "All",
+      "available": "Available",
+      "experienced": "Experienced",
+      "recommended": "Recommended"
+    },
+    "match": "Match",
+    "experience": "years experience",
+    "availability": "Availability",
+    "immediate": "Immediate",
+    "twoWeeks": "2 weeks",
+    "oneMonth": "1 month",
+    "ctaRank": "RANK CANDIDATES"
+  },
+  "results": {
+    "title": "ANALYSIS RESULTS",
+    "subtitle": "Top 3 candidates for",
+    "match": "Match",
+    "viewProfile": "VIEW PROFILE",
+    "newSearch": "NEW SEARCH",
+    "qrTitle": "DOWNLOAD FULL REPORT",
+    "qrSubtitle": "Scan the QR code with your smartphone to receive the detailed report via email"
+  },
+  "bottomNav": {
+    "home": "Home",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "SETTINGS",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "language": "Language",
+    "languageIt": "Italiano",
+    "languageEn": "English"
+  },
+  "processing": {
+    "analyzing": "Analyzing...",
+    "wait": "Please wait"
+  }
+}

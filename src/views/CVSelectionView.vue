@@ -86,6 +86,9 @@ const handleRank = () => {
 
 const handleNavigate = (screen: Screen) => {
   currentScreen.value = screen
+  if (screen === 'settings') {
+    router.push('/settings')
+  }
 }
 
 const handleHome = () => {
@@ -106,12 +109,13 @@ function onEnterCard(el: Element, done: () => void) {
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <PageTitle title="POOL CANDIDATI" :subtitle="jobTitle" />
+      <PageTitle :title="$t('candidates.title')" :subtitle="jobTitle" />
     </template>
 
     <div class="flex gap-4 mb-8">
-      <FilterButton v-for="(filter, idx) in ['Tutti', 'Alta affinità', 'Media affinità']" :key="idx" :label="filter"
-        :active="activeFilter === idx" @click="activeFilter = idx" />
+      <FilterButton
+        v-for="(filter, idx) in [$t('candidates.filter.all'), $t('candidates.filter.recommended'), $t('candidates.filter.experienced')]"
+        :key="idx" :label="filter" :active="activeFilter === idx" @click="activeFilter = idx" />
     </div>
 
     <ScrollArea class="flex-1 pb-8 pr-6">
@@ -124,8 +128,9 @@ function onEnterCard(el: Element, done: () => void) {
       </div>
     </ScrollArea>
 
-    <Button @click="handleRank" :disabled="selectedIds.size === 0" :label="`CLASSIFICA CANDIDATI (${selectedIds.size})`"
-      severity="warn" class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl !mt-8" />
+    <Button @click="handleRank" :disabled="selectedIds.size === 0"
+      :label="`${$t('candidates.ctaRank')} (${selectedIds.size})`" severity="warn"
+      class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl !mt-8" />
 
     <template #bottom-nav>
       <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />

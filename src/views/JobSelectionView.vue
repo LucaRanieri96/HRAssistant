@@ -62,7 +62,7 @@ const handleNavigate = (screen: Screen) => {
   if (screen === 'history') {
     // Navigate to history
   } else if (screen === 'settings') {
-    // Navigate to settings
+    router.push('/settings')
   }
 }
 
@@ -84,7 +84,7 @@ function onEnterCard(el: Element, done: () => void) {
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <PageTitle title="SELEZIONA POSIZIONE" />
+      <PageTitle :title="$t('jobs.title')" />
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">

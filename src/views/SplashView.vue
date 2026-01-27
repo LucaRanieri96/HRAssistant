@@ -13,7 +13,7 @@ const handleStart = () => {
 function onEnterContent(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   htmlEl.style.opacity = '0'
-  htmlEl.offsetHeight
+  void htmlEl.offsetHeight
   htmlEl.style.transition = 'opacity 0.8s ease'
   htmlEl.style.opacity = '1'
   done()
@@ -22,7 +22,7 @@ function onEnterContent(el: Element, done: () => void) {
 function onEnterBottom(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   htmlEl.style.opacity = '0'
-  htmlEl.offsetHeight
+  void htmlEl.offsetHeight
   htmlEl.style.transition = 'opacity 0.8s ease 0.3s'
   htmlEl.style.opacity = '1'
   done()
@@ -30,31 +30,29 @@ function onEnterBottom(el: Element, done: () => void) {
 </script>
 
 <template>
-  <ScreenLayout container-class="relative h-full px-16 py-20"
-    content-class="flex-1 flex flex-col items-center justify-between">
+  <ScreenLayout container-class="relative h-full px-16 py-12"
+    content-class="flex-1 flex flex-col items-center justify-center gap-16">
     <Transition appear @enter="onEnterContent">
-      <div class="flex-1 flex flex-col items-center justify-center space-y-12 max-w-[900px]">
+      <div class="flex flex-col items-center justify-center space-y-12 max-w-[900px]">
         <!-- Main Logo -->
         <div class="flex flex-col items-center">
-          <div
-            class="text-display-1 font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-4">
+          <div class="text-display-1 font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text mb-4">
             Aidia</div>
           <div class="text-h5 text-secondary-600 font-medium">Problem Solving with AI</div>
         </div>
 
         <!-- HR Assistant Tagline -->
         <div class="text-center space-y-6">
-          <h2 class="text-display-3 font-semibold text-neutral-900 tracking-tight leading-tight">
-            Assistente Intelligente per il Recruiting
+          <h2 class="text-display-3 font-semibold tracking-tight leading-tight">
+            {{ $t('splash.title') }}
           </h2>
-          <p class="text-h5 text-neutral-500 max-w-[850px] leading-relaxed">
-            Analizza i candidati, classifica i profili e identifica il match perfetto per il tuo
-            team con l'intelligenza artificiale
+          <p class="text-h5 opacity-70 max-w-[850px] leading-relaxed">
+            {{ $t('splash.subtitle') }}
           </p>
         </div>
 
         <!-- CTA Button -->
-        <PrimaryButton label="AVVIA ANALISI HR" @click="handleStart" />
+        <PrimaryButton :label="$t('splash.cta')" @click="handleStart" />
       </div>
     </Transition>
 

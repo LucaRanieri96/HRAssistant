@@ -68,7 +68,9 @@ onMounted(async () => {
     }
 
     graphics.circle(0, 0, node.size)
-    graphics.fill({ color: 0xd4d4d4, alpha: 0.8 })
+    graphics.fill({ color: 0x1c65cc, alpha: 0.35 })
+    graphics.circle(0, 0, node.size)
+    graphics.stroke({ width: 0.5, color: 0x4984d6, alpha: 0.5 })
 
     graphics.x = node.x
     graphics.y = node.y
@@ -127,10 +129,10 @@ onMounted(async () => {
 
         if (distSq < maxDistSq) {
           const dist = Math.sqrt(distSq)
-          const alpha = (1 - dist / connectionDistance) * 0.2
+          const alpha = (1 - dist / connectionDistance) * 0.18
           linesGraphics.moveTo(node.x, node.y)
           linesGraphics.lineTo(otherNode.x, otherNode.y)
-          linesGraphics.stroke({ width: 1, color: 0x737373, alpha })
+          linesGraphics.stroke({ width: 1, color: 0x4984d6, alpha })
         }
       }
     }

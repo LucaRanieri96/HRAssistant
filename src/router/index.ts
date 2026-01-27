@@ -6,6 +6,7 @@ const JobSelectionView = () => import('../views/JobSelectionView.vue')
 const CVSelectionView = () => import('../views/CVSelectionView.vue')
 const ResultsView = () => import('../views/ResultsView.vue')
 const ProcessingScreen = () => import('../components/ProcessingScreen.vue')
+const SettingsView = () => import('../views/SettingsView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,12 @@ const router = createRouter({
       path: '/results/:job',
       name: 'results',
       component: ResultsView,
+      meta: { transition: 'fade' },
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: SettingsView,
       meta: { transition: 'fade' },
     },
   ],

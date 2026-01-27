@@ -32,19 +32,19 @@ const classes = computed(() => {
   }
 
   const baseClasses = [
-    'relative bg-white/60 backdrop-blur-[12px]',
+    'relative bg-white/60 dark:bg-neutral-800/60 backdrop-blur-[12px]',
     roundedClassMap[props.rounded],
     props.padding,
   ]
 
   if (props.border) {
-    baseClasses.push('border border-neutral-200/30')
+    baseClasses.push('border border-neutral-200/30 dark:border-neutral-700/30')
   }
 
   baseClasses.push(shadowClassMap[props.shadow])
 
   if (props.hover) {
-    baseClasses.push('transition-all duration-300 hover:bg-white/80 hover:border-neutral-300')
+    baseClasses.push('transition-all duration-300 hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:border-neutral-300 dark:hover:border-neutral-600')
   }
 
   return baseClasses.join(' ')

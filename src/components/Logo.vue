@@ -3,10 +3,10 @@
   <Transition appear @before-enter="onBeforeEnter" @enter="onEnter">
     <div class="flex items-center">
       <div class="flex flex-col items-end">
-        <div class="text-h3 font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+        <div class="text-h3 font-bold">
           Aidia
         </div>
-        <div class="text-body-s text-secondary-600 font-medium mt-1">
+        <div class="text-body-s font-medium mt-1">
           Problem Solving with AI
         </div>
       </div>

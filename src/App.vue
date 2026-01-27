@@ -1,5 +1,16 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useSettingsStore } from '@/stores/settings'
 import GeometricBackground from '@/components/GeometricBackground.vue'
+
+const settingsStore = useSettingsStore()
+const { locale } = useI18n()
+
+onMounted(() => {
+  // Sync i18n locale with settings store
+  locale.value = settingsStore.locale
+})
 </script>
 
 <template>

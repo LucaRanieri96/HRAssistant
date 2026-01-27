@@ -28,10 +28,10 @@ const subtitleClasses = computed(() => {
 
 <template>
   <div class="mb-12">
-    <h1 :class="[titleClasses, 'font-bold text-neutral-900 tracking-tight mb-4']">
+    <h1 :class="[titleClasses, 'font-bold tracking-tight mb-4']">
       {{ title }}
     </h1>
-    <p v-if="subtitle" :class="[subtitleClasses, 'text-neutral-500 mb-6']">
+    <p v-if="subtitle" :class="[subtitleClasses, 'opacity-70 mb-6']">
       {{ subtitle }}
     </p>
     <div v-if="showDivider" class="w-32 h-2 bg-secondary-500 rounded-full" />
