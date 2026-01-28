@@ -11,7 +11,13 @@ defineProps<JobCardProps>()
 
 const emit = defineEmits<{
   click: [job: JobOffer]
+  'view-document': [job: JobOffer]
 }>()
+
+const handleDocumentClick = (e: Event, job: JobOffer) => {
+  e.stopPropagation()
+  emit('view-document', job)
+}
 </script>
 
 <template>
@@ -27,12 +33,10 @@ const emit = defineEmits<{
           </p>
         </div>
 
-        <div class="ml-6 flex-shrink-0">
-          <div
-            class="w-24 h-24 rounded-2xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300">
-            <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-l" />
-          </div>
-        </div>
+        <button @click="(e) => handleDocumentClick(e, job)"
+          class="ml-6 flex-shrink-0 w-24 h-24 rounded-2xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300">
+          <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-xxl" />
+        </button>
       </div>
     </BlurCard>
   </div>

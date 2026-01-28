@@ -8,6 +8,7 @@ export interface Candidate {
   experience: string
   skills: string[]
   education: string
+  documentUrl?: string
 }
 
 export interface CandidateCardProps {
@@ -20,47 +21,36 @@ defineProps<CandidateCardProps>()
 
 const emit = defineEmits<{
   click: [candidate: Candidate]
+  'view-document': [candidate: Candidate]
 }>()
+
+const handleDocumentClick = (e: Event, candidate: Candidate) => {
+  e.stopPropagation()
+  emit('view-document', candidate)
+}
 </script>
 
 <template>
   <div class="relative cursor-pointer group select-none" @click="emit('click', candidate)">
-    <BlurCard :padding="'p-10'" :rounded="'3xl'" :class="[
+    <BlurCard :padding="'p-8'" :rounded="'3xl'" :class="[
       'transition-all duration-300 ease-out',
       selected ? 'card-elevated-selected' : ''
     ]">
-      <div v-if="selected" class="absolute top-8 left-8">
-        <i class="pi pi-check-circle text-secondary-600 text-icon-l" />
-      </div>
+      <div class="flex items-center justify-between gap-6">
+        <div class="flex items-center gap-6 flex-1 min-w-0">
+          <div v-if="selected" class="flex-shrink-0">
+            <i class="pi pi-check-circle text-secondary-600 text-icon-l" />
+          </div>
 
-      <div class="flex items-start justify-between">
-        <div :class="['flex-1', selected ? 'ml-16' : '']">
-          <h3 class="text-h3 font-bold mb-2">
+          <h3 class="text-h3 font-bold truncate flex-1">
             {{ candidate.name }}
           </h3>
-
-          <div class="flex items-center gap-4 mb-4">
-            <span class="text-h4 font-bold text-secondary-600">
-              {{ candidate.matchScore }}%
-            </span>
-            <span class="text-label-xl opacity-70">{{ $t('candidates.match') }}</span>
-          </div>
-
-          <p class="text-body-xl opacity-70 mb-6">
-            {{ candidate.experience }}
-          </p>
-
-          <div class="flex flex-wrap gap-3 mb-4">
-            <div v-for="skill in candidate.skills.slice(0, 4)" :key="skill"
-              class="px-5 py-2 rounded-xl bg-secondary-500/10">
-              <span class="text-body-m text-secondary-700 dark:text-secondary-300 font-medium">{{ skill }}</span>
-            </div>
-          </div>
-
-          <p class="text-body-l opacity-60 italic">
-            {{ candidate.education }}
-          </p>
         </div>
+
+        <button @click="(e) => handleDocumentClick(e, candidate)"
+          class="flex-shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300">
+          <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-xl" />
+        </button>
       </div>
     </BlurCard>
   </div>

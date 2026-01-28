@@ -4,8 +4,9 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
-import FilterButton from '@/components/ui/FilterButton.vue'
 import CandidateCard from '@/components/ui/CandidateCard.vue'
+import DocumentViewer from '@/components/ui/DocumentViewer.vue'
+import SettingCard from '@/components/ui/SettingCard.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen, Candidate } from '@/types'
@@ -21,13 +22,18 @@ const mockCandidates = computed<Candidate[]>(() =>
     matchScore: candidate.matchScore,
     experience: t(candidate.experienceKey),
     skills: candidate.skills,
-    education: t(candidate.educationKey)
+    education: t(candidate.educationKey),
+    documentUrl: `/mock/cv-${candidate.id}.pdf` // Mock URL
   }))
 )
 
 const selectedIds = ref<Set<string>>(new Set())
 const currentScreen = ref<Screen>('candidates')
-const activeFilter = ref(0)
+const selectAll = ref(false)
+
+// Document viewer state
+const showDocumentViewer = ref(false)
+const currentDocument = ref<{ title: string; url: string; type: 'pdf' | 'image' } | null>(null)
 
 const jobTitle = ref('Senior AI Engineer')
 
@@ -39,15 +45,34 @@ const toggleCandidate = (candidate: Candidate) => {
     newSelected.add(candidate.id)
   }
   selectedIds.value = newSelected
+
+  // Update selectAll state
+  selectAll.value = selectedIds.value.size === mockCandidates.value.length
+}
+
+const toggleSelectAll = () => {
+  if (selectAll.value) {
+    selectedIds.value = new Set(mockCandidates.value.map(c => c.id))
+  } else {
+    selectedIds.value = new Set()
+  }
+}
+
+const handleViewDocument = (candidate: Candidate) => {
+  currentDocument.value = {
+    title: `${t('candidates.cv')}: ${candidate.name}`,
+    url: candidate.documentUrl || '',
+    type: 'pdf'
+  }
+  showDocumentViewer.value = true
 }
 
 const handleRank = () => {
   if (selectedIds.value.size > 0) {
-    // Passa i dati tramite router state (nascosto nell'URL)
     router.push({
       path: '/processing',
       state: {
-        jobId: '1', // TODO: prendere l'ID del job dalla route precedente
+        jobId: '1',
         candidateIds: Array.from(selectedIds.value)
       }
     })
@@ -82,10 +107,10 @@ function onEnterCard(el: Element, done: () => void) {
       <PageTitle :title="$t('candidates.title')" :subtitle="jobTitle" />
     </template>
 
-    <div class="flex gap-4 mb-8">
-      <FilterButton
-        v-for="(filter, idx) in [$t('candidates.filter.all'), $t('candidates.filter.recommended'), $t('candidates.filter.experienced')]"
-        :key="idx" :label="filter" :active="activeFilter === idx" @click="activeFilter = idx" />
+    <div class="mb-8">
+      <SettingCard icon="pi-users" :title="$t('candidates.selectAll')"
+        :subtitle="`${selectedIds.size} / ${mockCandidates.length} ${$t('candidates.selected')}`" v-model="selectAll"
+        @update:model-value="toggleSelectAll" :show-toggle="true" />
     </div>
 
     <ScrollArea class="flex-1 pb-4 pr-6">
@@ -93,7 +118,7 @@ function onEnterCard(el: Element, done: () => void) {
         <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
           v-memo="[selectedIds.has(candidate.id), candidate.id, candidate.name]">
           <CandidateCard :candidate="candidate" :selected="selectedIds.has(candidate.id)" :index="index"
-            :data-index="index" @click="toggleCandidate" />
+            :data-index="index" @click="toggleCandidate" @view-document="handleViewDocument" />
         </Transition>
       </div>
     </ScrollArea>
@@ -103,6 +128,9 @@ function onEnterCard(el: Element, done: () => void) {
         :label="`${$t('candidates.ctaRank')} (${selectedIds.size})`" severity="warn"
         class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl" />
     </div>
+
+    <DocumentViewer v-model:visible="showDocumentViewer" :title="currentDocument?.title || ''"
+      :document-url="currentDocument?.url || ''" :document-type="currentDocument?.type || 'pdf'" />
 
     <template #bottom-nav>
       <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />

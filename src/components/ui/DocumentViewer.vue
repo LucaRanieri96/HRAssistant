@@ -29,30 +29,15 @@ watch(localVisible, (newVal) => {
 </script>
 
 <template>
-  <Dialog 
-    v-model:visible="localVisible" 
-    :header="title"
-    modal
-    maximizable
-    :style="{ width: '90vw', height: '90vh' }"
-    :breakpoints="{ '960px': '95vw' }"
-  >
+  <Dialog v-model:visible="localVisible" :header="title" modal maximizable :style="{ width: '90vw', height: '90vh' }"
+    :breakpoints="{ '960px': '95vw' }">
     <div class="w-full h-full flex items-center justify-center">
       <div v-if="documentUrl" class="w-full h-[75vh]">
         <!-- PDF Viewer -->
-        <iframe 
-          v-if="documentType === 'pdf'"
-          :src="documentUrl"
-          class="w-full h-full rounded-xl border-0"
-          title="Document viewer"
-        />
+        <iframe v-if="documentType === 'pdf'" :src="documentUrl" class="w-full h-full rounded-xl border-0"
+          title="Document viewer" />
         <!-- Image Viewer -->
-        <img 
-          v-else
-          :src="documentUrl"
-          :alt="title"
-          class="max-w-full max-h-full object-contain mx-auto rounded-xl"
-        />
+        <img v-else :src="documentUrl" :alt="title" class="max-w-full max-h-full object-contain mx-auto rounded-xl" />
       </div>
       <div v-else class="flex flex-col items-center gap-6 py-20">
         <i class="pi pi-file text-icon-xxl opacity-30" />

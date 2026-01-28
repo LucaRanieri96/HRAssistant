@@ -10,6 +10,7 @@
   },
   "jobs": {
     "title": "SELEZIONA POSIZIONE",
+    "description": "Descrizione Posizione",
     "positions": {
       "marketing": "Marketing Manager",
       "sales": "Sales Director",
@@ -60,6 +61,9 @@
     "twoWeeks": "2 settimane",
     "oneMonth": "1 mese",
     "ctaRank": "CLASSIFICA CANDIDATI",
+    "selectAll": "Seleziona Tutti i Candidati",
+    "selected": "selezionati",
+    "cv": "CV",
     "mockData": {
       "alessandroRossi": {
         "name": "Alessandro Rossi",
