@@ -38,6 +38,13 @@ const currentDocument = ref<{ title: string; url: string; type: 'pdf' | 'image' 
 
 const jobTitle = ref('Senior AI Engineer')
 
+// Initialize with all candidates selected on first load
+watch(mockCandidates, (candidates) => {
+  if (candidates.length > 0) {
+    candidatesStore.initializeWithAll(candidates.map(c => c.id))
+  }
+}, { immediate: true })
+
 // Sync selectAll with store
 watch(() => candidatesStore.selectedIds.size, () => {
   selectAll.value = candidatesStore.selectedIds.size === mockCandidates.value.length
@@ -126,7 +133,7 @@ function onEnterCard(el: Element, done: () => void) {
 
     <div class="mt-6">
       <Button @click="handleRank" :disabled="candidatesStore.selectedIds.size === 0"
-        :label="`${$t('candidates.ctaRank')} (${candidatesStore.selectedIds.size})`" severity="warn"
+        :label="`${$t('candidates.ctaRank')} (${candidatesStore.selectedIds.size})`" severity="info"
         class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl" />
     </div>
 

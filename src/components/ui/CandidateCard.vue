@@ -38,17 +38,17 @@ const handleDocumentClick = (e: Event, candidate: Candidate) => {
     ]">
       <div class="flex items-center justify-between gap-6">
         <div class="flex items-center gap-6 flex-1 min-w-0">
-          <div v-if="selected" class="flex-shrink-0">
-            <i class="pi pi-check-circle text-secondary-600 text-icon-l" />
-          </div>
-
           <h3 class="text-h3 font-bold truncate flex-1">
             {{ candidate.name }}
           </h3>
+
+          <div v-if="selected" class="flex-shrink-0">
+            <i class="pi pi-check-circle-fill text-green-500 text-icon-l" />
+          </div>
         </div>
 
         <button @click="(e) => handleDocumentClick(e, candidate)"
-          class="flex-shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300">
+          class="flex-shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300 active:bg-secondary-500/30 active:scale-95">
           <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-xl" />
         </button>
       </div>

@@ -8,6 +8,9 @@ export const useCandidatesStore = defineStore('candidates', () => {
   // Current job ID (for context)
   const currentJobId = ref<string | null>(null)
 
+  // Flag to track if initial selection was done
+  const initialSelectionDone = ref(false)
+
   const toggleCandidate = (candidateId: string) => {
     const newSelected = new Set(selectedIds.value)
     if (newSelected.has(candidateId)) {
@@ -34,9 +37,17 @@ export const useCandidatesStore = defineStore('candidates', () => {
     currentJobId.value = jobId
   }
 
+  const initializeWithAll = (candidateIds: string[]) => {
+    if (!initialSelectionDone.value) {
+      selectedIds.value = new Set(candidateIds)
+      initialSelectionDone.value = true
+    }
+  }
+
   const reset = () => {
     selectedIds.value = new Set()
     currentJobId.value = null
+    initialSelectionDone.value = false
   }
 
   return {
@@ -47,6 +58,7 @@ export const useCandidatesStore = defineStore('candidates', () => {
     deselectAll,
     isSelected,
     setJobId,
+    initializeWithAll,
     reset,
   }
 })

@@ -185,16 +185,16 @@
   }
 
   .kiosk-scrollbar::-webkit-scrollbar-track {
-    background: rgba(195, 201, 208, 0.1);
+    background: rgba(195, 201, 208, 0.15);
     border-radius: 4px;
   }
 
   .kiosk-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(248, 203, 70, 0.5);
+    background: var(--color-secondary-500);
     border-radius: 4px;
   }
 
   .kiosk-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(248, 203, 70, 0.7);
+    background: var(--color-secondary-600);
   }
 }
