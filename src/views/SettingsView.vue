@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -17,25 +17,31 @@ const { locale: i18nLocale, t } = useI18n()
 
 const currentScreen = ref<Screen>('settings')
 
-const toggleTheme = () => {
-  settingsStore.toggleTheme()
-}
+const isDarkMode = computed({
+  get: () => theme.value === 'dark',
+  set: (value: boolean) => {
+    settingsStore.setTheme(value ? 'dark' : 'light')
+  }
+})
 
-const toggleLocale = () => {
-  const newLocale = locale.value === 'it' ? 'en' : 'it'
-  settingsStore.setLocale(newLocale)
-  i18nLocale.value = newLocale
-}
+const isEnglish = computed({
+  get: () => locale.value === 'en',
+  set: (value: boolean) => {
+    const newLocale = value ? 'en' : 'it'
+    settingsStore.setLocale(newLocale)
+    i18nLocale.value = newLocale
+  }
+})
 
 const getThemeIcon = () => {
   return theme.value === 'light' ? 'pi-sun' : 'pi-moon'
 }
 
-const getThemeLabel = () => {
+const getThemeSubtitle = () => {
   return t(theme.value === 'light' ? 'settings.themeLight' : 'settings.themeDark')
 }
 
-const getLocaleLabel = () => {
+const getLocaleSubtitle = () => {
   return t(locale.value === 'it' ? 'settings.languageIt' : 'settings.languageEn')
 }
 
@@ -61,12 +67,12 @@ const handleHome = () => {
 
     <div class="flex-1 flex flex-col gap-4 pb-8">
       <!-- Theme Setting -->
-      <SettingCard :icon="getThemeIcon()" :title="$t('settings.theme')" :subtitle="getThemeLabel()"
-        @click="toggleTheme" />
+      <SettingCard :icon="getThemeIcon()" :title="$t('settings.theme')" :subtitle="getThemeSubtitle()"
+        v-model="isDarkMode" />
 
       <!-- Language Setting -->
-      <SettingCard icon="pi-globe" :title="$t('settings.language')" :subtitle="getLocaleLabel()"
-        @click="toggleLocale" />
+      <SettingCard icon="pi-globe" :title="$t('settings.language')" :subtitle="getLocaleSubtitle()"
+        v-model="isEnglish" />
     </div>
 
     <template #bottom-nav>

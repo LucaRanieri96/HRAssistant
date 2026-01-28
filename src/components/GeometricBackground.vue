@@ -178,9 +178,6 @@ onUnmounted(() => {
   }
   nodes = []
   linesGraphics = null
-  if (typeof unwatchTheme === 'function') {
-    unwatchTheme()
-  }
 })
 </script>
 

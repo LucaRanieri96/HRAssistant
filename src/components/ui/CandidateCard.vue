@@ -26,8 +26,8 @@ const emit = defineEmits<{
 <template>
   <div class="relative cursor-pointer group select-none" @click="emit('click', candidate)">
     <BlurCard :padding="'p-10'" :rounded="'3xl'" :class="[
-      'transition-all duration-300 ease-out active:scale-[0.98]',
-      selected ? '!bg-white/90 dark:!bg-neutral-800/90' : ''
+      'transition-all duration-300 ease-out',
+      selected ? 'card-elevated-selected' : ''
     ]">
       <div v-if="selected" class="absolute top-8 left-8">
         <i class="pi pi-check-circle text-secondary-600 text-icon-l" />

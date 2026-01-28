@@ -1,28 +1,22 @@
 <script setup lang="ts">
 import BlurCard from './BlurCard.vue'
-
-export interface Job {
-  id: string
-  title: string
-  department: string
-  description?: string
-}
+import type { JobOffer } from '@/types'
 
 export interface JobCardProps {
-  job: Job
+  job: JobOffer
   index?: number
 }
 
 defineProps<JobCardProps>()
 
 const emit = defineEmits<{
-  click: [job: Job]
+  click: [job: JobOffer]
 }>()
 </script>
 
 <template>
   <div class="relative group cursor-pointer select-none" @click="emit('click', job)">
-    <BlurCard padding="p-10" rounded="3xl" class="transition-all duration-300 ease-out active:scale-[0.98]">
+    <BlurCard padding="p-10" rounded="3xl">
       <div class="flex items-start justify-between">
         <div class="flex-1">
           <h2 class="text-display-3 font-bold mb-3 leading-tight">

@@ -45,6 +45,18 @@
 
   /* Font family */
   --font-sans: 'Source Sans 3', sans-serif;
+
+  /* Elevation system */
+  --elevation-xs: 0 1px 4px rgba(0, 0, 0, 0.04);
+  --elevation-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --elevation-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --elevation-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --elevation-xl: 0 12px 32px rgba(0, 0, 0, 0.16);
+
+  /* Border system */
+  --border-subtle: 1px solid rgb(229 231 235 / 0.3);
+  --border-subtle-dark: 1px solid rgb(64 64 64 / 0.5);
+  --border-emphasis-dark: 1px solid rgb(82 82 82 / 0.7);
 }
 
 @layer base {
@@ -86,6 +98,49 @@
   button,
   a {
     touch-action: manipulation;
+  }
+}
+
+@layer components {
+  /* Card system - Light mode: elevated with shadow */
+  .card-elevated {
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: rgb(255 255 255 / 0.6);
+    box-shadow: var(--elevation-md);
+    transition: all 0.3s ease;
+  }
+
+  .card-elevated:active {
+    transform: scale(0.98);
+  }
+
+  /* Dark mode: flat with border */
+  .dark .card-elevated {
+    background-color: rgb(38 38 38 / 0.6);
+    box-shadow: none;
+    border: var(--border-subtle-dark);
+  }
+
+  .dark .card-elevated:hover {
+    border: var(--border-emphasis-dark);
+  }
+
+  /* Selected state */
+  .card-elevated-selected {
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: rgb(255 255 255 / 0.9) !important;
+    box-shadow: var(--elevation-md);
+    transition: all 0.3s ease;
+  }
+
+  .dark .card-elevated-selected {
+    background-color: rgb(38 38 38 / 0.9) !important;
+    box-shadow: none;
+    border: var(--border-emphasis-dark);
   }
 }
 
