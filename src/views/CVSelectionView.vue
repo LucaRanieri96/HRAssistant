@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useCandidatesStore } from '@/stores/candidates'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import CandidateCard from '@/components/ui/CandidateCard.vue'
@@ -14,6 +15,7 @@ import candidatesData from '@/data/candidates.json'
 
 const router = useRouter()
 const { t } = useI18n()
+const candidatesStore = useCandidatesStore()
 
 const mockCandidates = computed<Candidate[]>(() =>
   candidatesData.map(candidate => ({
@@ -23,11 +25,10 @@ const mockCandidates = computed<Candidate[]>(() =>
     experience: t(candidate.experienceKey),
     skills: candidate.skills,
     education: t(candidate.educationKey),
-    documentUrl: `/mock/cv-${candidate.id}.pdf` // Mock URL
+    documentUrl: `/documents/cv-${candidate.id}.pdf`
   }))
 )
 
-const selectedIds = ref<Set<string>>(new Set())
 const currentScreen = ref<Screen>('candidates')
 const selectAll = ref(false)
 
@@ -37,24 +38,20 @@ const currentDocument = ref<{ title: string; url: string; type: 'pdf' | 'image' 
 
 const jobTitle = ref('Senior AI Engineer')
 
-const toggleCandidate = (candidate: Candidate) => {
-  const newSelected = new Set(selectedIds.value)
-  if (newSelected.has(candidate.id)) {
-    newSelected.delete(candidate.id)
-  } else {
-    newSelected.add(candidate.id)
-  }
-  selectedIds.value = newSelected
+// Sync selectAll with store
+watch(() => candidatesStore.selectedIds.size, () => {
+  selectAll.value = candidatesStore.selectedIds.size === mockCandidates.value.length
+}, { immediate: true })
 
-  // Update selectAll state
-  selectAll.value = selectedIds.value.size === mockCandidates.value.length
+const toggleCandidate = (candidate: Candidate) => {
+  candidatesStore.toggleCandidate(candidate.id)
 }
 
 const toggleSelectAll = () => {
   if (selectAll.value) {
-    selectedIds.value = new Set(mockCandidates.value.map(c => c.id))
+    candidatesStore.selectAll(mockCandidates.value.map(c => c.id))
   } else {
-    selectedIds.value = new Set()
+    candidatesStore.deselectAll()
   }
 }
 
@@ -68,12 +65,12 @@ const handleViewDocument = (candidate: Candidate) => {
 }
 
 const handleRank = () => {
-  if (selectedIds.value.size > 0) {
+  if (candidatesStore.selectedIds.size > 0) {
     router.push({
       path: '/processing',
       state: {
         jobId: '1',
-        candidateIds: Array.from(selectedIds.value)
+        candidateIds: Array.from(candidatesStore.selectedIds)
       }
     })
   }
@@ -90,6 +87,10 @@ const handleHome = () => {
   router.push('/')
 }
 
+const handleBack = () => {
+  router.back()
+}
+
 function onEnterCard(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   const index = parseInt(htmlEl.dataset.index || '0')
@@ -104,28 +105,28 @@ function onEnterCard(el: Element, done: () => void) {
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <PageTitle :title="$t('candidates.title')" :subtitle="jobTitle" />
+      <PageTitle :title="$t('candidates.title')" :subtitle="jobTitle" :show-back="true" @back="handleBack" />
     </template>
 
     <div class="mb-8">
       <SettingCard icon="pi-users" :title="$t('candidates.selectAll')"
-        :subtitle="`${selectedIds.size} / ${mockCandidates.length} ${$t('candidates.selected')}`" v-model="selectAll"
-        @update:model-value="toggleSelectAll" :show-toggle="true" />
+        :subtitle="`${candidatesStore.selectedIds.size} / ${mockCandidates.length} ${$t('candidates.selected')}`"
+        v-model="selectAll" @update:model-value="toggleSelectAll" :show-toggle="true" />
     </div>
 
     <ScrollArea class="flex-1 pb-4 pr-6">
       <div class="grid grid-cols-1 gap-6 p-2">
         <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
-          v-memo="[selectedIds.has(candidate.id), candidate.id, candidate.name]">
-          <CandidateCard :candidate="candidate" :selected="selectedIds.has(candidate.id)" :index="index"
+          v-memo="[candidatesStore.isSelected(candidate.id), candidate.id, candidate.name]">
+          <CandidateCard :candidate="candidate" :selected="candidatesStore.isSelected(candidate.id)" :index="index"
             :data-index="index" @click="toggleCandidate" @view-document="handleViewDocument" />
         </Transition>
       </div>
     </ScrollArea>
 
     <div class="mt-6">
-      <Button @click="handleRank" :disabled="selectedIds.size === 0"
-        :label="`${$t('candidates.ctaRank')} (${selectedIds.size})`" severity="warn"
+      <Button @click="handleRank" :disabled="candidatesStore.selectedIds.size === 0"
+        :label="`${$t('candidates.ctaRank')} (${candidatesStore.selectedIds.size})`" severity="warn"
         class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl" />
     </div>
 

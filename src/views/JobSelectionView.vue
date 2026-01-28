@@ -29,7 +29,7 @@ const jobOffers = computed<JobOffer[]>(() =>
     title: t(offer.titleKey),
     department: t(offer.departmentKey),
     description: t(offer.descriptionKey),
-    documentUrl: `/mock/job-${offer.id}.pdf` // Mock URL
+    documentUrl: `/documents/job-${offer.id}.pdf`
   }))
 )
 
@@ -65,6 +65,10 @@ const handleHome = () => {
   router.push('/')
 }
 
+const handleBack = () => {
+  router.back()
+}
+
 function onEnterCard(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   const index = parseInt(htmlEl.dataset.index || '0')
@@ -79,7 +83,7 @@ function onEnterCard(el: Element, done: () => void) {
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <PageTitle :title="$t('jobs.title')" />
+      <PageTitle :title="$t('jobs.title')" :show-back="true" @back="handleBack" />
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">
