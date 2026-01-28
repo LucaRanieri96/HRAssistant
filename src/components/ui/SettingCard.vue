@@ -22,23 +22,34 @@ const emit = defineEmits<{
 const handleToggle = (value: boolean) => {
   emit('update:modelValue', value)
 }
+
+const handleCardClick = () => {
+  if (props.showToggle) {
+    emit('update:modelValue', !props.modelValue)
+  }
+}
 </script>
 
 <template>
-  <BlurCard padding="p-8" rounded="2xl">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <i :class="['pi text-icon-l transition-colors', icon]" />
-        <div class="text-left">
-          <div class="text-h5 font-bold">
-            {{ title }}
-          </div>
-          <div class="text-body-l opacity-70">
-            {{ subtitle }}
+  <div @click="handleCardClick" class="cursor-pointer select-none">
+    <BlurCard padding="p-8" rounded="2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-6">
+          <i :class="['pi text-icon-xl transition-colors', icon]" />
+          <div class="text-left">
+            <div class="text-h5 font-bold">
+              {{ title }}
+            </div>
+            <div class="text-body-l opacity-70">
+              {{ subtitle }}
+            </div>
           </div>
         </div>
+        <div @click.stop>
+          <ToggleSwitch v-if="showToggle" :model-value="modelValue" @update:model-value="handleToggle"
+            class="scale-125" />
+        </div>
       </div>
-      <ToggleSwitch v-if="showToggle" :model-value="modelValue" @update:model-value="handleToggle" />
-    </div>
-  </BlurCard>
+    </BlurCard>
+  </div>
 </template>

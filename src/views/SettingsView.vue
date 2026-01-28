@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
+import { useNavigationStore } from '../stores/navigation'
 import ScreenLayout from '../components/layout/ScreenLayout.vue'
 import PageTitle from '../components/ui/PageTitle.vue'
 import SettingCard from '../components/ui/SettingCard.vue'
@@ -12,6 +13,7 @@ import type { Screen } from '../components/BottomNav.vue'
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
+const navigationStore = useNavigationStore()
 const { theme, locale } = storeToRefs(settingsStore)
 const { locale: i18nLocale, t } = useI18n()
 
@@ -59,7 +61,7 @@ const handleHome = () => {
 }
 
 const handleBack = () => {
-  router.back()
+  navigationStore.goBack('/settings')
 }
 </script>
 

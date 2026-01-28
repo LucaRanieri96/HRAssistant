@@ -6,9 +6,14 @@ export interface PrimaryButtonProps {
   loading?: boolean
   disabled?: boolean
   icon?: string
+  fullWidth?: boolean
+  size?: 'default' | 'large'
 }
 
-defineProps<PrimaryButtonProps>()
+withDefaults(defineProps<PrimaryButtonProps>(), {
+  fullWidth: false,
+  size: 'default'
+})
 
 const emit = defineEmits<{
   click: [event: MouseEvent]
@@ -16,8 +21,11 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Button type="button" :label="label" :loading="loading" :disabled="disabled" :icon="icon"
-    class="!w-[600px] !h-[100px] !rounded-xl !text-3xl" @click="emit('click', $event)">
+  <Button type="button" :label="label" :loading="loading" :disabled="disabled" :icon="icon" :class="[
+    '!rounded-xl',
+    fullWidth ? '!w-full' : '!w-[600px]',
+    size === 'large' ? '!h-[110px] !text-3xl !font-bold' : '!h-[100px] !text-3xl'
+  ]" @click="emit('click', $event)">
     <template v-if="$slots.icon" #icon>
       <slot name="icon" />
     </template>

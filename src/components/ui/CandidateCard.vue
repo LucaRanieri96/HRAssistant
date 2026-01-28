@@ -42,8 +42,11 @@ const handleDocumentClick = (e: Event, candidate: Candidate) => {
             {{ candidate.name }}
           </h3>
 
-          <div v-if="selected" class="flex-shrink-0">
-            <i class="pi pi-check-circle-fill text-green-500 text-icon-l" />
+          <div v-if="selected"
+            class="flex-shrink-0 w-14 h-14 rounded-full bg-green-500 flex items-center justify-center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
           </div>
         </div>
 

@@ -3,11 +3,13 @@ import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCandidatesStore } from '@/stores/candidates'
+import { useNavigationStore } from '@/stores/navigation'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import CandidateCard from '@/components/ui/CandidateCard.vue'
 import DocumentViewer from '@/components/ui/DocumentViewer.vue'
 import SettingCard from '@/components/ui/SettingCard.vue'
+import PrimaryButton from '@/components/ui/PrimaryButton.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
 import type { Screen, Candidate } from '@/types'
@@ -16,6 +18,7 @@ import candidatesData from '@/data/candidates.json'
 const router = useRouter()
 const { t } = useI18n()
 const candidatesStore = useCandidatesStore()
+const navigationStore = useNavigationStore()
 
 const mockCandidates = computed<Candidate[]>(() =>
   candidatesData.map(candidate => ({
@@ -86,6 +89,7 @@ const handleRank = () => {
 const handleNavigate = (screen: Screen) => {
   currentScreen.value = screen
   if (screen === 'settings') {
+    navigationStore.setPreviousRoute('/cv-selection')
     router.push('/settings')
   }
 }
@@ -95,7 +99,7 @@ const handleHome = () => {
 }
 
 const handleBack = () => {
-  router.back()
+  navigationStore.goBack('/cv-selection')
 }
 
 function onEnterCard(el: Element, done: () => void) {
@@ -132,9 +136,8 @@ function onEnterCard(el: Element, done: () => void) {
     </ScrollArea>
 
     <div class="mt-6">
-      <Button @click="handleRank" :disabled="candidatesStore.selectedIds.size === 0"
-        :label="`${$t('candidates.ctaRank')} (${candidatesStore.selectedIds.size})`" severity="info"
-        class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl" />
+      <PrimaryButton @click="handleRank" :disabled="candidatesStore.selectedIds.size === 0"
+        :label="`${$t('candidates.ctaRank')} (${candidatesStore.selectedIds.size})`" :full-width="true" size="large" />
     </div>
 
     <DocumentViewer v-model:visible="showDocumentViewer" :title="currentDocument?.title || ''"

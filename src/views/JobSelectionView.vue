@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useNavigationStore } from '@/stores/navigation'
 
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
@@ -14,6 +15,7 @@ import jobOffersData from '@/data/jobOffers.json'
 
 const router = useRouter()
 const { t } = useI18n()
+const navigationStore = useNavigationStore()
 
 export interface JobOffer {
   id: string
@@ -57,6 +59,7 @@ const handleNavigate = (screen: Screen) => {
   if (screen === 'history') {
     // Navigate to history
   } else if (screen === 'settings') {
+    navigationStore.setPreviousRoute('/job-selection')
     router.push('/settings')
   }
 }
@@ -66,7 +69,7 @@ const handleHome = () => {
 }
 
 const handleBack = () => {
-  router.back()
+  navigationStore.goBack('/job-selection')
 }
 
 function onEnterCard(el: Element, done: () => void) {

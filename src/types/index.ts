@@ -13,6 +13,7 @@ export interface Candidate {
   skills: string[]
   education: string
   selected?: boolean
+  documentUrl?: string
 }
 
 export type Screen =

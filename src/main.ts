@@ -57,14 +57,14 @@ const NeutralPreset = definePreset(Aura, {
       },
       dark: {
         primary: {
-          color: 'var(--color-primary-200)',
-          inverseColor: 'var(--color-primary-950)',
-          hoverColor: 'var(--color-primary-100)',
-          activeColor: 'var(--color-primary-50)',
+          color: 'var(--color-primary-500)',
+          inverseColor: '#ffffff',
+          hoverColor: 'var(--color-primary-600)',
+          activeColor: 'var(--color-primary-700)',
         },
         highlight: {
-          background: 'var(--color-primary-400)',
-          focusBackground: 'var(--color-primary-300)',
+          background: 'var(--color-primary-600)',
+          focusBackground: 'var(--color-primary-700)',
           color: '#ffffff',
           focusColor: '#ffffff',
         },
