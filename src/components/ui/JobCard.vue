@@ -29,7 +29,7 @@ const emit = defineEmits<{
 
         <div class="ml-6 flex-shrink-0">
           <div
-            class="w-24 h-24 rounded-2xl bg-secondary-100 dark:bg-secondary-950 flex items-center justify-center transition-all duration-300">
+            class="w-24 h-24 rounded-2xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300">
             <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-l" />
           </div>
         </div>

@@ -17,8 +17,8 @@ export interface ScreenLayoutProps {
 const props = withDefaults(defineProps<ScreenLayoutProps>(), {
   showLogo: true,
   logoSize: 'medium',
-  rootClass: 'w-full h-full',
-  containerClass: 'h-full flex flex-col px-16 py-12',
+  rootClass: 'w-full h-full flex justify-center',
+  containerClass: 'h-full flex flex-col px-16 py-12 pb-40 max-w-[1400px] w-full',
   headerClass: '',
   contentClass: '',
   footerClass: '',

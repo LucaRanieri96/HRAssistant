@@ -88,7 +88,7 @@ function onEnterCard(el: Element, done: () => void) {
         :key="idx" :label="filter" :active="activeFilter === idx" @click="activeFilter = idx" />
     </div>
 
-    <ScrollArea class="flex-1 pb-8 pr-6">
+    <ScrollArea class="flex-1 pb-4 pr-6">
       <div class="grid grid-cols-1 gap-6 p-2">
         <Transition v-for="(candidate, index) in mockCandidates" :key="candidate.id" appear @enter="onEnterCard"
           v-memo="[selectedIds.has(candidate.id), candidate.id, candidate.name]">
@@ -98,9 +98,11 @@ function onEnterCard(el: Element, done: () => void) {
       </div>
     </ScrollArea>
 
-    <Button @click="handleRank" :disabled="selectedIds.size === 0"
-      :label="`${$t('candidates.ctaRank')} (${selectedIds.size})`" severity="warn"
-      class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl !mt-8" />
+    <div class="mt-6">
+      <Button @click="handleRank" :disabled="selectedIds.size === 0"
+        :label="`${$t('candidates.ctaRank')} (${selectedIds.size})`" severity="warn"
+        class="!w-full !h-[110px] !text-button-xxl !font-bold !rounded-xl" />
+    </div>
 
     <template #bottom-nav>
       <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />

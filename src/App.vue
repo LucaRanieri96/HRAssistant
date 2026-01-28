@@ -16,7 +16,7 @@ onMounted(() => {
 <template>
   <div class="relative h-screen w-full">
     <!-- Background persistente per tutta l'app -->
-    <div class="absolute inset-0 z-0 bg-neutral-50 dark:bg-neutral-900">
+    <div class="absolute inset-0 z-0 bg-neutral-50 dark:bg-neutral-900 transition-colors duration-300">
       <GeometricBackground />
     </div>
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, onMounted } from 'vue'
 import QRCode from 'qrcode'
 import BlurCard from './BlurCard.vue'
 
@@ -15,10 +14,7 @@ const props = withDefaults(defineProps<QRCodeCardProps>(), {
   url: 'https://aidia.it/'
 })
 
-const { t } = useI18n()
 const qrCodeDataUrl = ref('')
-
-const displayQrLabel = computed(() => props.qrLabel ?? t('components.qrCodeCard.defaultLabel'))
 
 onMounted(async () => {
   try {
@@ -45,7 +41,7 @@ onMounted(async () => {
         <div
           class="w-52 h-52 bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 rounded-3xl p-5 flex items-center justify-center">
           <img v-if="qrCodeDataUrl" :src="qrCodeDataUrl" alt="QR Code" class="w-full h-full rounded-2xl" />
-          <div v-else class="w-full h-full bg-neutral-100 rounded-2xl flex items-center justify-center">
+          <div v-else class="w-full h-full bg-white/5 rounded-2xl flex items-center justify-center">
             <i class="pi pi-spinner text-neutral-400 text-icon-xl animate-spin" />
           </div>
         </div>

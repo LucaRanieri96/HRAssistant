@@ -57,12 +57,16 @@ const handleNavigate = (screen: Screen) => {
 const handleHome = () => {
   router.push('/')
 }
+
+const handleBack = () => {
+  router.back()
+}
 </script>
 
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <PageTitle :title="$t('settings.title')" />
+      <PageTitle :title="$t('settings.title')" :show-back="true" @back="handleBack" />
     </template>
 
     <div class="flex-1 flex flex-col gap-4 pb-8">

@@ -15,6 +15,7 @@ declare module 'vue' {
     BottomNav: typeof import('./src/components/BottomNav.vue')['default']
     Button: typeof import('primevue/button')['default']
     CandidateCard: typeof import('./src/components/ui/CandidateCard.vue')['default']
+    DocumentViewer: typeof import('./src/components/ui/DocumentViewer.vue')['default']
     FilterButton: typeof import('./src/components/ui/FilterButton.vue')['default']
     GeometricBackground: typeof import('./src/components/GeometricBackground.vue')['default']
     JobCard: typeof import('./src/components/ui/JobCard.vue')['default']

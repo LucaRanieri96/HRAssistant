@@ -52,7 +52,7 @@ const emit = defineEmits<{
 
           <div class="flex flex-wrap gap-3 mb-4">
             <div v-for="skill in candidate.skills.slice(0, 4)" :key="skill"
-              class="px-5 py-2 rounded-xl bg-secondary-50 dark:bg-secondary-950">
+              class="px-5 py-2 rounded-xl bg-secondary-500/10">
               <span class="text-body-m text-secondary-700 dark:text-secondary-300 font-medium">{{ skill }}</span>
             </div>
           </div>

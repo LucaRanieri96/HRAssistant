@@ -7,7 +7,7 @@
       </h1>
 
       <div class="mb-20">
-        <div class="w-full h-4 bg-neutral-200/30 dark:bg-neutral-700/30 rounded-full overflow-hidden">
+        <div class="w-full h-4 bg-white/10 rounded-full overflow-hidden">
           <div class="h-full bg-gradient-to-r from-secondary-500 to-secondary-300 transition-all duration-300"
             :style="{ width: `${progress}%` }" />
         </div>

@@ -72,6 +72,11 @@ onMounted(async () => {
       node.graphics.circle(0, 0, node.size)
       node.graphics.stroke({ width: 0.5, color: nodeStrokeColor, alpha: strokeAlpha })
     })
+
+    // Aggiorna anche i colori delle linee nel prossimo frame
+    if (linesGraphics) {
+      linesGraphics.clear()
+    }
   }
 
   for (let i = 0; i < nodeCount; i++) {
