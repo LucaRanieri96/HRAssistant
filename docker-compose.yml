@@ -17,6 +17,3 @@ services:
 networks:
   hr-assistant-network:
     driver: bridge
-
-volumes:
-  # Add volumes here if needed
