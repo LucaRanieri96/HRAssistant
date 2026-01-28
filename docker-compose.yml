@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hr-assistant-frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - hr-assistant-network
+
+networks:
+  hr-assistant-network:
+    driver: bridge
+
+volumes:
+  # Add volumes here if needed

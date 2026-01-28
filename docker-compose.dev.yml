@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: hr-assistant-frontend-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tailwind.config.js:/app/tailwind.config.js
+      - ./package.json:/app/package.json
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    networks:
+      - hr-assistant-network
+
+networks:
+  hr-assistant-network:
+    driver: bridge
