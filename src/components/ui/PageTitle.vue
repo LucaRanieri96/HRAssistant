@@ -35,8 +35,7 @@ const subtitleClasses = computed(() => {
 <template>
   <div class="mb-10 mt-4">
     <div v-if="showBack" class="mb-8">
-      <button @click="emit('back')"
-        class="flex items-center gap-3 text-h5 opacity-70 hover:opacity-100 transition-opacity active:scale-95">
+      <button @click="emit('back')" class="flex items-center gap-3 text-h5 opacity-70 hover:opacity-100 btn-bounce">
         <i class="pi pi-arrow-left" style="font-size: 1.5rem;" />
         <span class="text-4xl">Indietro</span>
       </button>

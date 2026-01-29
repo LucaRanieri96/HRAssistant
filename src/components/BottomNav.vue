@@ -13,11 +13,11 @@
           <i :class="[
             'pi',
             item.icon,
-            'text-icon-l transition-colors',
+            ' transition-colors',
             currentScreen === item.id ? 'text-secondary-600 dark:text-secondary-400' : ''
-          ]" />
+          ]" style="font-size: 2rem;" />
           <span :class="[
-            'text-label-m font-semibold transition-colors',
+            'text-label-xl font-semibold transition-colors',
             currentScreen === item.id ? 'text-secondary-600 dark:text-secondary-400' : ''
           ]">{{ $t(item.label) }}</span>
         </button>

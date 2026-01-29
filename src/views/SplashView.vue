@@ -1,22 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useNavigationStore } from '@/stores/navigation'
 import PrimaryButton from '@/components/ui/PrimaryButton.vue'
 import QRCodeCard from '@/components/ui/QRCodeCard.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 
 const router = useRouter()
-const navigationStore = useNavigationStore()
 
 const handleStart = () => {
   router.push('/job-selection')
-}
-
-const handleNavigate = (screen: 'history' | 'settings') => {
-  if (screen === 'settings') {
-    navigationStore.setPreviousRoute('/')
-    router.push('/settings')
-  }
 }
 
 function onEnterContent(el: Element, done: () => void) {

@@ -144,6 +144,15 @@
     box-shadow: none;
     border-color: var(--color-secondary-500);
   }
+
+  /* Button bounce effect - same as cards */
+  .btn-bounce {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .btn-bounce:active {
+    transform: scale(0.97);
+  }
 }
 
 @layer utilities {

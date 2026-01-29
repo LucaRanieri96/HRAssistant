@@ -22,7 +22,7 @@ const emit = defineEmits<{
 
 <template>
   <Button type="button" :label="label" :loading="loading" :disabled="disabled" :icon="icon" :class="[
-    '!rounded-xl',
+    '!rounded-xl btn-bounce',
     fullWidth ? '!w-full' : '!w-[600px]',
     size === 'large' ? '!h-[110px] !text-3xl !font-bold' : '!h-[100px] !text-3xl'
   ]" @click="emit('click', $event)">

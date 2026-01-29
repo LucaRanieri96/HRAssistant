@@ -15,6 +15,6 @@ const emit = defineEmits<{
 
 <template>
   <Button type="button" :label="label" :severity="active ? 'warn' : 'secondary'"
-    :variant="active ? undefined : 'outlined'" class="!px-8 !py-4 !text-label-l !rounded-2xl"
+    :variant="active ? undefined : 'outlined'" class="!px-8 !py-4 !text-label-l !rounded-2xl btn-bounce"
     @click="emit('click', $event)" />
 </template>

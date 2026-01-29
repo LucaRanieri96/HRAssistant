@@ -52,7 +52,6 @@ watch(() => props.visible, (newVal) => {
           <div class="relative border-b border-gray-200/50 dark:border-gray-700/50">
             <div class="flex items-center justify-between px-8 py-6">
               <div class="flex items-center gap-4">
-                <i class="pi pi-plus-circle text-primary-600 dark:text-primary-400 mb-1.5" style="font-size: 2rem" />
                 <h3 class="text-h3 font-bold">
                   {{ title }}
                 </h3>

@@ -111,7 +111,19 @@ function onEnterCard(el: Element, done: () => void) {
   void htmlEl.offsetHeight // Force reflow
   htmlEl.style.transition = `opacity 0.4s ease ${index * 0.06}s`
   htmlEl.style.opacity = '1'
-  done()
+  setTimeout(() => {
+    htmlEl.style.transition = '' // Reset inline style after animation
+    done()
+  }, 400 + index * 60)
+}
+
+function onLeaveCard(el: Element, done: () => void) {
+  const htmlEl = el as HTMLElement
+  htmlEl.style.transition = 'opacity 0.3s ease'
+  htmlEl.style.opacity = '0'
+  setTimeout(() => {
+    done()
+  }, 300)
 }
 </script>
 
@@ -149,10 +161,9 @@ function onEnterCard(el: Element, done: () => void) {
 
       <!-- Active Jobs List -->
       <div v-else class="space-y-6 p-2">
-        <Transition v-for="(job, index) in activeJobs" :key="job.id" appear @enter="onEnterCard"
-          v-memo="[jobsStore.isSelected(job.id), job.id, job.title]">
-          <div :data-index="index" class="relative group cursor-pointer select-none"
-            @click="jobsStore.toggleJob(job.id)">
+        <TransitionGroup name="list" appear @enter="onEnterCard" @leave="onLeaveCard">
+          <div v-for="(job, index) in activeJobs" :key="job.id" :data-index="index"
+            class="relative group cursor-pointer select-none" @click="jobsStore.toggleJob(job.id)">
             <BlurCard padding="p-10" rounded="3xl" :class="[
               'transition-all duration-300 ease-out',
               jobsStore.isSelected(job.id) ? 'card-elevated-selected' : ''
@@ -160,7 +171,7 @@ function onEnterCard(el: Element, done: () => void) {
               <div class="flex items-center justify-between gap-6">
                 <div class="flex items-center gap-6 flex-1 min-w-0">
                   <div class="flex-1">
-                    <h2 class="text-display-3 font-bold leading-tight">
+                    <h2 class="text-h3 font-bold leading-tight">
                       {{ job.title }}
                     </h2>
                     <p class="text-h5 opacity-70 mt-2">
@@ -189,11 +200,11 @@ function onEnterCard(el: Element, done: () => void) {
               </div>
             </BlurCard>
           </div>
-        </Transition>
+        </TransitionGroup>
       </div>
     </ScrollArea>
 
-    <div class="mt-6">
+    <div class="my-8">
       <PrimaryButton @click="handleConfirmSelection" :disabled="!jobsStore.selectedJobId"
         :label="$t('jobs.confirmSelection')" :full-width="true" size="large" />
     </div>
@@ -212,32 +223,34 @@ function onEnterCard(el: Element, done: () => void) {
           </div>
 
           <div v-else class="space-y-4">
-            <BlurCard v-for="job in availableJobs" :key="job.id" padding="p-6" rounded="2xl"
-              class="cursor-pointer group hover:card-elevated-selected transition-all duration-300">
-              <div class="flex items-center gap-6">
-                <!-- Job Icon -->
-                <div
-                  class="shrink-0 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-600 text-white shadow-lg">
-                  <i class="pi pi-briefcase" style="font-size: 2rem" />
-                </div>
+            <TransitionGroup name="fade">
+              <BlurCard v-for="job in availableJobs" :key="job.id" padding="p-6" rounded="2xl"
+                class="cursor-pointer group hover:card-elevated-selected transition-all duration-300">
+                <div class="flex items-center gap-6">
+                  <!-- Job Icon -->
+                  <div
+                    class="shrink-0 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-600 text-white shadow-lg">
+                    <i class="pi pi-briefcase" style="font-size: 2rem" />
+                  </div>
 
-                <!-- Job Info -->
-                <div class="flex-1 min-w-0">
-                  <h5 class="text-h4 font-bold truncate mb-1">
-                    {{ job.title }}
-                  </h5>
-                  <p class="text-body-lg opacity-70 truncate">
-                    {{ job.department }}
-                  </p>
-                </div>
+                  <!-- Job Info -->
+                  <div class="flex-1 min-w-0">
+                    <h5 class="text-h4 font-bold truncate mb-1">
+                      {{ job.title }}
+                    </h5>
+                    <p class="text-body-lg opacity-70 truncate">
+                      {{ job.department }}
+                    </p>
+                  </div>
 
-                <!-- Add Button -->
-                <Button @click="addJobToList(job)" :unstyled="true"
-                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
-                  <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-icon-xl font-bold" />
-                </Button>
-              </div>
-            </BlurCard>
+                  <!-- Add Button -->
+                  <Button @click="addJobToList(job)" :unstyled="true"
+                    class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
+                    <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-icon-xl font-bold" />
+                  </Button>
+                </div>
+              </BlurCard>
+            </TransitionGroup>
           </div>
         </div>
       </div>
@@ -248,3 +261,27 @@ function onEnterCard(el: Element, done: () => void) {
     </template>
   </ScreenLayout>
 </template>
+
+<style scoped>
+/* TransitionGroup animations */
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
+/* Fade animation for drawer cards */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

@@ -38,7 +38,6 @@ const activeCandidates = computed<Candidate[]>(() =>
   allCandidates.value.filter(c => candidatesStore.isActive(c.id))
 )
 
-// Available candidates (shown in drawer)
 const availableCandidates = computed<Candidate[]>(() =>
   allCandidates.value.filter(c => !candidatesStore.isActive(c.id))
 )
@@ -47,22 +46,18 @@ const currentScreen = ref<Screen>('candidates')
 const selectAll = ref(false)
 const showAddDrawer = ref(false)
 
-// Document viewer state
 const showDocumentViewer = ref(false)
 const currentDocument = ref<{ title: string; url: string; type: 'pdf' | 'image' } | null>(null)
 
 const jobTitle = ref('Senior AI Engineer')
 
-// Initialize with NO candidates active (all available in drawer)
 watch(allCandidates, (candidates) => {
   if (candidates.length > 0 && !candidatesStore.initialSelectionDone) {
-    // Start with empty active list - user will add from drawer
     candidatesStore.activeCandidateIds = new Set()
     candidatesStore.initialSelectionDone = true
   }
 }, { immediate: true })
 
-// Sync selectAll with store
 watch(() => candidatesStore.selectedIds.size, () => {
   selectAll.value = candidatesStore.selectedIds.size === activeCandidates.value.length && activeCandidates.value.length > 0
 }, { immediate: true })
@@ -132,10 +127,22 @@ function onEnterCard(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   const index = parseInt(htmlEl.dataset.index || '0')
   htmlEl.style.opacity = '0'
-  void htmlEl.offsetHeight // Force reflow
+  void htmlEl.offsetHeight
   htmlEl.style.transition = `opacity 0.4s ease ${index * 0.06}s`
   htmlEl.style.opacity = '1'
-  done()
+  setTimeout(() => {
+    htmlEl.style.transition = '' // Reset inline style after animation
+    done()
+  }, 400 + index * 60)
+}
+
+function onLeaveCard(el: Element, done: () => void) {
+  const htmlEl = el as HTMLElement
+  htmlEl.style.transition = 'opacity 0.3s ease'
+  htmlEl.style.opacity = '0'
+  setTimeout(() => {
+    done()
+  }, 300)
 }
 </script>
 
@@ -181,10 +188,9 @@ function onEnterCard(el: Element, done: () => void) {
 
       <!-- Active Candidates List with Remove Option -->
       <div v-else class="space-y-6 p-2">
-        <Transition v-for="(candidate, index) in activeCandidates" :key="candidate.id" appear @enter="onEnterCard"
-          v-memo="[candidatesStore.isSelected(candidate.id), candidate.id, candidate.name]">
-          <div :data-index="index" class="relative cursor-pointer group select-none"
-            @click="toggleCandidate(candidate)">
+        <TransitionGroup name="list" appear @enter="onEnterCard" @leave="onLeaveCard">
+          <div v-for="(candidate, index) in activeCandidates" :key="candidate.id" :data-index="index"
+            class="relative cursor-pointer group select-none" @click="toggleCandidate(candidate)">
             <BlurCard padding="p-8" rounded="3xl" :class="[
               'transition-all duration-300 ease-out',
               candidatesStore.isSelected(candidate.id) ? 'card-elevated-selected' : ''
@@ -216,11 +222,11 @@ function onEnterCard(el: Element, done: () => void) {
               </div>
             </BlurCard>
           </div>
-        </Transition>
+        </TransitionGroup>
       </div>
     </ScrollArea>
 
-    <div class="mt-6">
+    <div class="my-8">
       <PrimaryButton @click="handleRank" :disabled="candidatesStore.selectedIds.size === 0"
         :label="`${$t('candidates.ctaRank')} (${candidatesStore.selectedIds.size})`" :full-width="true" size="large" />
     </div>
@@ -239,32 +245,34 @@ function onEnterCard(el: Element, done: () => void) {
           </div>
 
           <div v-else class="space-y-4">
-            <BlurCard v-for="candidate in availableCandidates" :key="candidate.id" padding="p-6" rounded="2xl"
-              class="cursor-pointer group hover:card-elevated-selected transition-all duration-300">
-              <div class="flex items-center gap-6">
-                <!-- Match Score Badge -->
-                <div
-                  class="shrink-0 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-600 text-white text-2xl font-bold shadow-lg">
-                  {{ candidate.matchScore }}
-                </div>
+            <TransitionGroup name="fade">
+              <BlurCard v-for="candidate in availableCandidates" :key="candidate.id" padding="p-6" rounded="2xl"
+                class="cursor-pointer group hover:card-elevated-selected transition-all duration-300">
+                <div class="flex items-center gap-6">
+                  <!-- Match Score Badge -->
+                  <div
+                    class="shrink-0 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-600 text-white text-2xl font-bold shadow-lg">
+                    {{ candidate.matchScore }}
+                  </div>
 
-                <!-- Candidate Info -->
-                <div class="flex-1 min-w-0">
-                  <h5 class="text-h4 font-bold truncate mb-1">
-                    {{ candidate.name }}
-                  </h5>
-                  <p class="text-body-lg opacity-70 truncate">
-                    {{ candidate.experience }}
-                  </p>
-                </div>
+                  <!-- Candidate Info -->
+                  <div class="flex-1 min-w-0">
+                    <h5 class="text-h4 font-bold truncate mb-1">
+                      {{ candidate.name }}
+                    </h5>
+                    <p class="text-body-lg opacity-70 truncate">
+                      {{ candidate.experience }}
+                    </p>
+                  </div>
 
-                <!-- Add Button -->
-                <Button @click="addCandidateToList(candidate)" :unstyled="true"
-                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
-                  <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-icon-xl font-bold" />
-                </Button>
-              </div>
-            </BlurCard>
+                  <!-- Add Button -->
+                  <Button @click="addCandidateToList(candidate)" :unstyled="true"
+                    class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
+                    <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-icon-xl font-bold" />
+                  </Button>
+                </div>
+              </BlurCard>
+            </TransitionGroup>
           </div>
         </div>
       </div>
@@ -275,3 +283,27 @@ function onEnterCard(el: Element, done: () => void) {
     </template>
   </ScreenLayout>
 </template>
+
+<style scoped>
+/* TransitionGroup animations */
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
+/* Fade animation for drawer cards */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
