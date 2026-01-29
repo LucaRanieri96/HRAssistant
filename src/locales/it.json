@@ -154,8 +154,8 @@
     "match": "Match",
     "viewProfile": "VEDI PROFILO",
     "newSearch": "NUOVA RICERCA",
-    "qrTitle": "SCARICA REPORT COMPLETO",
-    "qrSubtitle": "Scansiona il QR code con il tuo smartphone per ricevere il report dettagliato via email",
+    "qrTitle": "Condividi Risultati",
+    "qrDescription": "Scansiona il QR code con il tuo smartphone per visualizzare e scaricare il report completo della classifica",
     "score": "SCORE",
     "otherCandidates": "Altri Candidati",
     "mockData": {
@@ -213,6 +213,21 @@
       "calculateAffinity": "Calcolo affinità candidati",
       "generateRanking": "Generazione ranking finale"
     }
+  },
+  "download": {
+    "report": "Scarica Report"
+  },
+  "share": {
+    "title": "Risultati Classifica AI",
+    "subtitle": "Top candidati per la posizione selezionata",
+    "noData": "Nessun dato di classifica disponibile",
+    "otherCandidates": "Altri Candidati",
+    "downloadPDF": "Scarica Report PDF",
+    "generating": "Generazione PDF...",
+    "errorGenerating": "Errore nella generazione del PDF. Riprova.",
+    "footer": "Report generato da Aidia HR Assistant",
+    "pdfTitle": "Report Classifica Candidati",
+    "pdfSubtitle": "Analisi e classifica candidati basata su AI"
   },
   "components": {
     "qrCodeCard": {

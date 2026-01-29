@@ -65,7 +65,6 @@ watch(() => props.visible, (newVal) => {
                     class=" text-secondary-700 dark:text-secondary-300" style="font-size: 1.5rem;" />
                 </button>
 
-                <!-- Close Button -->
                 <button @click="close"
                   class="p-4 rounded-2xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 active:scale-95 transition-all flex justify-center items-center">
                   <i class="pi pi-times  text-red-600 dark:text-red-400" style="font-size: 1.5rem;" />
@@ -73,13 +72,11 @@ watch(() => props.visible, (newVal) => {
               </div>
             </div>
 
-            <!-- Drag indicator -->
             <div class="flex justify-center pb-4">
               <div class="w-20 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700" />
             </div>
           </div>
 
-          <!-- Content -->
           <div class="relative overflow-y-auto"
             :style="{ height: isExpanded ? 'calc(' + maxHeight + ' - 140px)' : 'calc(65vh - 140px)' }"
             style="transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1)">
@@ -105,7 +102,7 @@ watch(() => props.visible, (newVal) => {
 }
 
 .slide-down-enter-active {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1, 0.64, 1);
 }
 
 .slide-down-leave-active {

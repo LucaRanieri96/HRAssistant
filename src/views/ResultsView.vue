@@ -5,18 +5,15 @@
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-4">
-      <!-- Top 3 Podium -->
       <Transition appear @before-enter="onBeforeEnter" @enter="(el) => onEnter(el, 0.2)">
         <div class="space-y-6">
-          <!-- Winner - Full Width -->
           <Transition appear @before-enter="onBeforeEnter" @enter="(el) => onEnter(el, 0)">
             <div v-if="first">
               <div class="relative card-elevated border-2 border-secondary-400 rounded-3xl overflow-hidden">
                 <div class="relative p-10 flex items-center gap-8">
-                  <!-- Trophy Badge with Position -->
                   <div class="flex-shrink-0 relative">
                     <div class="w-32 h-32 rounded-2xl bg-secondary-400 flex items-center justify-center">
-                      <i class="pi pi-trophy text-neutral-950 text-icon-xl" />
+                      <i class="pi pi-trophy text-neutral-950" style="font-size: 3rem;" />
                     </div>
                     <div
                       class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-secondary-400 border-4 border-neutral-950 flex items-center justify-center z-10">
@@ -24,7 +21,6 @@
                     </div>
                   </div>
 
-                  <!-- Info -->
                   <div class="flex-1">
                     <h3 class="text-display-3 font-bold mb-4 leading-tight">{{ first.name }}</h3>
 
@@ -32,14 +28,14 @@
                       <span class="text-h4 font-bold text-neutral-950">{{ $t('results.score') }}</span>
                       <div class="w-1 h-10 bg-neutral-950/30 rounded-full"></div>
                       <span class="text-score-huge font-black text-neutral-950 leading-none">{{ first.matchScore
-                        }}</span>
+                      }}</span>
                     </div>
 
                     <div class="flex items-center gap-4 mb-6 flex-wrap">
-                      <div class="flex items-center gap-2">
-                        <i class="pi pi-briefcase opacity-40 text-icon-m" />
+                      <div class="flex items-center gap-4">
+                        <i class="pi pi-briefcase opacity-40" style="font-size: 2rem;" />
                         <span class="text-h5 opacity-70">{{ first.experience }} · {{ first.skills[0]
-                        }}</span>
+                          }}</span>
                       </div>
                     </div>
 
@@ -50,7 +46,7 @@
                           ? 'bg-secondary-400/10 border-secondary-400/40 text-secondary-600'
                           : 'bg-surface-50 border-surface-200 opacity-70'
                       ]">
-                        <span class="text-body-lg font-medium">{{ skill }}</span>
+                        <span class="text-xl">{{ skill }}</span>
                       </div>
                     </div>
                   </div>
@@ -59,17 +55,14 @@
             </div>
           </Transition>
 
-          <!-- 2nd and 3rd - Side by Side with EQUAL HEIGHT -->
           <div class="grid grid-cols-2 gap-6">
-            <!-- 2nd Place -->
             <Transition appear @before-enter="onBeforeEnter" @enter="(el) => onEnter(el, 0.15)">
               <div v-if="second" class="relative card-elevated rounded-3xl overflow-hidden h-full">
                 <div class="p-8 h-full flex flex-col">
-                  <!-- Medal Badge with Position -->
                   <div class="flex items-center gap-6 mb-6">
                     <div class="flex-shrink-0 relative">
                       <div class="w-24 h-24 rounded-2xl bg-[#C0C0C0] flex items-center justify-center">
-                        <i class="pi pi-star-fill text-white text-icon-l" />
+                        <i class="pi pi-star-fill text-white" style="font-size: 2rem;" />
                       </div>
                       <div
                         class="absolute -top-3 -right-3 w-14 h-14 rounded-full bg-[#C0C0C0] border-4 border-white dark:border-neutral-800 flex items-center justify-center z-10">
@@ -82,7 +75,6 @@
                     </div>
                   </div>
 
-                  <!-- Score Badge - Full Width -->
                   <div class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6">
                     <span class="text-h5 font-bold text-neutral-950">{{ $t('results.score') }}</span>
                     <div class="w-1 h-8 bg-neutral-950/30 rounded-full"></div>
@@ -90,35 +82,31 @@
                       second.matchScore }}</span>
                   </div>
 
-                  <!-- Details -->
                   <div class="flex flex-col gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase opacity-40 text-icon-s" />
-                      <span class="text-body-lg opacity-70">{{ second.experience }} · {{ second.skills[0]
-                        }}</span>
+                      <i class="pi pi-briefcase opacity-40" style="font-size: 1.5rem;" />
+                      <span class="text-xl opacity-70">{{ second.experience }} · {{ second.skills[0]
+                      }}</span>
                     </div>
                   </div>
 
-                  <!-- Skills -->
                   <div class="flex flex-wrap gap-2 mt-auto">
                     <div v-for="(skill, idx) in second.skills.slice(0, 3)" :key="idx"
                       class="px-4 py-1.5 rounded-xl border bg-surface-50 border-surface-200">
-                      <span class="text-body-m opacity-70">{{ skill }}</span>
+                      <span class="text-xl opacity-70">{{ skill }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </Transition>
 
-            <!-- 3rd Place -->
             <Transition appear @before-enter="onBeforeEnter" @enter="(el) => onEnter(el, 0.25)">
               <div v-if="third" class="relative card-elevated rounded-3xl overflow-hidden h-full">
                 <div class="p-8 h-full flex flex-col">
-                  <!-- Medal Badge with Position -->
                   <div class="flex items-center gap-6 mb-6">
                     <div class="flex-shrink-0 relative">
                       <div class="w-24 h-24 rounded-2xl bg-[#CD7F32] flex items-center justify-center">
-                        <i class="pi pi-star-fill text-white text-icon-l" />
+                        <i class="pi pi-star-fill text-white" style="font-size: 2rem;" />
                       </div>
                       <div
                         class="absolute -top-3 -right-3 w-14 h-14 rounded-full bg-[#CD7F32] border-4 border-white dark:border-neutral-800 flex items-center justify-center z-10">
@@ -142,9 +130,9 @@
                   <!-- Details -->
                   <div class="flex flex-col gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase opacity-40 text-icon-s" />
-                      <span class="text-body-lg opacity-70">{{ third.experience }} · {{ third.skills[0]
-                        }}</span>
+                      <i class="pi pi-briefcase opacity-40" style="font-size: 1.5rem;" />
+                      <span class="text-xl opacity-70">{{ third.experience }} · {{ third.skills[0]
+                      }}</span>
                     </div>
                   </div>
 
@@ -152,7 +140,7 @@
                   <div class="flex flex-wrap gap-2 mt-auto">
                     <div v-for="(skill, idx) in third.skills.slice(0, 3)" :key="idx"
                       class="px-4 py-1.5 rounded-xl border bg-surface-50 border-surface-200">
-                      <span class="text-body-m opacity-70">{{ skill }}</span>
+                      <span class="text-xl opacity-70">{{ skill }}</span>
                     </div>
                   </div>
                 </div>
@@ -163,7 +151,7 @@
       </Transition>
 
       <!-- Other Candidates -->
-      <div v-if="rest.length > 0">
+      <div v-if="rest.length > 0" class="pt-4">
         <h2 class="text-display-3 font-bold mb-6 ml-2">{{ $t('results.otherCandidates') }}</h2>
         <div class="space-y-6">
           <Transition v-for="(candidate, index) in rest" :key="candidate.id" appear @before-enter="onBeforeEnter"
@@ -197,22 +185,22 @@
 
                   <!-- Details -->
                   <div class="flex items-center gap-6 mb-4">
-                    <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase opacity-30 text-icon-s" />
-                      <span class="text-body-lg opacity-60">{{ candidate.skills[0] }}</span>
+                    <div class="flex items-center gap-4">
+                      <i class="pi pi-briefcase opacity-30" style="font-size: 1.5rem;" />
+                      <span class="text-xl opacity-60">{{ candidate.skills[0] }}</span>
                     </div>
                     <div class="h-5 w-px bg-surface-200" />
-                    <div class="flex items-center gap-2">
-                      <i class="pi pi-clock opacity-30 text-icon-s" />
-                      <span class="text-body-lg opacity-60">{{ candidate.experience }}</span>
+                    <div class="flex items-center gap-4">
+                      <i class="pi pi-clock opacity-30" style="font-size: 1.5rem;" />
+                      <span class="text-xl opacity-60">{{ candidate.experience }}</span>
                     </div>
                   </div>
 
                   <!-- Skills -->
-                  <div class="flex flex-wrap gap-2">
+                  <div class="flex flex-wrap gap-4">
                     <div v-for="(skill, idx) in candidate.skills.slice(0, 4)" :key="idx"
                       class="px-4 py-1.5 rounded-lg bg-surface-50 border border-surface-200">
-                      <span class="text-body-lg opacity-60">{{ skill }}</span>
+                      <span class="text-xl opacity-60">{{ skill }}</span>
                     </div>
                   </div>
                 </div>
@@ -222,6 +210,10 @@
         </div>
       </div>
     </ScrollArea>
+
+    <div class="my-8">
+      <QRCodeCard :title="$t('results.qrTitle')" :description="$t('results.qrDescription')" :url="shareUrl" />
+    </div>
 
     <template #bottom-nav>
       <BottomNav :current-screen="currentScreen" @navigate="handleNavigate" @home="handleHome" />
@@ -241,6 +233,8 @@ import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
 import resultsData from '@/data/resultsData.json'
+import QRCodeCard from '@/components/ui/QRCodeCard.vue'
+import { generateShareUrl } from '@/utils/resultsEncoder'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -284,7 +278,8 @@ const second = computed(() => candidates.value[1]);
 const third = computed(() => candidates.value[2]);
 const rest = computed(() => candidates.value.slice(3));
 
-// Animation hooks
+const shareUrl = computed(() => generateShareUrl(candidates.value));
+
 const onBeforeEnter = (el: Element) => {
   (el as HTMLElement).style.opacity = '0';
 };

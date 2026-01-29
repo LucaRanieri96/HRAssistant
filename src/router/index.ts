@@ -7,6 +7,7 @@ const CVSelectionView = () => import('../views/CVSelectionView.vue')
 const ResultsView = () => import('../views/ResultsView.vue')
 const ProcessingScreen = () => import('../components/ProcessingScreen.vue')
 const SettingsView = () => import('../views/SettingsView.vue')
+const ShareResultsView = () => import('../views/ShareResultsView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,12 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: SettingsView,
+      meta: { transition: 'fade' },
+    },
+    {
+      path: '/share',
+      name: 'share',
+      component: ShareResultsView,
       meta: { transition: 'fade' },
     },
   ],
