@@ -47,10 +47,10 @@ function onEnterBottom(el: Element, done: () => void) {
         <div class="flex flex-col items-center justify-center space-y-12 max-w-225">
           <!-- HR Assistant Tagline -->
           <div class="text-center space-y-6">
-            <h2 class="text-display-3 font-semibold tracking-tight leading-tight">
+            <h2 class="text-display-1 font-bold tracking-tight leading-tight">
               {{ $t('splash.title') }}
             </h2>
-            <p class="text-h5 opacity-70 max-w-[850px] leading-relaxed">
+            <p class="text-h3 opacity-70 max-w-[850px] leading-relaxed">
               {{ $t('splash.subtitle') }}
             </p>
           </div>

@@ -26,20 +26,20 @@
 
                   <!-- Info -->
                   <div class="flex-1">
-                    <h3 class="text-h3 font-bold mb-4 leading-tight">{{ first.name }}</h3>
+                    <h3 class="text-display-3 font-bold mb-4 leading-tight">{{ first.name }}</h3>
 
                     <div class="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-secondary-400 mb-6">
-                      <span class="text-label-xl font-bold text-neutral-950">{{ $t('results.score') }}</span>
+                      <span class="text-h4 font-bold text-neutral-950">{{ $t('results.score') }}</span>
                       <div class="w-1 h-10 bg-neutral-950/30 rounded-full"></div>
                       <span class="text-score-huge font-black text-neutral-950 leading-none">{{ first.matchScore
-                      }}</span>
+                        }}</span>
                     </div>
 
                     <div class="flex items-center gap-4 mb-6 flex-wrap">
                       <div class="flex items-center gap-2">
-                        <i class="pi pi-briefcase opacity-40 text-icon-s" />
-                        <span class="text-body-xl opacity-70">{{ first.experience }} · {{ first.skills[0]
-                          }}</span>
+                        <i class="pi pi-briefcase opacity-40 text-icon-m" />
+                        <span class="text-h5 opacity-70">{{ first.experience }} · {{ first.skills[0]
+                        }}</span>
                       </div>
                     </div>
 
@@ -50,7 +50,7 @@
                           ? 'bg-secondary-400/10 border-secondary-400/40 text-secondary-600'
                           : 'bg-surface-50 border-surface-200 opacity-70'
                       ]">
-                        <span class="text-body-m font-medium">{{ skill }}</span>
+                        <span class="text-body-lg font-medium">{{ skill }}</span>
                       </div>
                     </div>
                   </div>
@@ -78,13 +78,13 @@
                     </div>
 
                     <div class="flex-1 min-w-0">
-                      <h3 class="text-h5 font-bold leading-tight truncate">{{ second.name }}</h3>
+                      <h3 class="text-h4 font-bold leading-tight truncate">{{ second.name }}</h3>
                     </div>
                   </div>
 
                   <!-- Score Badge - Full Width -->
                   <div class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6">
-                    <span class="text-label-m font-bold text-neutral-950">{{ $t('results.score') }}</span>
+                    <span class="text-h5 font-bold text-neutral-950">{{ $t('results.score') }}</span>
                     <div class="w-1 h-8 bg-neutral-950/30 rounded-full"></div>
                     <span class="text-score-large font-black text-neutral-950 leading-none">{{
                       second.matchScore }}</span>
@@ -93,9 +93,9 @@
                   <!-- Details -->
                   <div class="flex flex-col gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase opacity-40 text-icon-xs" />
-                      <span class="text-body-m opacity-70">{{ second.experience }} · {{ second.skills[0]
-                      }}</span>
+                      <i class="pi pi-briefcase opacity-40 text-icon-s" />
+                      <span class="text-body-lg opacity-70">{{ second.experience }} · {{ second.skills[0]
+                        }}</span>
                     </div>
                   </div>
 
@@ -103,7 +103,7 @@
                   <div class="flex flex-wrap gap-2 mt-auto">
                     <div v-for="(skill, idx) in second.skills.slice(0, 3)" :key="idx"
                       class="px-4 py-1.5 rounded-xl border bg-surface-50 border-surface-200">
-                      <span class="text-body-s opacity-70">{{ skill }}</span>
+                      <span class="text-body-m opacity-70">{{ skill }}</span>
                     </div>
                   </div>
                 </div>
@@ -127,13 +127,13 @@
                     </div>
 
                     <div class="flex-1 min-w-0">
-                      <h3 class="text-h5 font-bold leading-tight truncate">{{ third.name }}</h3>
+                      <h3 class="text-h4 font-bold leading-tight truncate">{{ third.name }}</h3>
                     </div>
                   </div>
 
                   <!-- Score Badge - Full Width -->
                   <div class="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-secondary-400 mb-6">
-                    <span class="text-label-m font-bold text-neutral-950">{{ $t('results.score') }}</span>
+                    <span class="text-h5 font-bold text-neutral-950">{{ $t('results.score') }}</span>
                     <div class="w-1 h-8 bg-neutral-950/30 rounded-full"></div>
                     <span class="text-score-large font-black text-neutral-950 leading-none">{{
                       third.matchScore }}</span>
@@ -142,9 +142,9 @@
                   <!-- Details -->
                   <div class="flex flex-col gap-3 mb-4">
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase opacity-40 text-icon-xs" />
-                      <span class="text-body-m opacity-70">{{ third.experience }} · {{ third.skills[0]
-                      }}</span>
+                      <i class="pi pi-briefcase opacity-40 text-icon-s" />
+                      <span class="text-body-lg opacity-70">{{ third.experience }} · {{ third.skills[0]
+                        }}</span>
                     </div>
                   </div>
 
@@ -152,7 +152,7 @@
                   <div class="flex flex-wrap gap-2 mt-auto">
                     <div v-for="(skill, idx) in third.skills.slice(0, 3)" :key="idx"
                       class="px-4 py-1.5 rounded-xl border bg-surface-50 border-surface-200">
-                      <span class="text-body-s opacity-70">{{ skill }}</span>
+                      <span class="text-body-m opacity-70">{{ skill }}</span>
                     </div>
                   </div>
                 </div>
@@ -164,7 +164,7 @@
 
       <!-- Other Candidates -->
       <div v-if="rest.length > 0">
-        <h2 class="text-title-xl font-bold mb-6 ml-2">{{ $t('results.otherCandidates') }}</h2>
+        <h2 class="text-display-3 font-bold mb-6 ml-2">{{ $t('results.otherCandidates') }}</h2>
         <div class="space-y-6">
           <Transition v-for="(candidate, index) in rest" :key="candidate.id" appear @before-enter="onBeforeEnter"
             @enter="(el) => onEnter(el, 0.4 + index * 0.1)" v-memo="[candidate.id, candidate.matchScore]">
@@ -173,7 +173,7 @@
                 <!-- Position Number -->
                 <div class="flex-shrink-0 w-20 h-20 rounded-xl bg-surface-100 border-2 border-surface-200
                           flex items-center justify-center">
-                  <span class="text-h5 font-bold opacity-60">
+                  <span class="text-h4 font-bold opacity-60">
                     {{ index + 4 }}
                   </span>
                 </div>
@@ -182,13 +182,13 @@
                 <div class="flex-1">
                   <!-- Name and Score -->
                   <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-h4 font-bold">
+                    <h4 class="text-h3 font-bold">
                       {{ candidate.name }}
                     </h4>
                     <div class="flex items-center gap-3">
-                      <span class="text-label-l opacity-50">{{ $t('results.score') }}:</span>
+                      <span class="text-h5 opacity-50">{{ $t('results.score') }}:</span>
                       <div class="px-5 py-2 rounded-xl bg-surface-100 border border-surface-200">
-                        <span class="text-label-xl font-bold opacity-80">
+                        <span class="text-h4 font-bold opacity-80">
                           {{ candidate.matchScore }}
                         </span>
                       </div>
@@ -198,13 +198,13 @@
                   <!-- Details -->
                   <div class="flex items-center gap-6 mb-4">
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-briefcase opacity-30 text-icon-xs" />
-                      <span class="text-body-l opacity-60">{{ candidate.skills[0] }}</span>
+                      <i class="pi pi-briefcase opacity-30 text-icon-s" />
+                      <span class="text-body-lg opacity-60">{{ candidate.skills[0] }}</span>
                     </div>
                     <div class="h-5 w-px bg-surface-200" />
                     <div class="flex items-center gap-2">
-                      <i class="pi pi-clock opacity-30 text-icon-xs" />
-                      <span class="text-body-l opacity-60">{{ candidate.experience }}</span>
+                      <i class="pi pi-clock opacity-30 text-icon-s" />
+                      <span class="text-body-lg opacity-60">{{ candidate.experience }}</span>
                     </div>
                   </div>
 
@@ -212,7 +212,7 @@
                   <div class="flex flex-wrap gap-2">
                     <div v-for="(skill, idx) in candidate.skills.slice(0, 4)" :key="idx"
                       class="px-4 py-1.5 rounded-lg bg-surface-50 border border-surface-200">
-                      <span class="text-body-m opacity-60">{{ skill }}</span>
+                      <span class="text-body-lg opacity-60">{{ skill }}</span>
                     </div>
                   </div>
                 </div>

@@ -10,13 +10,15 @@
   },
   "jobs": {
     "title": "SELEZIONA POSIZIONE",
+    "subtitle": "Scegli una posizione per analizzare i candidati",
     "description": "Descrizione Posizione",
     "addJobs": "Aggiungi Offerte",
     "availableJobs": "Offerte Disponibili",
+    "confirmSelection": "CONFERMA POSIZIONE",
     "dragHint": "Trascina le offerte tra le due liste per aggiungerle o rimuoverle",
     "emptyAvailable": "Tutte le offerte sono state aggiunte",
     "noJobs": "Nessuna posizione nella tua lista",
-    "tapAddButton": "Tocca il pulsante + in alto per aggiungere posizioni",
+    "tapAddButton": "Tocca il pulsante aggiungi offerte",
     "allAdded": "Tutte le posizioni aggiunte!",
     "positions": {
       "marketing": "Marketing Manager",
@@ -91,7 +93,7 @@
     "dragHint": "Trascina i candidati tra le due liste per aggiungerli o rimuoverli",
     "emptyAvailable": "Tutti i candidati sono stati aggiunti",
     "noCandidates": "Nessun candidato nella tua lista",
-    "tapAddButton": "Tocca il pulsante + in alto per aggiungere candidati",
+    "tapAddButton": "Tocca il pulsante aggiungi candidati",
     "allAdded": "Tutti i candidati aggiunti!",
     "mockData": {
       "alessandroRossi": {

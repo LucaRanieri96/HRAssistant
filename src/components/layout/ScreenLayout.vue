@@ -37,7 +37,6 @@ const contentClasses = computed(() => {
 
 <template>
   <div :class="rootClass">
-    <!-- Logo in alto a destra (absolute solo per lui) -->
     <div v-if="showLogo" class="absolute top-8 right-16 z-10">
       <Logo :size="logoSize" />
     </div>

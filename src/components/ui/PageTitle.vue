@@ -33,20 +33,25 @@ const subtitleClasses = computed(() => {
 </script>
 
 <template>
-  <div class="mb-12">
-    <div v-if="showBack" class="mb-6">
+  <div class="mb-10 mt-4">
+    <div v-if="showBack" class="mb-8">
       <button @click="emit('back')"
         class="flex items-center gap-3 text-h5 opacity-70 hover:opacity-100 transition-opacity active:scale-95">
-        <i class="pi pi-arrow-left text-icon-m" />
-        <span>Indietro</span>
+        <i class="pi pi-arrow-left" style="font-size: 1.5rem;" />
+        <span class="text-4xl">Indietro</span>
       </button>
     </div>
-    <h1 :class="[titleClasses, 'font-bold tracking-tight mb-4']">
+    <h1 :class="[titleClasses, 'font-bold tracking-tight mb-6']">
       {{ title }}
     </h1>
-    <p v-if="subtitle" :class="[subtitleClasses, 'opacity-70 mb-6']">
-      {{ subtitle }}
-    </p>
-    <div v-if="showDivider" class="w-32 h-2 bg-secondary-500 rounded-full" />
+    <div v-if="subtitle || $slots.actions" class="flex items-center justify-between gap-8 mb-8">
+      <p v-if="subtitle" :class="[subtitleClasses, 'opacity-70']">
+        {{ subtitle }}
+      </p>
+      <div v-if="$slots.actions" class="shrink-0">
+        <slot name="actions" />
+      </div>
+    </div>
+    <div v-if="showDivider" class="w-full h-1.5 bg-secondary-500 rounded-full opacity-40" />
   </div>
 </template>

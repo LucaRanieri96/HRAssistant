@@ -4,10 +4,12 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useNavigationStore } from '@/stores/navigation'
 import { useJobsStore } from '@/stores/jobs'
+import Button from 'primevue/button'
 
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import DocumentViewer from '@/components/ui/DocumentViewer.vue'
+import PrimaryButton from '@/components/ui/PrimaryButton.vue'
 import BlurCard from '@/components/ui/BlurCard.vue'
 import ScreenLayout from '@/components/layout/ScreenLayout.vue'
 import ScrollArea from '@/components/ui/ScrollArea.vue'
@@ -38,20 +40,16 @@ const allJobOffers = computed<JobOffer[]>(() =>
   }))
 )
 
-// Active jobs (shown in main list)
 const activeJobs = computed<JobOffer[]>(() =>
   allJobOffers.value.filter(j => jobsStore.isActive(j.id))
 )
 
-// Available jobs (shown in drawer)
 const availableJobs = computed<JobOffer[]>(() =>
   allJobOffers.value.filter(j => !jobsStore.isActive(j.id))
 )
 
-// Initialize with NO jobs active (all available in drawer)
 watch(allJobOffers, (jobs) => {
   if (jobs.length > 0 && !jobsStore.initialSelectionDone) {
-    // Start with empty active list - user will add from drawer
     jobsStore.activeJobIds = new Set()
     jobsStore.initialSelectionDone = true
   }
@@ -60,13 +58,8 @@ watch(allJobOffers, (jobs) => {
 const currentScreen = ref<Screen>('jobs')
 const showAddDrawer = ref(false)
 
-// Document viewer state
 const showDocumentViewer = ref(false)
 const currentDocument = ref<{ title: string; url: string; type: 'pdf' | 'image' } | null>(null)
-
-const handleJobSelect = (job: JobOffer) => {
-  router.push({ name: 'cv-selection', params: { job: job.id } })
-}
 
 const openAddDrawer = () => {
   showAddDrawer.value = true
@@ -105,6 +98,12 @@ const handleBack = () => {
   navigationStore.goBack('/job-selection')
 }
 
+const handleConfirmSelection = () => {
+  if (jobsStore.selectedJobId) {
+    router.push({ name: 'cv-selection', params: { job: jobsStore.selectedJobId } })
+  }
+}
+
 function onEnterCard(el: Element, done: () => void) {
   const htmlEl = el as HTMLElement
   const index = parseInt(htmlEl.dataset.index || '0')
@@ -119,64 +118,85 @@ function onEnterCard(el: Element, done: () => void) {
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <div class="flex items-center justify-between gap-4">
-        <PageTitle :title="$t('jobs.title')" :subtitle="$t('jobs.subtitle')" :show-back="true" @back="handleBack" />
-        <button @click="openAddDrawer"
-          class="flex items-center gap-3 px-8 py-5 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-95 transition-all duration-300 shrink-0">
-          <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-2xl" />
-          <span class="text-h5 font-bold text-secondary-700 dark:text-secondary-300">{{ $t('jobs.addJobs') }}</span>
-        </button>
-      </div>
+      <PageTitle :title="$t('jobs.title')" :subtitle="$t('jobs.subtitle')" :show-back="true" :show-divider="true"
+        @back="handleBack">
+        <template #actions>
+          <Button @click="openAddDrawer" :unstyled="true"
+            class="flex items-center gap-3 px-8 py-5 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-[0.97] transition-all duration-200 shrink-0">
+            <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-2xl" />
+            <span class="text-h5 font-bold text-secondary-700 dark:text-secondary-300">{{ $t('jobs.addJobs') }}</span>
+          </Button>
+        </template>
+      </PageTitle>
     </template>
 
     <ScrollArea class="flex-1 space-y-6 pr-6 pb-8">
       <!-- Empty State -->
       <div v-if="activeJobs.length === 0" class="flex flex-col items-center justify-center py-20 px-6">
-        <i class="pi pi-briefcase text-icon-xxxl opacity-20 mb-8" />
+        <i class="pi pi-briefcase opacity-20 mb-8" style="font-size: 6rem" />
         <h3 class="text-display-3 font-bold mb-4 text-center">
           {{ $t('jobs.noJobs') }}
         </h3>
         <p class="text-h4 opacity-60 text-center mb-12">
           {{ $t('jobs.tapAddButton') }}
         </p>
-        <button @click="openAddDrawer"
-          class="flex items-center gap-4 px-10 py-6 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-95 transition-all duration-300">
-          <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-3xl" />
+        <Button @click="openAddDrawer" :unstyled="true"
+          class="flex items-center gap-4 px-10 py-6 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-[0.97] transition-all duration-200">
+          <i class="pi pi-plus text-secondary-700 dark:text-secondary-300" style="font-size: 2rem" />
           <span class="text-h3 font-bold text-secondary-700 dark:text-secondary-300">{{ $t('jobs.addJobs') }}</span>
-        </button>
+        </Button>
       </div>
 
       <!-- Active Jobs List -->
       <div v-else class="space-y-6 p-2">
         <Transition v-for="(job, index) in activeJobs" :key="job.id" appear @enter="onEnterCard"
-          v-memo="[job.id, job.title]">
-          <div :data-index="index" class="relative group cursor-pointer select-none" @click="handleJobSelect(job)">
-            <BlurCard padding="p-10" rounded="3xl">
-              <div class="flex items-start justify-between">
-                <div class="flex-1">
-                  <h2 class="text-display-3 font-bold mb-3 leading-tight">
-                    {{ job.title }}
-                  </h2>
-                  <p class="text-h5 opacity-70">
-                    {{ job.department }}
-                  </p>
+          v-memo="[jobsStore.isSelected(job.id), job.id, job.title]">
+          <div :data-index="index" class="relative group cursor-pointer select-none"
+            @click="jobsStore.toggleJob(job.id)">
+            <BlurCard padding="p-10" rounded="3xl" :class="[
+              'transition-all duration-300 ease-out',
+              jobsStore.isSelected(job.id) ? 'card-elevated-selected' : ''
+            ]">
+              <div class="flex items-center justify-between gap-6">
+                <div class="flex items-center gap-6 flex-1 min-w-0">
+                  <div class="flex-1">
+                    <h2 class="text-display-3 font-bold leading-tight">
+                      {{ job.title }}
+                    </h2>
+                    <p class="text-h5 opacity-70 mt-2">
+                      {{ job.department }}
+                    </p>
+                  </div>
+
+                  <div v-if="jobsStore.isSelected(job.id)"
+                    class="shrink-0 w-14 h-14 rounded-full bg-green-500 flex items-center justify-center">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </div>
                 </div>
 
-                <button @click.stop="handleViewDocument(job)"
-                  class="ml-6 shrink-0 w-24 h-24 rounded-2xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300 active:bg-secondary-500/30 active:scale-95">
+                <Button @click.stop="handleViewDocument(job)" :unstyled="true"
+                  class="ml-6 shrink-0 w-24 h-24 rounded-2xl bg-secondary-500/10 flex items-center justify-center transition-all duration-200 active:bg-secondary-500/30 active:scale-[0.95]">
                   <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-xxl" />
-                </button>
+                </Button>
 
-                <button @click.stop="removeJobFromList(job)"
-                  class="ml-4 shrink-0 w-24 h-24 rounded-2xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center transition-all duration-300 active:scale-95">
+                <Button @click.stop="removeJobFromList(job)" :unstyled="true"
+                  class="ml-4 shrink-0 w-24 h-24 rounded-2xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
                   <i class="pi pi-times text-red-600 dark:text-red-400 text-icon-xxl" />
-                </button>
+                </Button>
               </div>
             </BlurCard>
           </div>
         </Transition>
       </div>
     </ScrollArea>
+
+    <div class="mt-6">
+      <PrimaryButton @click="handleConfirmSelection" :disabled="!jobsStore.selectedJobId"
+        :label="$t('jobs.confirmSelection')" :full-width="true" size="large" />
+    </div>
 
     <DocumentViewer v-model:visible="showDocumentViewer" :title="currentDocument?.title || ''"
       :document-url="currentDocument?.url || ''" :document-type="currentDocument?.type || 'pdf'" />
@@ -187,7 +207,7 @@ function onEnterCard(el: Element, done: () => void) {
         <!-- Available Jobs Grid -->
         <div class="flex-1 overflow-y-auto -mr-4 pr-4">
           <div v-if="availableJobs.length === 0" class="text-center py-16">
-            <i class="pi pi-check-circle text-icon-xxxl text-green-500 mb-6" />
+            <i class="pi pi-check-circle text-green-500 mb-6" style="font-size: 4rem" />
             <p class="text-h3 font-bold">{{ $t('jobs.allAdded') }}</p>
           </div>
 
@@ -198,7 +218,7 @@ function onEnterCard(el: Element, done: () => void) {
                 <!-- Job Icon -->
                 <div
                   class="shrink-0 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-600 text-white shadow-lg">
-                  <i class="pi pi-briefcase text-3xl" />
+                  <i class="pi pi-briefcase" style="font-size: 2rem" />
                 </div>
 
                 <!-- Job Info -->
@@ -212,10 +232,10 @@ function onEnterCard(el: Element, done: () => void) {
                 </div>
 
                 <!-- Add Button -->
-                <button @click="addJobToList(job)"
-                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-300 active:scale-95">
+                <Button @click="addJobToList(job)" :unstyled="true"
+                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
                   <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-icon-xl font-bold" />
-                </button>
+                </Button>
               </div>
             </BlurCard>
           </div>

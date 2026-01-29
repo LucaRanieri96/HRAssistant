@@ -13,6 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     BlurCard: typeof import('./src/components/ui/BlurCard.vue')['default']
     BottomNav: typeof import('./src/components/BottomNav.vue')['default']
+    Button: typeof import('primevue/button')['default']
     CandidateCard: typeof import('./src/components/ui/CandidateCard.vue')['default']
     DocumentViewer: typeof import('./src/components/ui/DocumentViewer.vue')['default']
     DraggableCandidateMini: typeof import('./src/components/ui/DraggableCandidateMini.vue')['default']

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCandidatesStore } from '@/stores/candidates'
 import { useNavigationStore } from '@/stores/navigation'
+import Button from 'primevue/button'
 import BottomNav from '@/components/BottomNav.vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import DocumentViewer from '@/components/ui/DocumentViewer.vue'
@@ -33,7 +34,6 @@ const allCandidates = computed<Candidate[]>(() =>
   }))
 )
 
-// Active candidates (shown in main list)
 const activeCandidates = computed<Candidate[]>(() =>
   allCandidates.value.filter(c => candidatesStore.isActive(c.id))
 )
@@ -142,15 +142,17 @@ function onEnterCard(el: Element, done: () => void) {
 <template>
   <ScreenLayout content-class="flex-1 flex flex-col">
     <template #header>
-      <div class="flex items-center justify-between gap-4">
-        <PageTitle :title="$t('candidates.title')" :subtitle="jobTitle" :show-back="true" @back="handleBack" />
-        <button @click="openAddDrawer"
-          class="flex items-center gap-3 px-8 py-5 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-95 transition-all duration-300 shrink-0">
-          <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-2xl" />
-          <span class="text-h5 font-bold text-secondary-700 dark:text-secondary-300">{{ $t('candidates.addCandidates')
+      <PageTitle :title="$t('candidates.title')" :subtitle="jobTitle" :show-back="true" :show-divider="true"
+        @back="handleBack">
+        <template #actions>
+          <Button @click="openAddDrawer" :unstyled="true"
+            class="flex items-center gap-3 px-8 py-5 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-[0.97] transition-all duration-200 shrink-0">
+            <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-2xl" />
+            <span class="text-h5 font-bold text-secondary-700 dark:text-secondary-300">{{ $t('candidates.addCandidates')
             }}</span>
-        </button>
-      </div>
+          </Button>
+        </template>
+      </PageTitle>
     </template>
 
     <div class="mb-8">
@@ -162,19 +164,19 @@ function onEnterCard(el: Element, done: () => void) {
     <ScrollArea class="flex-1 pb-4 pr-6">
       <!-- Empty State -->
       <div v-if="activeCandidates.length === 0" class="flex flex-col items-center justify-center py-20 px-6">
-        <i class="pi pi-inbox text-icon-xxxl opacity-20 mb-8" />
+        <i class="pi pi-inbox opacity-20 mb-8" style="font-size: 6rem" />
         <h3 class="text-display-3 font-bold mb-4 text-center">
           {{ $t('candidates.noCandidates') }}
         </h3>
         <p class="text-h4 opacity-60 text-center mb-12">
           {{ $t('candidates.tapAddButton') }}
         </p>
-        <button @click="openAddDrawer"
-          class="flex items-center gap-4 px-10 py-6 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-95 transition-all duration-300">
-          <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-3xl" />
+        <Button @click="openAddDrawer" :unstyled="true"
+          class="flex items-center gap-4 px-10 py-6 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-[0.97] transition-all duration-200">
+          <i class="pi pi-plus text-secondary-700 dark:text-secondary-300" style="font-size: 2rem" />
           <span class="text-h3 font-bold text-secondary-700 dark:text-secondary-300">{{ $t('candidates.addCandidates')
             }}</span>
-        </button>
+        </Button>
       </div>
 
       <!-- Active Candidates List with Remove Option -->
@@ -202,15 +204,15 @@ function onEnterCard(el: Element, done: () => void) {
                   </div>
                 </div>
 
-                <button @click.stop="handleViewDocument(candidate)"
-                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 flex items-center justify-center transition-all duration-300 active:bg-secondary-500/30 active:scale-95">
+                <Button @click.stop="handleViewDocument(candidate)" :unstyled="true"
+                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 flex items-center justify-center transition-all duration-200 active:bg-secondary-500/30 active:scale-[0.95]">
                   <i class="pi pi-file text-secondary-700 dark:text-secondary-300 text-icon-xl" />
-                </button>
+                </Button>
 
-                <button @click.stop="removeCandidateFromList(candidate)"
-                  class="shrink-0 w-20 h-20 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center transition-all duration-300 active:scale-95">
+                <Button @click.stop="removeCandidateFromList(candidate)" :unstyled="true"
+                  class="shrink-0 w-20 h-20 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
                   <i class="pi pi-times text-red-600 dark:text-red-400 text-icon-xl" />
-                </button>
+                </Button>
               </div>
             </BlurCard>
           </div>
@@ -232,7 +234,7 @@ function onEnterCard(el: Element, done: () => void) {
         <!-- Available Candidates Grid -->
         <div class="flex-1 overflow-y-auto -mr-4 pr-4">
           <div v-if="availableCandidates.length === 0" class="text-center py-16">
-            <i class="pi pi-check-circle text-icon-xxxl text-green-500 mb-6" />
+            <i class="pi pi-check-circle text-green-500 mb-6" style="font-size: 4rem" />
             <p class="text-h3 font-bold">{{ $t('candidates.allAdded') }}</p>
           </div>
 
@@ -257,10 +259,10 @@ function onEnterCard(el: Element, done: () => void) {
                 </div>
 
                 <!-- Add Button -->
-                <button @click="addCandidateToList(candidate)"
-                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-300 active:scale-95">
+                <Button @click="addCandidateToList(candidate)" :unstyled="true"
+                  class="shrink-0 w-20 h-20 rounded-xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 flex items-center justify-center transition-all duration-200 active:scale-[0.95]">
                   <i class="pi pi-plus text-secondary-700 dark:text-secondary-300 text-icon-xl font-bold" />
-                </button>
+                </Button>
               </div>
             </BlurCard>
           </div>

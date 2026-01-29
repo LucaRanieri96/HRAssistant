@@ -12,7 +12,7 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  maxHeight: '70vh'
+  maxHeight: '85vh'
 })
 
 const emit = defineEmits<Emits>()
@@ -37,57 +37,52 @@ watch(() => props.visible, (newVal) => {
 
 <template>
   <Teleport to="body">
-    <!-- Overlay -->
     <Transition name="fade">
       <div v-if="visible" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9998]" @click="close" />
     </Transition>
 
-    <!-- Drawer -->
     <Transition name="slide-down">
       <div v-if="visible" class="fixed top-0 left-0 right-0 z-[9999] flex justify-center" @click.stop>
-        <div class="w-full max-w-7xl mx-4 mt-4 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl"
-          :style="{ maxHeight: isExpanded ? maxHeight : '500px' }"
+        <div class="w-full max-w-7xl mx-4 mt-4 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl"
+          :style="{ maxHeight: isExpanded ? maxHeight : '40vh' }"
           style="transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)">
-          <!-- Glass effect background -->
           <div
             class="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/95 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/95" />
 
-          <!-- Header -->
           <div class="relative border-b border-gray-200/50 dark:border-gray-700/50">
-            <div class="flex items-center justify-between px-6 py-4">
-              <div class="flex items-center gap-3">
-                <i class="pi pi-plus-circle text-2xl text-indigo-600 dark:text-indigo-400" />
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            <div class="flex items-center justify-between px-8 py-6">
+              <div class="flex items-center gap-4">
+                <i class="pi pi-plus-circle text-primary-600 dark:text-primary-400 mb-1.5" style="font-size: 2rem" />
+                <h3 class="text-h3 font-bold">
                   {{ title }}
                 </h3>
               </div>
 
-              <div class="flex items-center gap-2">
-                <!-- Expand/Collapse Button -->
+              <div class="flex items-center gap-3">
                 <button @click="toggleExpand"
-                  class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  class="p-4 rounded-2xl bg-secondary-500/10 hover:bg-secondary-500/20 active:bg-secondary-500/30 active:scale-95 transition-all flex justify-center items-center"
                   :title="isExpanded ? 'Collapse' : 'Expand'">
                   <i :class="isExpanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
-                    class="text-gray-600 dark:text-gray-400" />
+                    class=" text-secondary-700 dark:text-secondary-300" style="font-size: 1.5rem;" />
                 </button>
 
                 <!-- Close Button -->
                 <button @click="close"
-                  class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  <i class="pi pi-times text-gray-600 dark:text-gray-400" />
+                  class="p-4 rounded-2xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 active:scale-95 transition-all flex justify-center items-center">
+                  <i class="pi pi-times  text-red-600 dark:text-red-400" style="font-size: 1.5rem;" />
                 </button>
               </div>
             </div>
 
             <!-- Drag indicator -->
-            <div class="flex justify-center pb-2">
-              <div class="w-12 h-1 rounded-full bg-gray-300 dark:bg-gray-700" />
+            <div class="flex justify-center pb-4">
+              <div class="w-20 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700" />
             </div>
           </div>
 
           <!-- Content -->
           <div class="relative overflow-y-auto"
-            :style="{ height: isExpanded ? 'calc(' + maxHeight + ' - 88px)' : '192px' }"
+            :style="{ height: isExpanded ? 'calc(' + maxHeight + ' - 140px)' : 'calc(65vh - 140px)' }"
             style="transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1)">
             <div class="p-6">
               <slot />

@@ -10,9 +10,11 @@
   },
   "jobs": {
     "title": "SELECT POSITION",
+    "subtitle": "Choose a job position to analyze candidates",
     "description": "Job Description",
     "addJobs": "Add Job Offers",
     "availableJobs": "Available Job Offers",
+    "confirmSelection": "CONFIRM POSITION",
     "dragHint": "Drag job offers between the two lists to add or remove them",
     "emptyAvailable": "All job offers have been added",
     "noJobs": "No job positions in your list yet",
