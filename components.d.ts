@@ -13,9 +13,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     BlurCard: typeof import('./src/components/ui/BlurCard.vue')['default']
     BottomNav: typeof import('./src/components/BottomNav.vue')['default']
-    Button: typeof import('primevue/button')['default']
     CandidateCard: typeof import('./src/components/ui/CandidateCard.vue')['default']
     DocumentViewer: typeof import('./src/components/ui/DocumentViewer.vue')['default']
+    DraggableCandidateMini: typeof import('./src/components/ui/DraggableCandidateMini.vue')['default']
+    DraggableJobMini: typeof import('./src/components/ui/DraggableJobMini.vue')['default']
     FilterButton: typeof import('./src/components/ui/FilterButton.vue')['default']
     GeometricBackground: typeof import('./src/components/GeometricBackground.vue')['default']
     JobCard: typeof import('./src/components/ui/JobCard.vue')['default']
@@ -29,5 +30,6 @@ declare module 'vue' {
     ScreenLayout: typeof import('./src/components/layout/ScreenLayout.vue')['default']
     ScrollArea: typeof import('./src/components/ui/ScrollArea.vue')['default']
     SettingCard: typeof import('./src/components/ui/SettingCard.vue')['default']
+    TopDrawer: typeof import('./src/components/ui/TopDrawer.vue')['default']
   }
 }

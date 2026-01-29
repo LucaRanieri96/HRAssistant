@@ -11,6 +11,13 @@
   "jobs": {
     "title": "SELECT POSITION",
     "description": "Job Description",
+    "addJobs": "Add Job Offers",
+    "availableJobs": "Available Job Offers",
+    "dragHint": "Drag job offers between the two lists to add or remove them",
+    "emptyAvailable": "All job offers have been added",
+    "noJobs": "No job positions in your list yet",
+    "tapAddButton": "Tap the + button above to add positions",
+    "allAdded": "All positions added!",
     "positions": {
       "marketing": "Marketing Manager",
       "sales": "Sales Director",
@@ -43,6 +50,21 @@
         "title": "Machine Learning Researcher",
         "department": "Engineering & Research",
         "description": "Advance ML capabilities and methodologies"
+      },
+      "frontendDeveloper": {
+        "title": "Senior Frontend Developer",
+        "department": "Engineering & Product",
+        "description": "Build modern and responsive web applications"
+      },
+      "devOpsEngineer": {
+        "title": "DevOps Engineer",
+        "department": "Infrastructure & Operations",
+        "description": "Manage CI/CD pipelines and cloud infrastructure"
+      },
+      "dataEngineer": {
+        "title": "Data Engineer",
+        "department": "Data & Analytics",
+        "description": "Design and maintain data pipelines at scale"
       }
     }
   },
@@ -64,6 +86,13 @@
     "selectAll": "Select All Candidates",
     "selected": "selected",
     "cv": "CV",
+    "addCandidates": "Add Candidates",
+    "availableCandidates": "Available Candidates",
+    "dragHint": "Drag candidates between the two lists to add or remove them",
+    "emptyAvailable": "All candidates have been added",
+    "noCandidates": "No candidates in your list yet",
+    "tapAddButton": "Tap the + button above to add candidates",
+    "allAdded": "All candidates added!",
     "mockData": {
       "alessandroRossi": {
         "name": "Alessandro Rossi",
@@ -94,6 +123,26 @@
         "name": "Francesca Ricci",
         "experience": "4 years in ML Development",
         "education": "BSc Computer Engineering - Politecnico Torino"
+      },
+      "lucaConti": {
+        "name": "Luca Conti",
+        "experience": "5 years in Full Stack Development",
+        "education": "MSc Software Engineering - Politecnico Milano"
+      },
+      "elenaGalli": {
+        "name": "Elena Galli",
+        "experience": "6 years in NLP & Text Analytics",
+        "education": "PhD Computational Linguistics - Cambridge"
+      },
+      "davideMoretti": {
+        "name": "Davide Moretti",
+        "experience": "7 years in Backend & Distributed Systems",
+        "education": "MSc Computer Engineering - Politecnico Torino"
+      },
+      "chiaraMartini": {
+        "name": "Chiara Martini",
+        "experience": "5 years in Data Analytics & BI",
+        "education": "MSc Business Analytics - Bocconi"
       }
     }
   },

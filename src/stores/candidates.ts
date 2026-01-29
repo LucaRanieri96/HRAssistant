@@ -2,7 +2,10 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useCandidatesStore = defineStore('candidates', () => {
-  // Selected candidate IDs
+  // Active candidate IDs (shown in the main list)
+  const activeCandidateIds = ref<Set<string>>(new Set())
+
+  // Selected candidate IDs (for processing)
   const selectedIds = ref<Set<string>>(new Set())
 
   // Current job ID (for context)
@@ -39,26 +42,47 @@ export const useCandidatesStore = defineStore('candidates', () => {
 
   const initializeWithAll = (candidateIds: string[]) => {
     if (!initialSelectionDone.value) {
+      activeCandidateIds.value = new Set(candidateIds)
       selectedIds.value = new Set(candidateIds)
       initialSelectionDone.value = true
     }
   }
 
+  const addCandidate = (candidateId: string) => {
+    activeCandidateIds.value.add(candidateId)
+    selectedIds.value.add(candidateId)
+  }
+
+  const removeCandidate = (candidateId: string) => {
+    activeCandidateIds.value.delete(candidateId)
+    selectedIds.value.delete(candidateId)
+  }
+
+  const isActive = (candidateId: string) => {
+    return activeCandidateIds.value.has(candidateId)
+  }
+
   const reset = () => {
+    activeCandidateIds.value = new Set()
     selectedIds.value = new Set()
     currentJobId.value = null
     initialSelectionDone.value = false
   }
 
   return {
+    activeCandidateIds,
     selectedIds,
     currentJobId,
+    initialSelectionDone,
     toggleCandidate,
     selectAll,
     deselectAll,
     isSelected,
     setJobId,
     initializeWithAll,
+    addCandidate,
+    removeCandidate,
+    isActive,
     reset,
   }
 })

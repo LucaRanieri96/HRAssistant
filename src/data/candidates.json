@@ -45,8 +45,8 @@
     "experienceKey": "candidates.mockData.sofiaRomano.experience",
     "skills": [
       "Python",
-      "Ricerca",
-      "Pubblicazioni",
+      "Research",
+      "Publications",
       "Transformers"
     ],
     "educationKey": "candidates.mockData.sofiaRomano.education"
@@ -76,5 +76,57 @@
       "CI/CD"
     ],
     "educationKey": "candidates.mockData.francescaRicci.education"
+  },
+  {
+    "id": "7",
+    "nameKey": "candidates.mockData.lucaConti.name",
+    "matchScore": 92,
+    "experienceKey": "candidates.mockData.lucaConti.experience",
+    "skills": [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "GraphQL"
+    ],
+    "educationKey": "candidates.mockData.lucaConti.education"
+  },
+  {
+    "id": "8",
+    "nameKey": "candidates.mockData.elenaGalli.name",
+    "matchScore": 88,
+    "experienceKey": "candidates.mockData.elenaGalli.experience",
+    "skills": [
+      "Python",
+      "NLP",
+      "BERT",
+      "Elasticsearch"
+    ],
+    "educationKey": "candidates.mockData.elenaGalli.education"
+  },
+  {
+    "id": "9",
+    "nameKey": "candidates.mockData.davideMoretti.name",
+    "matchScore": 85,
+    "experienceKey": "candidates.mockData.davideMoretti.experience",
+    "skills": [
+      "Go",
+      "Microservices",
+      "gRPC",
+      "Redis"
+    ],
+    "educationKey": "candidates.mockData.davideMoretti.education"
+  },
+  {
+    "id": "10",
+    "nameKey": "candidates.mockData.chiaraMartini.name",
+    "matchScore": 90,
+    "experienceKey": "candidates.mockData.chiaraMartini.experience",
+    "skills": [
+      "Python",
+      "Pandas",
+      "SQL",
+      "Tableau"
+    ],
+    "educationKey": "candidates.mockData.chiaraMartini.education"
   }
 ]

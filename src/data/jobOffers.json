@@ -28,5 +28,23 @@
     "titleKey": "jobs.offers.mlResearcher.title",
     "departmentKey": "jobs.offers.mlResearcher.department",
     "descriptionKey": "jobs.offers.mlResearcher.description"
+  },
+  {
+    "id": "6",
+    "titleKey": "jobs.offers.frontendDeveloper.title",
+    "departmentKey": "jobs.offers.frontendDeveloper.department",
+    "descriptionKey": "jobs.offers.frontendDeveloper.description"
+  },
+  {
+    "id": "7",
+    "titleKey": "jobs.offers.devOpsEngineer.title",
+    "departmentKey": "jobs.offers.devOpsEngineer.department",
+    "descriptionKey": "jobs.offers.devOpsEngineer.description"
+  },
+  {
+    "id": "8",
+    "titleKey": "jobs.offers.dataEngineer.title",
+    "departmentKey": "jobs.offers.dataEngineer.department",
+    "descriptionKey": "jobs.offers.dataEngineer.description"
   }
 ]
